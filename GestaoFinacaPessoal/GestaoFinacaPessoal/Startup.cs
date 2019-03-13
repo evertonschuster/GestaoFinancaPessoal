@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using CasaDoCodigo;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication;
 
 namespace GestaoFinacaPessoal
 {
@@ -32,7 +32,23 @@ namespace GestaoFinacaPessoal
             });
 
 
+            string connectionString = Configuration.GetConnectionString("Default");
+            services.AddDbContext<FinancaContexto>(options => options.UseSqlServer(connectionString));
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+            // services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores();
+            services.AddDefaultIdentity<IdentityUser>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                        .AddCookie(o => o.LoginPath = new PathString("/login"))
+                        .AddFacebook(o =>
+                        {
+                            o.AppId = Configuration["facebook:appid"];
+                            o.AppSecret = Configuration["facebook:appsecret"];
+                        });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +75,9 @@ namespace GestaoFinacaPessoal
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseAuthentication();
+
         }
     }
 }
