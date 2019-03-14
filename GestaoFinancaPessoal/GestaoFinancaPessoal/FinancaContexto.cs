@@ -5,7 +5,7 @@ namespace GestaoFinancaPessoal
 {
     public class FinancaContexto : DbContext
     {
-        public DbSet<Usuario> Usuario { get; set; }
+        //public DbSet<Usuario> Usuario { get; set; }
 
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

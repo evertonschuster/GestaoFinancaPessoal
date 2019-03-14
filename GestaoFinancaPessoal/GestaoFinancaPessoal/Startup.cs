@@ -65,7 +65,7 @@ namespace GestaoFinacaPessoal
                         });
 
 
-            services.AddSingleton<IClaimsTransformation, ClaimsTransformer>();
+            
 
     }
 
