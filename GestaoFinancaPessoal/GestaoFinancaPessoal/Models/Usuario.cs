@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestaoFinancaPessoal.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -9,9 +10,8 @@ using System.Threading.Tasks;
 namespace GestaoFinacaPessoal.Models
 {
     [Table("Usuarios")]
-    public class Usuario
+    public class Usuario : MasterModel
     {
-        public string Id { get; set; }
 
         [DisplayName("Primeiro Nome")]
         [StringLength(50, ErrorMessage = "O campo Nome permite no máximo 50 caracteres!")]

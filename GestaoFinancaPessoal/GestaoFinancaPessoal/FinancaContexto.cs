@@ -1,7 +1,7 @@
 ﻿using GestaoFinacaPessoal.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CasaDoCodigo
+namespace GestaoFinancaPessoal
 {
     public class FinancaContexto : DbContext
     {

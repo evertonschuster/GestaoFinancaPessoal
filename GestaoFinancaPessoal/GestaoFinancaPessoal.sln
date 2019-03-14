@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentacao", "Documentaca
 		readme.txt = readme.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoFinancaPessoal", "GestaoFinacaPessoal\GestaoFinancaPessoal.csproj", "{65105C66-978F-4A34-85B5-64D4144A63DB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestaoFinancaPessoal", "GestaoFinancaPessoal\GestaoFinancaPessoal.csproj", "{65105C66-978F-4A34-85B5-64D4144A63DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
