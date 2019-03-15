@@ -19,15 +19,15 @@ namespace GestaoFinancaPessoal.Architecture
 
         public async Task Invoke(HttpContext context /* other dependencies */)
         {
-            try
-            {
+            //try
+            //{
                 await next(context);
-            }
-            catch (Exception ex)
-            {
-                HandleExceptionAsync(context, ex);
-                throw ex;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    HandleExceptionAsync(context, ex);
+            //    throw ex;
+            //}
         }
 
         private static void HandleExceptionAsync(HttpContext context1, Exception exception)
@@ -42,7 +42,7 @@ namespace GestaoFinancaPessoal.Architecture
             //context1.Response.ContentType = "application/json";
             //context1.Response.StatusCode = (int)code;
 
-
+            
             //return Task.Factory.StartNew(
             //state =>
             //{

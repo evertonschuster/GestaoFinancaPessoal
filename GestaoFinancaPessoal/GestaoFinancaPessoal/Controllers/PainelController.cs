@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GestaoFinancaPessoal.Controllers
 {
-    [Authorize]
+
     public class PainelController : Controller
     {
         public PainelController(DbContext Contexto, IHttpContextAccessor contextAcessor) : base(Contexto, contextAcessor)
