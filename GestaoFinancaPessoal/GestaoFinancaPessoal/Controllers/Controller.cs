@@ -7,20 +7,21 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using GestaoFinancaPessoal.Uteis.Exception.ModelErrorException;
+using GestaoFinancaPessoal.Data;
 
 namespace GestaoFinancaPessoal.Controllers
 {
     public class Controller : Microsoft.AspNetCore.Mvc.Controller
     {
-        protected FinancaContexto Contexto { get; }
+        protected ApplicationDbContext Contexto { get; }
         protected IHttpContextAccessor ContextAcessor { get; }
         protected Session Session { get; }
 
         protected IDAO DAO { get; set; }
 
-        public Controller(DbContext Contexto, IHttpContextAccessor contextAcessor)
+        public Controller(ApplicationDbContext Contexto, IHttpContextAccessor contextAcessor)
         {
-            this.Contexto = (FinancaContexto)Contexto;
+            this.Contexto = (ApplicationDbContext)Contexto;
             this.ContextAcessor = contextAcessor;
             this.Session = new Session(contextAcessor);
             this.DAO = new DAO<MasterModel>(this.Contexto, this.Session);

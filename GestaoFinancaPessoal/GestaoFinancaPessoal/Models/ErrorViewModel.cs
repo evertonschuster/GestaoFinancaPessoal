@@ -1,6 +1,6 @@
 using System;
 
-namespace GestaoFinacaPessoal.Models
+namespace GestaoFinancaPessoal.Models
 {
     public class ErrorViewModel
     {

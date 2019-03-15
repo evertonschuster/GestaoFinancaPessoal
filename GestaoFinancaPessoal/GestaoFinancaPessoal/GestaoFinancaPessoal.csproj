@@ -6,6 +6,13 @@
 	<UserSecretsId>aspnet-ContactManager-0DAD76F8-C053-4971-A8DF-4C55A4FF198B</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Views\Autenticacao\**" />
+    <Content Remove="Views\Autenticacao\**" />
+    <EmbeddedResource Remove="Views\Autenticacao\**" />
+    <None Remove="Views\Autenticacao\**" />
+  </ItemGroup>
+
 
   <ItemGroup>
 	<PackageReference Include="Microsoft.ApplicationInsights" Version="2.4.0" />
@@ -20,6 +27,11 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0" />
 	<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils" Version="2.2.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

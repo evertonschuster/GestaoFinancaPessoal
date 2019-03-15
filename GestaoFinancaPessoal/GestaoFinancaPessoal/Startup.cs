@@ -18,7 +18,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using GestaoFinancaPessoal.Authorization;
 
-namespace GestaoFinacaPessoal
+namespace GestaoFinancaPessoal
 {
     //    public class Startup
     //    {
@@ -165,7 +165,7 @@ namespace GestaoFinacaPessoal
         public void ConfigureServices(IServiceCollection services)
         {
             string connectionString = Configuration.GetConnectionString("Default");
-            services.AddDbContext<DbContext, FinancaContexto>(options => options.UseSqlServer(connectionString));
+            //services.AddDbContext<DbContext, FinancaContexto>(options => options.UseSqlServer(connectionString));
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -204,6 +204,9 @@ namespace GestaoFinacaPessoal
             });
             #endregion
 
+            services.AddDistributedMemoryCache();   //adicionar session
+            services.AddSession();                  //adicionar session
+
             // Authorization handlers.
             services.AddScoped<IAuthorizationHandler,
                                   ContactIsOwnerAuthorizationHandler>();
@@ -232,6 +235,8 @@ namespace GestaoFinacaPessoal
             app.UseStaticFiles();
 
             app.UseAuthentication();
+
+            app.UseSession();   //poem para rodar a session
 
             app.UseMvc(routes =>
             {

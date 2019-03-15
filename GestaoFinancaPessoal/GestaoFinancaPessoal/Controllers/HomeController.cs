@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using GestaoFinacaPessoal.Models;
+using GestaoFinancaPessoal.Models;
 
-namespace GestaoFinacaPessoal.Controllers
+namespace GestaoFinancaPessoal.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         public IActionResult Index()
         {

@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GestaoFinacaPessoal.Models;
+using GestaoFinancaPessoal.Models;
+using GestaoFinancaPessoal.Data;
 
 namespace GestaoFinancaPessoal.DAO
 {
     public class DAO<T> : IDAO, IDisposable where T : MasterModel, IDisposable 
     {
-        protected readonly FinancaContexto Context;
+        protected readonly ApplicationDbContext Context;
         protected readonly DbSet<T> DbSet;
         protected readonly Session Session;
         
@@ -24,7 +25,7 @@ namespace GestaoFinancaPessoal.DAO
         {
             return this.Session;
         }
-        public DAO(FinancaContexto context, Session session )
+        public DAO(ApplicationDbContext context, Session session )
         {
             this.Context = context;
             this.DbSet = context.Set<T>();
@@ -35,7 +36,7 @@ namespace GestaoFinancaPessoal.DAO
 
         public DAO(IDAO dao)
         {
-            this.Context = (FinancaContexto)dao.GetContext();
+            this.Context = (ApplicationDbContext)dao.GetContext();
             this.DbSet = this.Context.Set<T>();
             this.Session = dao.GetSssion();
 
