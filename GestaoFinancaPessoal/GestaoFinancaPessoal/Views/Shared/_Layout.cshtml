@@ -17,34 +17,17 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-page="/Contacts/Index" class="navbar-brand">CM 2.0</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-page="/Contacts/Index">Contacts</a></li>
-                    <li><a asp-page="/About">About</a></li>
-                    <li><a asp-page="/Contact">Contact</a></li>
-                </ul>
-                @await Html.PartialAsync("../_LoginPartial")
-            </div>
+
+    
+    @*<div class="navbar-header">*@
+        <div class="container body-content">
+            @RenderBody()
         </div>
-    </nav>
-    <div class="container body-content">
+    @*</div>*@
+
+    @*<div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - CM 2.0</p>
-        </footer>
-    </div>
+    </div>*@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
