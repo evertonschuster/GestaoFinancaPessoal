@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace GestaoFinancaPessoal.Controllers
 {
 
-    [AllowAnonymous]
+    //[AllowAnonymous]
     public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
         public IActionResult Index()
