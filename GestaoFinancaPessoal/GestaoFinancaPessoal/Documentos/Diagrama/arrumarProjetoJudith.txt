@@ -1,0 +1,13 @@
+* tirar despesas e receitas do dashboar inicial.
+
+* ultimos 3 meses, pode ficar na tela inicial.
+
+* lançamentos vencidos e que vencem nos proximos 5 dias.
+
+* saldo em cada conta, pode ser em varios bancos.
+
+* manter total de despesas e receitas pendentes, mas nao em forma de grafico.
+
+* registrar dada de pagamento e valor pago.
+
+* transferencia tem conta origem e conta destino. Deve ter um historico.
