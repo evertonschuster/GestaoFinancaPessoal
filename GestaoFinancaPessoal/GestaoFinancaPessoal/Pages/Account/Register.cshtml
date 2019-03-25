@@ -4,33 +4,74 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>@ViewData["Title"]</h2>
+<div class="pb-5 pt-5">
+    <div class="container mt--8 ">
+        <div class="row justify-content-md-center ">
+            <div class="col-xl-5 col-lg-6 col-md-8">
+                <div class="login-content shadow-lg p-3 mb-5 bg-white rounded">
+                    <div class="login-logo">
+                        <a href="#">
+                            <img src="~/images/icon/logo.png" alt="CoolAdmin">
+                        </a>
+                    </div>
+                    <div class="login-form">
+                        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Input.Email"></label>
-                <input asp-for="Input.Email" class="form-control" />
-                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            <div class="container ">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Input.Username"></label>
+                                <input asp-for="Input.Username" class="au-input au-input--full" placeholder="Joao da Silva" />
+                                <span asp-validation-for="Input.Username" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Input.Email"></label>
+                                <input asp-for="Input.Email" class="au-input au-input--full" placeholder="joaodasilva@hotmail.com" />
+                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Input.Password"></label>
+                                <input asp-for="Input.Password" class="au-input au-input--full" placeholder="*********" />
+                                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Input.ConfirmPassword"></label>
+                                <input asp-for="Input.ConfirmPassword" class="au-input au-input--full" placeholder="*********" />
+                                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                            </div>
+
+                            <div class="login-checkbox">
+                                <label>
+                                    <input type="checkbox" name="aggree">Concordo com os termos.
+                                </label>
+                            </div>
+                            <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Cadastrar</button>
+                            <div class="social-login-content">
+                                <div class="social-button">
+                                    <button class="au-btn au-btn--block au-btn--blue m-b-20">Cadastrar com facebook</button>
+                                    <button class="au-btn au-btn--block au-btn--blue2">Cadastrar com twitter</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="register-link">
+                            <p>
+                                Possui cadastro?
+                                <a asp-action="login" asp-controller="Account">Login</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Input.Password"></label>
-                <input asp-for="Input.Password" class="form-control" />
-                <span asp-validation-for="Input.Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ConfirmPassword"></label>
-                <input asp-for="Input.ConfirmPassword" class="form-control" />
-                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Register</button>
-        </form>
+        </div>
     </div>
 </div>
+
+
+
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

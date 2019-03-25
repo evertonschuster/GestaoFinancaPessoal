@@ -42,20 +42,25 @@ namespace GestaoFinancaPessoal.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage ="Nome obrigatório")]
+            //[StringLength(100,ErrorMessage = "O {o} deve ter minimo {1} caracteres e {2} no maxímo", MinimumLength = 6)]
+            [Display(Name = "Nome")]
+            public string Username { get; set; }
+
+            [Required(ErrorMessage = "Email obrigatório")]
             [EmailAddress]
-            [Display(Name = "Email")]
+            [Display(Name = "Email", Prompt = "João da Silva")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "Senha obrigatório")]
+            [StringLength(100, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Senha")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Confirmar senha")]
+            [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não correspondem.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -69,11 +74,11 @@ namespace GestaoFinancaPessoal.Pages.Account
             ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Username , Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("Usuário criou uma nova conta com senha.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);

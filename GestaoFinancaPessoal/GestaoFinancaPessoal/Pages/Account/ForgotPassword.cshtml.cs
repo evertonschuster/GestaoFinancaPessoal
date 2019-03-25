@@ -28,7 +28,7 @@ namespace GestaoFinancaPessoal.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Informe o email")]
             [EmailAddress]
             public string Email { get; set; }
         }
