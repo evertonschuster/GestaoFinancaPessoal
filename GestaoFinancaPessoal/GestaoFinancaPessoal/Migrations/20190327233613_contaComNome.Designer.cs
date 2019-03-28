@@ -4,14 +4,16 @@ using GestaoFinancaPessoal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestaoFinancaPessoal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190327233613_contaComNome")]
+    partial class contaComNome
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,24 +70,6 @@ namespace GestaoFinancaPessoal.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("GestaoFinancaPessoal.Models.Categoria", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("HierarquiaId");
-
-                    b.Property<string>("nome")
-                        .HasMaxLength(100);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HierarquiaId");
-
-                    b.ToTable("Categoria");
                 });
 
             modelBuilder.Entity("GestaoFinancaPessoal.Models.Conta", b =>
@@ -251,13 +235,6 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
-                });
-
-            modelBuilder.Entity("GestaoFinancaPessoal.Models.Categoria", b =>
-                {
-                    b.HasOne("GestaoFinancaPessoal.Models.Categoria", "Hierarquia")
-                        .WithMany()
-                        .HasForeignKey("HierarquiaId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

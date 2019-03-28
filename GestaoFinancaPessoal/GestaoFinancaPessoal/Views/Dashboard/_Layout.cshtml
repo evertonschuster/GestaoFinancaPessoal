@@ -1,0 +1,102 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CM 2.0</title>
+
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">
+    <!-- Retina iPad Touch Icon-->
+    <link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">
+    <!-- Retina iPhone Touch Icon-->
+    <link rel="apple-touch-icon" sizes="114x114" href="http://placehold.it/114.png/000/fff">
+    <!-- Standard iPad Touch Icon-->
+    <link rel="apple-touch-icon" sizes="72x72" href="http://placehold.it/72.png/000/fff">
+    <!-- Standard iPhone Touch Icon-->
+    <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
+
+    <!-- Styles -->
+    <link href="assets/css/lib/weather-icons.css" rel="stylesheet" />
+    <link href="assets/css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="assets/css/lib/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="assets/css/lib/menubar/sidebar.css" rel="stylesheet">
+    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
+
+
+
+    <link href="assets/css/lib/helper.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    @*<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>*@
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body>
+
+
+    <div class="body-content">
+        @RenderBody()
+    </div>
+
+    <div class="row">
+        <div class="fixed-bottom mb-5 mr-5">
+
+            <div class="float-right float-sm-right  col-12  col-md-1">
+                <div class="btn btn-primary-outline float-right float-sm-right ">
+                    <div class="stat-widget-one">
+                        <div class="stat-icon dib">
+                            <i class="material-icons color-success border-success">trending_up</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" float-right col-12  col-md-1">
+                <button class="btn btn-primary-outline float-right float-sm-right " style="background-color:transparent" type="submit">
+                    <div class="stat-widget-one">
+                        <div class="stat-icon dib">
+                            <i class="material-icons color-danger border-danger">trending_down</i>
+                        </div>
+                    </div>
+                </button>
+            </div>
+
+            <div class=" float-right col-12  col-md-1">
+                <button class="btn btn-primary-outline float-right float-sm-right " style="background-color:transparent" type="submit">
+                    <div class="stat-widget-one">
+                        <div class="stat-icon dib">
+                            <i class="material-icons color-info border-info">autorenew</i>
+                        </div>
+                    </div>
+                </button>
+            </div>
+
+            <div class=" float-right col-12  col-md-1">
+                <button class="btn btn-primary-outline float-right float-sm-right " style="background-color:transparent" type="submit">
+                    <div class="stat-widget-one">
+                        <div class="stat-icon dib">
+                            <i class="material-icons color-primary border-primary">add</i>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- nano scroller -->
+    <script src="assets/js/lib/menubar/sidebar.js"></script>
+    <script src="assets/js/lib/preloader/pace.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

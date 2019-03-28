@@ -26,25 +26,9 @@ namespace GestaoFinancaPessoal.Controllers
             this.Session = new Session(contextAcessor);
             this.DAO = new DAO<MasterModel>(this.Contexto, this.Session);
 
-            //Console.WriteLine("Retstet");
-            //StackTrace stackTrace = new StackTrace();
-            //var classe = stackTrace.GetFrame(2).GetMethod().DeclaringType;
-
-            //Localiza os prop com anotacao
-            //List<PropertyInfo> parametros = new List<PropertyInfo>();
-            //PropertyInfo[] properties = classe.GetProperties();
-            //foreach (var propertyInfo in properties)
-            //{
-            //    var atributo = propertyInfo.GetCustomAttribute<ParameterSystemAttribute>();
-            //    if (atributo is ParameterSystemAttribute)
-            //    {
-            //        parametros.Add(propertyInfo);
-            //        { System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeData]}
-            //    }
-
-            //}
-
-            Console.WriteLine("Final do re");
+            this.ViewBag.Salvo = false;
+            this.ViewBag.Excluido = false;
+            this.ViewBag.Alterado = false;
 
         }
 

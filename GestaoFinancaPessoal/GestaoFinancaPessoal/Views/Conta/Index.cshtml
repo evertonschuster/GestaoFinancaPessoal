@@ -1,0 +1,76 @@
+﻿@model IEnumerable<GestaoFinancaPessoal.Models.Conta>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class=" col-12 text-center">
+    <h2>Contas cadastrada</h2>
+</div>
+
+
+<div class="row col-12 ">
+
+    @foreach (var item in Model)
+    {
+
+        <div class="col-sm-3 col-12 col-sm-12 col-md-6 col-lg-4 pb-4">
+            <div class="card  border border-primary">
+                <div class="card-header">
+                    <h5 class="card-title text-center text-uppercase">@item.Nome</h5>
+                </div>
+                <div class="card-body">
+
+                    <div class="col list-group-item">
+                        <span style="font-size:10px;" class="align-top">@Html.DisplayNameFor(model => model.Tipo):</span><br />
+                        <span>@item.Tipo</span>
+                    </div>
+
+                    <div class="col list-group-item">
+                        <span style="font-size:10px" class="align-top">@Html.DisplayNameFor(model => model.Banco):</span><br />
+                        <span>@item.Banco</span>
+                    </div>
+
+                    <div class="col list-group-item">
+                        <span style="font-size:10px" class="align-top">@Html.DisplayNameFor(model => model.Tipo):</span><br />
+                        <span>@item.Tipo</span>
+                    </div>
+
+                    <div class="col list-group-item">
+                        <span style="font-size:10px" class="align-top">@Html.DisplayNameFor(model => model.Descricao):</span><br />
+                        <span>@item.Descricao</span>
+                    </div>
+
+                    <div class="col list-group-item">
+                        <span style="font-size:10px" class="align-top">@Html.DisplayNameFor(model => model.Saldo):</span><br />
+                        <span>R$: @item.Saldo</span>
+                    </div>
+
+                    <br />
+                    <div class="text-center">
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+
+    <a class="col-sm-3 col-12 col-sm-12 col-md-6 col-lg-4" asp-action="Create">
+        <div class="card  border border-primary">
+            <div class="card-header">
+                <h5 class="card-title text-center">Criar conta</h5>
+            </div>
+            <div class="card-body text-center">
+                <i class="material-icons md-48" style="font-size:200px;">
+                    add
+                </i>
+            </div>
+        </div>
+    </a>
+
+</div>

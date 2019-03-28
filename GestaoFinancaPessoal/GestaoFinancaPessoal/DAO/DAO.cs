@@ -68,6 +68,11 @@ namespace GestaoFinancaPessoal.DAO
             return DbSet.Where(i => i.Id == p.Id).FirstOrDefault();
         }
 
+        public virtual T getById(int id)
+        {
+            return DbSet.Where(i => i.Id == id).FirstOrDefault();
+        }
+
         public virtual IList<T> List()
         {
             return DbSet.ToList();

@@ -7,7 +7,7 @@ namespace GestaoFinancaPessoal.Models
     public class MasterModel : IDisposable
     {
         [DataMember]
-        public int Id { get; protected set; }
+        public int Id { get;  set; }
 
         public void Dispose()
         {

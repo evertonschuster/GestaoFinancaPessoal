@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +24,11 @@ namespace GestaoFinancaPessoal.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        public DbSet<GestaoFinancaPessoal.Models.Contact> Contact { get; set; }
+        public DbSet<Contact> Contact { get; set; }
+
+        public DbSet<Conta> Conta { get; set; }
+
+        public DbSet<Categoria> Categoria { get; set; }
+
     }
 }

@@ -25,5 +25,8 @@
     }
 
     );
+}
 
+function SetURLIframe(url) {
+    $('#iFrameForm').attr('src', url)
 }
