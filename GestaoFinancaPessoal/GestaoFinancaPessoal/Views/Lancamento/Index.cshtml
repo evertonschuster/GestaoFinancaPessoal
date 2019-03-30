@@ -1,0 +1,107 @@
+﻿@model IEnumerable<GestaoFinancaPessoal.Models.Lancamento>
+
+@{
+    ViewData["Title"] = "Index";
+    ViewBag.SemContainer = "Sim";
+}
+
+
+<link href="~/assets/css/style.css" rel="stylesheet">
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<h2 class="text-center">Lançamentos</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary" >Criar Lançamento</a>
+</p>
+<div class="row col-12 ">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descricao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ValorPago)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Valor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsPago)
+                </th>
+                <th>
+                    Dt Pagt.
+                </th>
+                <th>
+                    Dt Venc.
+                </th>
+                <th>
+                    Tipo Lanç.
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{DateTime data = DateTime.Now;}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ValorPago)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Valor)
+                    </td>
+                    <td>
+                        <span class="@(item.IsPago ? "text-success" : "text-danger")">
+                            @(item.IsPago ? "Sim" : "Näo")
+                        </span>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataPagamento)
+                    </td>
+                    <td>
+                        @{
+                            string css = "";
+                            css = item.DataVencimento < data && !item.IsPago ? "text-danger" : "";
+                        }
+                        <span class="@(css)">
+                            @Html.DisplayFor(modelItem => item.DataVencimento)
+                        </span>
+                    </td>
+                    <td>
+                        @{
+                            css = "";
+                            if (item.Tipo == TipoLancamento.DESPESA)
+                            {
+                                css = "text-danger";
+                            }
+                            else if (item.Tipo == TipoLancamento.RECEITA)
+                            {
+                                css = "text-success";
+                            }
+                            else
+                            {
+                                css = "text-info";
+                            }
+                        }
+                        <span class="@(css)">
+                            @Html.DisplayFor(modelItem => item.Tipo)
+                        </span>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @await Html.PartialAsync("_LancamentoButton")
+</div>
+
+

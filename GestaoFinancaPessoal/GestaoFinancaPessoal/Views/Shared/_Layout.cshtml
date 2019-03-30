@@ -18,18 +18,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-
-
+    <div class="container" id="container">
         @RenderBody()
-
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - GestaoFinacaPessoal - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -58,6 +49,9 @@
         var salvo = '@ViewBag.Salvo';
         var excluido = '@ViewBag.Excluido';
         var alterado = '@ViewBag.Alterado';
+        var erro = '@ViewBag.Erro';
+
+        var semContainer = '@ViewBag.SemContainer';
 
         debugger;
         if (salvo == 'True') {
@@ -71,11 +65,20 @@
             swal("Excluido com sucesso!", "", "success");
         }
 
+        if (erro != '') {
+            swal("Erro!", decodeURIComponent(escape(erro)) , "error");
+        }
+
         if (alterado == 'True') {
             swal("Alterado com sucesso!", "", "success")
                 .then((value) => {
                     window.location.href = window.location.href + "/../../";
             });
+        }
+
+        if (semContainer == "Sim") {
+            $("#container").removeClass("container");
+            $("#container").addClass("container-fluid");
         }
     </script>
 

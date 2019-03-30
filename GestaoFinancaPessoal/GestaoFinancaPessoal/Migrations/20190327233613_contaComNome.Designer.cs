@@ -242,7 +242,7 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -250,7 +250,7 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("GestaoFinancaPessoal.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -258,7 +258,7 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("GestaoFinancaPessoal.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -266,12 +266,12 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
 
                     b.HasOne("GestaoFinancaPessoal.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -279,7 +279,7 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("GestaoFinancaPessoal.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

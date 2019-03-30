@@ -16,6 +16,13 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\20190327233438_contaComNome.cs" />
+    <Compile Remove="Migrations\20190328011745_categoria.cs" />
+    <Compile Remove="Migrations\20190329124748_Lancamento.cs" />
+    <Compile Remove="Migrations\20190329125944_Lancamento.cs" />
+    <Compile Remove="Migrations\20190330031958_transferenciaDestino.cs" />
+    <Compile Remove="Migrations\20190330032422_Lancamento.cs" />
+    <Compile Remove="Migrations\20190330040019_Transferencia.cs" />
+    <Compile Remove="Migrations\20190330134021_DeleteBehavior.cs" />
   </ItemGroup>
 
 

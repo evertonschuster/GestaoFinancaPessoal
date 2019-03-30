@@ -10,13 +10,13 @@ namespace GestaoFinancaPessoal.Models
     public class Conta : MasterModel
     {
         [DataMember]
-        [StringLength(100, ErrorMessage = "A {0} deve ter no máximo {1} caracteres.")]
+        [StringLength(256, ErrorMessage = "A {0} deve ter no máximo {1} caracteres.")]
         [Display(Name = "Descrição da Conta")]
         public string  Descricao { get; set; }
 
         [DataMember]
         [Required(ErrorMessage = "Informe o Nome da Conta.")]
-        [StringLength(100, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 3)]
+        [StringLength(256, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 3)]
         [Display(Name = "Nome da Conta")]
         public string Nome { get; set; }
 
@@ -26,7 +26,7 @@ namespace GestaoFinancaPessoal.Models
 
         [DataMember]
         [Required(ErrorMessage = "Informe o Tipo da Conta.")]
-        [StringLength(100, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 3)]
+        [StringLength(256, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 3)]
         [Display(Name = "Tipo da Conta")]
         public string Tipo { get; set; }
 

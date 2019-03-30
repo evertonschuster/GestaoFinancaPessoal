@@ -194,6 +194,7 @@ namespace GestaoFinancaPessoal
                                  .RequireAuthenticatedUser()
                                  .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
+                config.Filters.Add(new RequireHttpsAttribute());
             });
             #endregion
 

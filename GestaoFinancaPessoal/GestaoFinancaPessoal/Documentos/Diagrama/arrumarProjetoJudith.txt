@@ -1,4 +1,4 @@
-* tirar despesas e receitas do dashboar inicial.
+* tirar Lancamentos e receitas do dashboar inicial.
 
 * ultimos 3 meses, pode ficar na tela inicial.
 
@@ -6,7 +6,7 @@
 
 * saldo em cada conta, pode ser em varios bancos.
 
-* manter total de despesas e receitas pendentes, mas nao em forma de grafico.
+* manter total de Lancamentos e receitas pendentes, mas nao em forma de grafico.
 
 * registrar dada de pagamento e valor pago.
 

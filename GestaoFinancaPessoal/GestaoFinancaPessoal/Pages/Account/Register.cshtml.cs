@@ -43,7 +43,7 @@ namespace GestaoFinancaPessoal.Pages.Account
         public class InputModel
         {
             [Required(ErrorMessage ="Nome obrigatório")]
-            //[StringLength(100,ErrorMessage = "O {o} deve ter minimo {1} caracteres e {2} no maxímo", MinimumLength = 6)]
+            //[StringLength(256,ErrorMessage = "O {o} deve ter minimo {1} caracteres e {2} no maxímo", MinimumLength = 6)]
             [Display(Name = "Nome")]
             public string Username { get; set; }
 
@@ -53,7 +53,7 @@ namespace GestaoFinancaPessoal.Pages.Account
             public string Email { get; set; }
 
             [Required(ErrorMessage = "Senha obrigatório")]
-            [StringLength(100, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+            [StringLength(256, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Senha")]
             public string Password { get; set; }

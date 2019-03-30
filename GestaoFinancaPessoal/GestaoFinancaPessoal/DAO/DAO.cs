@@ -10,12 +10,12 @@ using GestaoFinancaPessoal.Data;
 
 namespace GestaoFinancaPessoal.DAO
 {
-    public class DAO<T> : IDAO, IDisposable where T : MasterModel, IDisposable 
+    public class DAO<T> : IDAO, IDisposable where T : MasterModel, IDisposable
     {
         protected readonly ApplicationDbContext Context;
         protected readonly DbSet<T> DbSet;
         protected readonly Session Session;
-        
+
         public DbContext GetContext()
         {
             return this.Context;
@@ -25,7 +25,7 @@ namespace GestaoFinancaPessoal.DAO
         {
             return this.Session;
         }
-        public DAO(ApplicationDbContext context, Session session )
+        public DAO(ApplicationDbContext context, Session session)
         {
             this.Context = context;
             this.DbSet = context.Set<T>();
@@ -48,19 +48,31 @@ namespace GestaoFinancaPessoal.DAO
             DbSet.Add(p);
         }
 
+        public virtual void Attach(T p)
+        {
+            DbSet.Attach(p);
+        }
+
         public virtual void Update(T p)
         {
             DbSet.Update(p);
         }
 
-        public virtual void Remove(T  p)
+        public virtual void Remove(T p)
         {
             DbSet.Remove(p);
         }
 
-        public virtual IList<T> List(T p)
+        public virtual IList<T> List(T p, Boolean mapeado = false)
         {
-            return DbSet.ToList();
+            if (mapeado)
+            {
+                return DbSet.ToList();//ele mapeia todos objetos 
+            }
+            else
+            {
+                return DbSet.AsNoTracking().ToList();//ele nao mapeia os objetos 
+            }
         }
 
         public virtual T getById(T p)
@@ -73,9 +85,16 @@ namespace GestaoFinancaPessoal.DAO
             return DbSet.Where(i => i.Id == id).FirstOrDefault();
         }
 
-        public virtual IList<T> List()
+        public virtual IList<T> List(Boolean mapeado = false)
         {
-            return DbSet.ToList();
+            if (mapeado)
+            {
+                return DbSet.ToList();//ele mapeia todos objetos 
+            }
+            else
+            {
+                return DbSet.AsNoTracking().ToList();//ele nao mapeia os objetos 
+            }
         }
 
         public virtual void SaveChanges()

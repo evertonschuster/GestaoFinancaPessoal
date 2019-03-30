@@ -37,10 +37,10 @@ namespace GestaoFinancaPessoal.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = "Informe o email")]
-            [EmailAddress(ErrorMessage="Email não é válido")]
-            [Display(Name = "Email")]
-            public string Email { get; set; }
+            [Required(ErrorMessage = "Informe o Usuario")]
+            //[EmailAddress(ErrorMessage="Email não é válido")]
+            [Display(Name = "Usuario")]
+            public string Username { get; set; }
 
             [Required(ErrorMessage = "Informe a senha")]
             [DataType(DataType.Password)]
@@ -74,7 +74,7 @@ namespace GestaoFinancaPessoal.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("Usuário logado.");

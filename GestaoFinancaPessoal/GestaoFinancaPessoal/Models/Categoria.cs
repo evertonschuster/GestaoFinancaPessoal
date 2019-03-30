@@ -10,8 +10,9 @@ namespace GestaoFinancaPessoal.Models
     public class Categoria : MasterModel
     {
         [DataMember]
-        [StringLength(100, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 3)]
+        [StringLength(256, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 3)]
         [Display(Name = "Categoria")]
+        [Required(ErrorMessage = "Informe o nome da Categoria")]
         public string Nome { get; set; }
 
         [DataMember]

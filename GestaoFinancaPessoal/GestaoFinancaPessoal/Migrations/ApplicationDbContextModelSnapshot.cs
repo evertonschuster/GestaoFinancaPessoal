@@ -78,8 +78,9 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<int?>("HierarquiaId");
 
-                    b.Property<string>("nome")
-                        .HasMaxLength(100);
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -99,17 +100,17 @@ namespace GestaoFinancaPessoal.Migrations
                     b.Property<DateTime>("DataAtualizacao");
 
                     b.Property<string>("Descricao")
-                        .HasMaxLength(100);
+                        .HasMaxLength(256);
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(100);
+                        .HasMaxLength(256);
 
                     b.Property<double>("Saldo");
 
                     b.Property<string>("Tipo")
                         .IsRequired()
-                        .HasMaxLength(100);
+                        .HasMaxLength(256);
 
                     b.HasKey("Id");
 
@@ -141,6 +142,75 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasKey("ContactId");
 
                     b.ToTable("Contact");
+                });
+
+            modelBuilder.Entity("GestaoFinancaPessoal.Models.Lancamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CategoriaId");
+
+                    b.Property<int?>("ContaDestionId");
+
+                    b.Property<int>("ContaId");
+
+                    b.Property<DateTime>("DataInclusao");
+
+                    b.Property<DateTime>("DataPagamento");
+
+                    b.Property<DateTime>("DataVencimento");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("IsAutomatico");
+
+                    b.Property<bool>("IsPago");
+
+                    b.Property<int?>("RecorrenteId");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired();
+
+                    b.Property<decimal>("Valor");
+
+                    b.Property<decimal>("ValorPago");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
+
+                    b.HasIndex("ContaDestionId");
+
+                    b.HasIndex("ContaId");
+
+                    b.HasIndex("RecorrenteId");
+
+                    b.ToTable("Lancamento");
+                });
+
+            modelBuilder.Entity("GestaoFinancaPessoal.Models.Recorrente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("ParcelaInicial");
+
+                    b.Property<decimal>("ParcelaTotal");
+
+                    b.Property<int>("Periodo");
+
+                    b.Property<int>("Quantidade");
+
+                    b.Property<decimal>("Valor");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Recorrente");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -258,6 +328,28 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("GestaoFinancaPessoal.Models.Categoria", "Hierarquia")
                         .WithMany()
                         .HasForeignKey("HierarquiaId");
+                });
+
+            modelBuilder.Entity("GestaoFinancaPessoal.Models.Lancamento", b =>
+                {
+                    b.HasOne("GestaoFinancaPessoal.Models.Categoria", "Categoria")
+                        .WithMany()
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("GestaoFinancaPessoal.Models.Conta", "ContaDestion")
+                        .WithMany()
+                        .HasForeignKey("ContaDestionId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GestaoFinancaPessoal.Models.Conta", "Conta")
+                        .WithMany()
+                        .HasForeignKey("ContaId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GestaoFinancaPessoal.Models.Recorrente", "Recorrente")
+                        .WithMany()
+                        .HasForeignKey("RecorrenteId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

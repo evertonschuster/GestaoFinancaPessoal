@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoFinancaPessoal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190328011745_categoria")]
-    partial class categoria
+    [Migration("20190328022758_Categoria")]
+    partial class Categoria
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -80,7 +80,8 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<int?>("HierarquiaId");
 
-                    b.Property<string>("nome")
+                    b.Property<string>("Nome")
+                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
@@ -267,7 +268,7 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -275,7 +276,7 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("GestaoFinancaPessoal.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -283,7 +284,7 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("GestaoFinancaPessoal.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -291,12 +292,12 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
 
                     b.HasOne("GestaoFinancaPessoal.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -304,7 +305,7 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasOne("GestaoFinancaPessoal.Data.ApplicationUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

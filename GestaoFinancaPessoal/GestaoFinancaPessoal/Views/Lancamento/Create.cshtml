@@ -1,0 +1,110 @@
+﻿@model GestaoFinancaPessoal.Models.Lancamento
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Criar Lancamento</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-3" Tipo>
+                    <label asp-for="Valor" class="control-label"></label>
+                    <input asp-for="Valor" class="form-control" />
+                    <span asp-validation-for="Valor" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3" Tipo>
+                    <label asp-for="ValorPago" class="control-label"></label>
+                    <input asp-for="ValorPago" class="form-control" />
+                    <span asp-validation-for="ValorPago" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3" Tipo>
+                    <label asp-for="Tipo" class="control-label"></label>
+                    <select asp-for="Tipo" class="form-control" onchange="LancamentoChange(this)">
+                        <option value="@TipoLancamento.DESPESA">Despesa</option>
+                        <option value="@TipoLancamento.RECEITA">Receita</option>
+                        <option value="@TipoLancamento.TRANSFERENCIA">Transferencia</option>
+                    </select>
+                    <span asp-validation-for="Tipo" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3" Conta>
+                    <label asp-for="Conta" class="control-label"></label>
+                    <select class="form-control single-select" name="Conta.Id" asp-for="@Model.Conta.Id" asp-items="@(new SelectList(@ViewBag.Conta, "Id", "Nome"))"></select>
+                    <span asp-validation-for="Conta" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3" Conta ContaDestino>
+                    <label asp-for="ContaDestion" class="control-label"></label>
+                    <select class="form-control single-select" name="ContaDestion.Id" asp-for="@Model.ContaDestion.Id" asp-items="@(new SelectList(@ViewBag.Conta, "Id", "Nome"))"></select>
+                    <span asp-validation-for="ContaDestion.Id" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label asp-for="DataPagamento" class="control-label"></label>
+                    <input asp-for="DataPagamento" class="form-control" />
+                    <span asp-validation-for="DataPagamento" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="DataVencimento" class="control-label"></label>
+                    <input asp-for="DataVencimento" class="form-control" />
+                    <span asp-validation-for="DataVencimento" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="Categoria" class="control-label"></label>
+                    <select class="form-control single-select" name="Categoria.Id" asp-for="@Model.Categoria.Id" asp-items="@(new SelectList(@ViewBag.Categoria, "Id", "Nome"))"></select>
+                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsPago" /> @Html.DisplayNameFor(model => model.IsPago)
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="IsAutomatico" /> @Html.DisplayNameFor(model => model.IsAutomatico)
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-2">
+                    <a asp-action="Index" asp-controller="Lancamento" class="btn btn-info">Voltar</a>
+                </div>
+                <div class="form-group col-md-2">
+                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script src="~/js/Lancamento/Create.js"></script>
+
+    <script>
+        LancamentoChange(this);
+    </script>
+}

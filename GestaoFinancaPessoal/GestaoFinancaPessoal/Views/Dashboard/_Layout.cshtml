@@ -20,18 +20,18 @@
     <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
 
     <!-- Styles -->
-    <link href="assets/css/lib/weather-icons.css" rel="stylesheet" />
-    <link href="assets/css/lib/owl.carousel.min.css" rel="stylesheet" />
-    <link href="assets/css/lib/owl.theme.default.min.css" rel="stylesheet" />
-    <link href="assets/css/lib/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/lib/themify-icons.css" rel="stylesheet">
-    <link href="assets/css/lib/menubar/sidebar.css" rel="stylesheet">
-    <link href="assets/css/lib/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/css/lib/weather-icons.css" rel="stylesheet" />
+    <link href="~/assets/css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/assets/css/lib/owl.theme.default.min.css" rel="stylesheet" />
+    <link href="~/assets/css/lib/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/css/lib/themify-icons.css" rel="stylesheet">
+    <link href="~/assets/css/lib/menubar/sidebar.css" rel="stylesheet">
+    <link href="~/assets/css/lib/bootstrap.min.css" rel="stylesheet">
 
 
 
-    <link href="assets/css/lib/helper.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="~/assets/css/lib/helper.css" rel="stylesheet">
+    <link href="~/assets/css/style.css" rel="stylesheet">
 
     @*<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>*@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -44,58 +44,13 @@
         @RenderBody()
     </div>
 
-    <div class="row">
-        <div class="fixed-bottom mb-5 mr-5">
-
-            <div class="float-right float-sm-right  col-12  col-md-1">
-                <div class="btn btn-primary-outline float-right float-sm-right ">
-                    <div class="stat-widget-one">
-                        <div class="stat-icon dib">
-                            <i class="material-icons color-success border-success">trending_up</i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class=" float-right col-12  col-md-1">
-                <button class="btn btn-primary-outline float-right float-sm-right " style="background-color:transparent" type="submit">
-                    <div class="stat-widget-one">
-                        <div class="stat-icon dib">
-                            <i class="material-icons color-danger border-danger">trending_down</i>
-                        </div>
-                    </div>
-                </button>
-            </div>
-
-            <div class=" float-right col-12  col-md-1">
-                <button class="btn btn-primary-outline float-right float-sm-right " style="background-color:transparent" type="submit">
-                    <div class="stat-widget-one">
-                        <div class="stat-icon dib">
-                            <i class="material-icons color-info border-info">autorenew</i>
-                        </div>
-                    </div>
-                </button>
-            </div>
-
-            <div class=" float-right col-12  col-md-1">
-                <button class="btn btn-primary-outline float-right float-sm-right " style="background-color:transparent" type="submit">
-                    <div class="stat-widget-one">
-                        <div class="stat-icon dib">
-                            <i class="material-icons color-primary border-primary">add</i>
-                        </div>
-                    </div>
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     <!-- nano scroller -->
-    <script src="assets/js/lib/menubar/sidebar.js"></script>
-    <script src="assets/js/lib/preloader/pace.min.js"></script>
+    <script src="~/assets/js/lib/menubar/sidebar.js"></script>
+    <script src="~/assets/js/lib/preloader/pace.min.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

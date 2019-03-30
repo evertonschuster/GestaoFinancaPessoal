@@ -1,0 +1,48 @@
+﻿<div class="row">
+    <div class="fixed-bottom mb-5 mr-5 ml-5">
+        <div class=" float-right col-12  col-md-1" LancamentoDIV ondblclick="MoverBotao()" onclick="ExibirOcultarAtalhos()">
+            <a class="btn btn-primary-outline float-right float-sm-right">
+                <div class="stat-widget-one">
+                    <div class="stat-icon dib">
+                        <i class="material-icons color-primary border-primary" IconeBtn>add</i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class=" float-right col-12  col-md-1" Lancamento style="display: none;">
+            <a asp-action="Receita" asp-controller="Lancamento" class="btn btn-primary-outline float-right float-sm-right ">
+                <div class="stat-widget-one">
+                    <div class="stat-icon dib">
+                        <i class="material-icons color-success border-success">trending_up</i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class=" float-right col-12  col-md-1" Lancamento style="display: none;">
+            <a asp-action="Create" asp-controller="Lancamento" class="btn btn-primary-outline float-right float-sm-right ">
+                <div class="stat-widget-one">
+                    <div class="stat-icon dib">
+                        <i class="material-icons color-danger border-danger">trending_down</i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class=" float-right col-12  col-md-1" Lancamento style="display: none;">
+            <a asp-action="Transferencia" asp-controller="Lancamento" class="btn btn-primary-outline float-right float-sm-right ">
+                <div class="stat-widget-one">
+                    <div class="stat-icon dib">
+                        <i class="material-icons color-info border-info">autorenew</i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="~/js/Lancamento/Index.js">
+</script>

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoFinancaPessoal.Migrations
 {
-    public partial class categoria : Migration
+    public partial class Categoria : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,7 @@ namespace GestaoFinancaPessoal.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    nome = table.Column<string>(maxLength: 100, nullable: true),
+                    Nome = table.Column<string>(maxLength: 100, nullable: false),
                     HierarquiaId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
