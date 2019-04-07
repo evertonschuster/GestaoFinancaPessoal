@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Create">
+        <form asp-controller="Categoria" asp-action="Create">
 
             <div class="row">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -24,12 +24,12 @@
                     <span asp-validation-for="Nome" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-6">
-                        <label asp-for="Hierarquia" class="control-label"></label>
-                        <select class="form-control single-select" name="Hierarquia.Id" asp-for="@Model.Hierarquia.Id" asp-items="@(new SelectList(@ViewBag.Categoria,"Id", "Nome"))">
-                            <option selected value="0" class="badge-info">[Categoria Master]</option>
-                        </select>
-                        <span asp-validation-for="Hierarquia" class="text-danger"></span>
-                    </div>
+                    <label asp-for="Hierarquia" class="control-label"></label>
+                    <select class="form-control single-select" name="Hierarquia.Id" asp-for="@Model.Hierarquia.Id" asp-items="@(new SelectList(@ViewBag.Categoria,"Id", "Nome"))">
+                        <option selected value="0" class="badge-info">[Categoria Master]</option>
+                    </select>
+                    <span asp-validation-for="Hierarquia" class="text-danger"></span>
+                </div>
             </div>
 
             <div class="row">
@@ -47,4 +47,6 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
 }

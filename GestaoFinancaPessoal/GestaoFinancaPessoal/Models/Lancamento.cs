@@ -58,7 +58,7 @@ namespace GestaoFinancaPessoal.Models
         public DateTime DataVencimento { get; set; }
 
         [DataMember]
-        [Display(Name = "Categoria")]
+        [Display(Name = "Subcategoria")]
         [Required(ErrorMessage = "Informe a categoria.")]
         public Categoria Categoria { get; set; }
 

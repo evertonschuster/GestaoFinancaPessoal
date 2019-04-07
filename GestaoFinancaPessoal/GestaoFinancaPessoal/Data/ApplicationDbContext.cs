@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using GestaoFinancaPessoal.Models;
 using System;
 using System.Linq;
+using GestaoFinancaPessoal.ViewModels;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GestaoFinancaPessoal.Data
 {
@@ -29,6 +31,10 @@ namespace GestaoFinancaPessoal.Data
 
             builder.Entity<Lancamento>().HasOne(l => l.ContaDestion).WithMany().OnDelete(DeleteBehavior.Restrict);
             builder.Entity<Lancamento>().HasOne(l => l.Conta).WithMany().OnDelete(DeleteBehavior.Restrict);
+
+            //builder.Entity<Categoria>().Ignore("HasLancamento");
+            //builder.Entity<CategoriaViewModel>().Ignore("HasLancamento");
+
         }
 
         public DbSet<Contact> Contact { get; set; }

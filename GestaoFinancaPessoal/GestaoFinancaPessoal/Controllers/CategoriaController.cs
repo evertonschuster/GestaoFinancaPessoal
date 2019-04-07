@@ -38,7 +38,7 @@ namespace GestaoFinancaPessoal.Controllers
         public ActionResult Create()
         {
             var categoriaDAO = new CategoriaDAO(this.DAO);
-            ViewBag.Categoria = categoriaDAO.List();
+            ViewBag.Categoria = categoriaDAO.ListCategoria();
             return View(new Categoria());
         }
 
@@ -49,7 +49,7 @@ namespace GestaoFinancaPessoal.Controllers
         {
             var categoriaDAO = new CategoriaDAO(this.DAO);
 
-            ViewBag.Categoria = categoriaDAO.List();
+            ViewBag.Categoria = categoriaDAO.ListCategoria();
             ViewBag.Salvo = false;
             ModelState.Remove("Hierarquia.Nome");
             try
@@ -90,7 +90,7 @@ namespace GestaoFinancaPessoal.Controllers
         public ActionResult Edit(int id)
         {
             var categoriaDAO = new CategoriaDAO(this.DAO);
-            ViewBag.Categoria = categoriaDAO.List();
+            ViewBag.Categoria = categoriaDAO.ListSubCategoria();
 
             var categoria = categoriaDAO.getById(id);
             return View(categoria);
@@ -103,7 +103,7 @@ namespace GestaoFinancaPessoal.Controllers
         {
             var categoriaDAO = new CategoriaDAO(this.DAO);
 
-            ViewBag.Categoria = categoriaDAO.List();
+            ViewBag.Categoria = categoriaDAO.ListSubCategoria();
             ViewBag.Alterado = false;
             ModelState.Remove("Hierarquia.Nome");
             try
@@ -153,7 +153,7 @@ namespace GestaoFinancaPessoal.Controllers
                 categoriaDAO.SaveChanges();
                 ViewBag.Excluido = true;
 
-                return View("index", categoriaDAO.List());
+                return View("index", categoriaDAO.List(true));
 
             }
             catch (ModelErrorException e)
@@ -161,6 +161,35 @@ namespace GestaoFinancaPessoal.Controllers
                 this.AddModelError(e);
             }
             catch(DbUpdateException e)
+            {
+                ViewBag.Erro = "N&atilde;o foi possivel deletar está categoria.";
+                return View("index", categoriaDAO.List());
+            }
+            return View();
+        }
+
+        // GET: Categoria/Delete/5
+        public ActionResult Suspender(int id)
+        {
+            var categoriaDAO = new CategoriaDAO(this.DAO);
+            try
+            {
+                ViewBag.Suspenso = false;
+
+                Categoria categoria = categoriaDAO.getById(id);
+
+                categoria.IsSuspenco = true;
+                categoriaDAO.SaveChanges();
+                ViewBag.Suspenso = true;
+
+                return View("index", categoriaDAO.List(true));
+
+            }
+            catch (ModelErrorException e)
+            {
+                this.AddModelError(e);
+            }
+            catch (DbUpdateException e)
             {
                 ViewBag.Erro = "N&atilde;o foi possivel deletar está categoria.";
                 return View("index", categoriaDAO.List());
@@ -183,6 +212,14 @@ namespace GestaoFinancaPessoal.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IList<Categoria> ListCategoria()
+        {
+            var categoriaDao = new CategoriaDAO(this.DAO);
+            return categoriaDao.ListSubCategoria();
         }
     }
 }

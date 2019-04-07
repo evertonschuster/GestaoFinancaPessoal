@@ -60,7 +60,7 @@ namespace GestaoFinancaPessoal.Controllers
         {
             var categoriaDAO = new CategoriaDAO(this.DAO);
             var contaDAO = new ContaDAO(this.DAO);
-            ViewBag.Categoria = categoriaDAO.List();
+            ViewBag.Categoria = categoriaDAO.ListSubCategoria();
             ViewBag.Conta = contaDAO.List();
 
             return View();
@@ -76,7 +76,7 @@ namespace GestaoFinancaPessoal.Controllers
                 var lancamentoDAO = new LancamentoDAO(this.DAO);
                 var categoriaDAO = new CategoriaDAO(this.DAO);
                 var contaDAO = new ContaDAO(this.DAO);
-                ViewBag.Categoria = categoriaDAO.List();
+                ViewBag.Categoria = categoriaDAO.ListSubCategoria();
                 ViewBag.Conta = contaDAO.List();
 
                 ModelState.Remove("Categoria.Nome");
@@ -147,8 +147,8 @@ namespace GestaoFinancaPessoal.Controllers
             var categoriaDAO = new CategoriaDAO(this.DAO);
             var contaDAO = new ContaDAO(this.DAO);
             var lancamentoDAO = new LancamentoDAO(this.DAO);
-            ViewBag.Categoria = categoriaDAO.List();
-            ViewBag.Conta = contaDAO.List();
+            ViewBag.Categoria = categoriaDAO.ListSubCategoria();
+            ViewBag.Conta = contaDAO.List(comSuspensa: true);
 
             var lancamento = lancamentoDAO.getById(id);
             return View(lancamento);
@@ -164,7 +164,7 @@ namespace GestaoFinancaPessoal.Controllers
                 var lancamentoDAO = new LancamentoDAO(this.DAO);
                 var categoriaDAO = new CategoriaDAO(this.DAO);
                 var contaDAO = new ContaDAO(this.DAO);
-                ViewBag.Categoria = categoriaDAO.List();
+                ViewBag.Categoria = categoriaDAO.ListSubCategoria();
                 ViewBag.Conta = contaDAO.List();
 
                 ModelState.Remove("Categoria.Nome");

@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Create">
+        <form asp-action="Create" id="Create">
             <div class="row">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -27,7 +27,9 @@
                     <span asp-validation-for="ValorPago" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-3" Tipo>
-                    <label asp-for="Tipo" class="control-label"></label>
+                    <a onclick="CadastrarConta()">
+                        <label asp-for="Tipo" class="control-label"></label>
+                    </a>
                     <select asp-for="Tipo" class="form-control" onchange="LancamentoChange(this)">
                         <option value="@TipoLancamento.DESPESA">Despesa</option>
                         <option value="@TipoLancamento.RECEITA">Receita</option>
@@ -36,12 +38,16 @@
                     <span asp-validation-for="Tipo" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-3" Conta>
-                    <label asp-for="Conta" class="control-label"></label>
+                    <a onclick="CadastrarConta()">
+                        <label asp-for="Conta" class="control-label"></label><i style="font-size: 13px;" class="material-icons">add</i>
+                    </a>
                     <select class="form-control single-select" name="Conta.Id" asp-for="@Model.Conta.Id" asp-items="@(new SelectList(@ViewBag.Conta, "Id", "Nome"))"></select>
                     <span asp-validation-for="Conta" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-3" Conta ContaDestino>
-                    <label asp-for="ContaDestion" class="control-label"></label>
+                    <a onclick="CadastrarConta()">
+                        <label asp-for="ContaDestion" class="control-label"></label><i style="font-size: 13px;" class="material-icons">add</i>
+                    </a>
                     <select class="form-control single-select" name="ContaDestion.Id" asp-for="@Model.ContaDestion.Id" asp-items="@(new SelectList(@ViewBag.Conta, "Id", "Nome"))"></select>
                     <span asp-validation-for="ContaDestion.Id" class="text-danger"></span>
                 </div>
@@ -65,7 +71,9 @@
                     <span asp-validation-for="DataVencimento" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-4">
-                    <label asp-for="Categoria" class="control-label"></label>
+                    <a onclick="CadastrarCategoria()">
+                        <label asp-for="Categoria" class="control-label"></label><i style="font-size: 13px;" class="material-icons">add</i>
+                    </a>
                     <select class="form-control single-select" name="Categoria.Id" asp-for="@Model.Categoria.Id" asp-items="@(new SelectList(@ViewBag.Categoria, "Id", "Nome"))"></select>
                     <span asp-validation-for="Categoria" class="text-danger"></span>
                 </div>
@@ -101,10 +109,12 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ModalCadastro");}
 
     <script src="~/js/Lancamento/Create.js"></script>
 
     <script>
         LancamentoChange(this);
     </script>
+
 }

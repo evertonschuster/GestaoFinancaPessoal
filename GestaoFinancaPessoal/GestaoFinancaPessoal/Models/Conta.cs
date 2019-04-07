@@ -12,7 +12,7 @@ namespace GestaoFinancaPessoal.Models
         [DataMember]
         [StringLength(256, ErrorMessage = "A {0} deve ter no máximo {1} caracteres.")]
         [Display(Name = "Descrição da Conta")]
-        public string  Descricao { get; set; }
+        public string Descricao { get; set; }
 
         [DataMember]
         [Required(ErrorMessage = "Informe o Nome da Conta.")]
@@ -35,6 +35,8 @@ namespace GestaoFinancaPessoal.Models
         public string Banco { get; set; }
 
         public DateTime DataAtualizacao { get; set; }
+
+        public Boolean IsSuspensa { get; set; }
 
     }
 }

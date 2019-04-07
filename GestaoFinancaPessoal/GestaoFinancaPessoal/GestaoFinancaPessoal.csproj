@@ -23,6 +23,10 @@
     <Compile Remove="Migrations\20190330032422_Lancamento.cs" />
     <Compile Remove="Migrations\20190330040019_Transferencia.cs" />
     <Compile Remove="Migrations\20190330134021_DeleteBehavior.cs" />
+    <Compile Remove="Migrations\20190406171838_CategoriaViewModel.cs" />
+    <Compile Remove="Migrations\20190406173021_CategoriaViewModel.cs" />
+    <Compile Remove="Migrations\20190406175255_CategoriaViewModel1.cs" />
+    <Compile Remove="Migrations\20190406180511_CategoriaViewModel1.cs" />
   </ItemGroup>
 
 

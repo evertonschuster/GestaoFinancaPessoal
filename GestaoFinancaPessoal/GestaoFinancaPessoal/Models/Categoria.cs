@@ -16,7 +16,10 @@ namespace GestaoFinancaPessoal.Models
         public string Nome { get; set; }
 
         [DataMember]
-        [Display(Name = "Hierarquia da categoria")]
+        [Display(Name = "Categoria")]
         public Categoria Hierarquia { get; set; }
+
+        [DataMember]
+        public Boolean IsSuspenco { get; set; }
     }
 }

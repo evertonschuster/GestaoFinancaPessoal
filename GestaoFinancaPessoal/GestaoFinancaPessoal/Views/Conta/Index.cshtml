@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GestaoFinancaPessoal.Models.Conta>
+﻿@model IEnumerable<GestaoFinancaPessoal.ViewModels.ContaViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -50,7 +50,17 @@
                     <br />
                     <div class="text-center">
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Editar</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
+                        @{
+                            if (item.HasLancamento)
+                            {
+                                <a asp-action="Suspender" asp-route-id="@item.Id" class="btn btn-warning">Suspender</a>
+                            }
+                            else
+                            {
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
+                            }
+                        }
+
                     </div>
                 </div>
             </div>

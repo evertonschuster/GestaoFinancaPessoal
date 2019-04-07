@@ -49,11 +49,11 @@
         var salvo = '@ViewBag.Salvo';
         var excluido = '@ViewBag.Excluido';
         var alterado = '@ViewBag.Alterado';
+        var suspenso = '@ViewBag.Suspenso';
         var erro = '@ViewBag.Erro';
 
         var semContainer = '@ViewBag.SemContainer';
-
-        debugger;
+        
         if (salvo == 'True') {
             swal("Salvo com sucesso!", "", "success")
                 .then((value) => {
@@ -63,6 +63,10 @@
 
         if (excluido == 'True') {
             swal("Excluido com sucesso!", "", "success");
+        }
+
+        if (suspenso == 'True') {
+            swal("Suspensa com sucesso!", "", "success");
         }
 
         if (erro != '') {

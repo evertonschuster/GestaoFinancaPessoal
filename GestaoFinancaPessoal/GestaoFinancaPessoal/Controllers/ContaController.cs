@@ -5,6 +5,7 @@ using GestaoFinancaPessoal.Uteis.Exception.ModelErrorException;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace GestaoFinancaPessoal.Controllers
 {
@@ -18,7 +19,7 @@ namespace GestaoFinancaPessoal.Controllers
         public ActionResult Index()
         {
             var contaDAO = new ContaDAO(this.DAO);
-            return View(contaDAO.List());
+            return View(contaDAO.ListContaView());
         }
 
         // GET: Conta/Details/5
@@ -122,7 +123,29 @@ namespace GestaoFinancaPessoal.Controllers
                 contaDAO.Remove(conta);
                 contaDAO.SaveChanges();
                 ViewBag.Excluido = true;
-                return View("index", contaDAO.List());
+                return View("index", contaDAO.ListContaView());
+
+            }
+            catch (ModelErrorException e)
+            {
+                this.AddModelError(e);
+            }
+            return View();
+        }
+
+        public ActionResult Suspender(int id)
+        {
+            try
+            {
+                ViewBag.Suspenso = false;
+
+                var contaDAO = new ContaDAO(this.DAO);
+                Conta conta = contaDAO.getById(id);
+                conta.IsSuspensa = true;
+                contaDAO.Update(conta);
+                contaDAO.SaveChanges();
+                ViewBag.Suspenso = true;
+                return View("index", contaDAO.ListContaView());
 
             }
             catch (ModelErrorException e)
@@ -147,6 +170,14 @@ namespace GestaoFinancaPessoal.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IList<Conta> ListConta()
+        {
+            var contaDAO = new ContaDAO(this.DAO);
+            return contaDAO.List();
         }
     }
 }
