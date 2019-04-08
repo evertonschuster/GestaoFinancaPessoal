@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoFinancaPessoal.Migrations
 {
-    public partial class teste : Migration
+    public partial class primeiraEntrega : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -48,6 +48,46 @@ namespace GestaoFinancaPessoal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Categoria",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Nome = table.Column<string>(maxLength: 256, nullable: false),
+                    HierarquiaId = table.Column<int>(nullable: true),
+                    IsSuspenco = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categoria", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Categoria_Categoria_HierarquiaId",
+                        column: x => x.HierarquiaId,
+                        principalTable: "Categoria",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Conta",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Descricao = table.Column<string>(maxLength: 256, nullable: true),
+                    Nome = table.Column<string>(maxLength: 256, nullable: false),
+                    Saldo = table.Column<double>(nullable: false),
+                    Tipo = table.Column<string>(maxLength: 256, nullable: false),
+                    Banco = table.Column<string>(nullable: true),
+                    DataAtualizacao = table.Column<DateTime>(nullable: false),
+                    IsSuspensa = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Conta", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Contact",
                 columns: table => new
                 {
@@ -65,6 +105,23 @@ namespace GestaoFinancaPessoal.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contact", x => x.ContactId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Recorrente",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Quantidade = table.Column<int>(nullable: false),
+                    Periodo = table.Column<int>(nullable: false),
+                    ParcelaInicial = table.Column<decimal>(nullable: false),
+                    ParcelaTotal = table.Column<decimal>(nullable: false),
+                    Valor = table.Column<decimal>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recorrente", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -173,6 +230,55 @@ namespace GestaoFinancaPessoal.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Lancamento",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ContaId = table.Column<int>(nullable: false),
+                    Valor = table.Column<decimal>(nullable: false),
+                    ValorPago = table.Column<decimal>(nullable: false),
+                    Descricao = table.Column<string>(maxLength: 256, nullable: false),
+                    IsPago = table.Column<bool>(nullable: false),
+                    IsAutomatico = table.Column<bool>(nullable: false),
+                    DataPagamento = table.Column<DateTime>(nullable: false),
+                    DataVencimento = table.Column<DateTime>(nullable: false),
+                    CategoriaId = table.Column<int>(nullable: false),
+                    Tipo = table.Column<string>(nullable: false),
+                    RecorrenteId = table.Column<int>(nullable: true),
+                    DataInclusao = table.Column<DateTime>(nullable: false),
+                    ContaDestionId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lancamento", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lancamento_Categoria_CategoriaId",
+                        column: x => x.CategoriaId,
+                        principalTable: "Categoria",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Lancamento_Conta_ContaDestionId",
+                        column: x => x.ContaDestionId,
+                        principalTable: "Conta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Lancamento_Conta_ContaId",
+                        column: x => x.ContaId,
+                        principalTable: "Conta",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Lancamento_Recorrente_RecorrenteId",
+                        column: x => x.RecorrenteId,
+                        principalTable: "Recorrente",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -211,6 +317,31 @@ namespace GestaoFinancaPessoal.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Categoria_HierarquiaId",
+                table: "Categoria",
+                column: "HierarquiaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lancamento_CategoriaId",
+                table: "Lancamento",
+                column: "CategoriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lancamento_ContaDestionId",
+                table: "Lancamento",
+                column: "ContaDestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lancamento_ContaId",
+                table: "Lancamento",
+                column: "ContaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lancamento_RecorrenteId",
+                table: "Lancamento",
+                column: "RecorrenteId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -234,10 +365,22 @@ namespace GestaoFinancaPessoal.Migrations
                 name: "Contact");
 
             migrationBuilder.DropTable(
+                name: "Lancamento");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Categoria");
+
+            migrationBuilder.DropTable(
+                name: "Conta");
+
+            migrationBuilder.DropTable(
+                name: "Recorrente");
         }
     }
 }

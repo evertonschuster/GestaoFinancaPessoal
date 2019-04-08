@@ -40,6 +40,31 @@ CREATE TABLE [AspNetUsers] (
 
 GO
 
+CREATE TABLE [Categoria] (
+    [Id] int NOT NULL IDENTITY,
+    [Nome] nvarchar(256) NOT NULL,
+    [HierarquiaId] int NULL,
+    [IsSuspenco] bit NOT NULL,
+    CONSTRAINT [PK_Categoria] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Categoria_Categoria_HierarquiaId] FOREIGN KEY ([HierarquiaId]) REFERENCES [Categoria] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
+CREATE TABLE [Conta] (
+    [Id] int NOT NULL IDENTITY,
+    [Descricao] nvarchar(256) NULL,
+    [Nome] nvarchar(256) NOT NULL,
+    [Saldo] float NOT NULL,
+    [Tipo] nvarchar(256) NOT NULL,
+    [Banco] nvarchar(max) NULL,
+    [DataAtualizacao] datetime2 NOT NULL,
+    [IsSuspensa] bit NOT NULL,
+    CONSTRAINT [PK_Conta] PRIMARY KEY ([Id])
+);
+
+GO
+
 CREATE TABLE [Contact] (
     [ContactId] int NOT NULL IDENTITY,
     [OwnerID] nvarchar(max) NULL,
@@ -51,6 +76,18 @@ CREATE TABLE [Contact] (
     [Email] nvarchar(max) NULL,
     [Status] int NOT NULL,
     CONSTRAINT [PK_Contact] PRIMARY KEY ([ContactId])
+);
+
+GO
+
+CREATE TABLE [Recorrente] (
+    [Id] int NOT NULL IDENTITY,
+    [Quantidade] int NOT NULL,
+    [Periodo] int NOT NULL,
+    [ParcelaInicial] decimal(18,2) NOT NULL,
+    [ParcelaTotal] decimal(18,2) NOT NULL,
+    [Valor] decimal(18,2) NOT NULL,
+    CONSTRAINT [PK_Recorrente] PRIMARY KEY ([Id])
 );
 
 GO
@@ -109,6 +146,30 @@ CREATE TABLE [AspNetUserTokens] (
 
 GO
 
+CREATE TABLE [Lancamento] (
+    [Id] int NOT NULL IDENTITY,
+    [ContaId] int NOT NULL,
+    [Valor] decimal(18,2) NOT NULL,
+    [ValorPago] decimal(18,2) NOT NULL,
+    [Descricao] nvarchar(256) NOT NULL,
+    [IsPago] bit NOT NULL,
+    [IsAutomatico] bit NOT NULL,
+    [DataPagamento] datetime2 NOT NULL,
+    [DataVencimento] datetime2 NOT NULL,
+    [CategoriaId] int NOT NULL,
+    [Tipo] nvarchar(max) NOT NULL,
+    [RecorrenteId] int NULL,
+    [DataInclusao] datetime2 NOT NULL,
+    [ContaDestionId] int NULL,
+    CONSTRAINT [PK_Lancamento] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_Lancamento_Categoria_CategoriaId] FOREIGN KEY ([CategoriaId]) REFERENCES [Categoria] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_Lancamento_Conta_ContaDestionId] FOREIGN KEY ([ContaDestionId]) REFERENCES [Conta] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Lancamento_Conta_ContaId] FOREIGN KEY ([ContaId]) REFERENCES [Conta] ([Id]) ON DELETE NO ACTION,
+    CONSTRAINT [FK_Lancamento_Recorrente_RecorrenteId] FOREIGN KEY ([RecorrenteId]) REFERENCES [Recorrente] ([Id]) ON DELETE NO ACTION
+);
+
+GO
+
 CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
 
 GO
@@ -137,139 +198,7 @@ CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHER
 
 GO
 
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190325012653_teste', N'2.2.3-servicing-35854');
-
-GO
-
-CREATE TABLE [Conta] (
-    [Id] int NOT NULL IDENTITY,
-    [Descricao] nvarchar(100) NOT NULL,
-    [Saldo] float NOT NULL,
-    [Tipo] nvarchar(100) NOT NULL,
-    [Banco] nvarchar(max) NULL,
-    [DataAtualizacao] datetime2 NOT NULL,
-    CONSTRAINT [PK_Conta] PRIMARY KEY ([Id])
-);
-
-GO
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190326003647_Conta', N'2.2.3-servicing-35854');
-
-GO
-
-DECLARE @var0 sysname;
-SELECT @var0 = [d].[name]
-FROM [sys].[default_constraints] [d]
-INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
-WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Conta]') AND [c].[name] = N'Descricao');
-IF @var0 IS NOT NULL EXEC(N'ALTER TABLE [Conta] DROP CONSTRAINT [' + @var0 + '];');
-ALTER TABLE [Conta] ALTER COLUMN [Descricao] nvarchar(100) NULL;
-
-GO
-
-ALTER TABLE [Conta] ADD [Nome] nvarchar(100) NOT NULL DEFAULT N'';
-
-GO
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190327233613_contaComNome', N'2.2.3-servicing-35854');
-
-GO
-
-CREATE TABLE [Categoria] (
-    [Id] int NOT NULL IDENTITY,
-    [Nome] nvarchar(100) NOT NULL,
-    [HierarquiaId] int NULL,
-    CONSTRAINT [PK_Categoria] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Categoria_Categoria_HierarquiaId] FOREIGN KEY ([HierarquiaId]) REFERENCES [Categoria] ([Id]) ON DELETE NO ACTION
-);
-
-GO
-
 CREATE INDEX [IX_Categoria_HierarquiaId] ON [Categoria] ([HierarquiaId]);
-
-GO
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190328022758_Categoria', N'2.2.3-servicing-35854');
-
-GO
-
-DECLARE @var1 sysname;
-SELECT @var1 = [d].[name]
-FROM [sys].[default_constraints] [d]
-INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
-WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Conta]') AND [c].[name] = N'Tipo');
-IF @var1 IS NOT NULL EXEC(N'ALTER TABLE [Conta] DROP CONSTRAINT [' + @var1 + '];');
-ALTER TABLE [Conta] ALTER COLUMN [Tipo] nvarchar(256) NOT NULL;
-
-GO
-
-DECLARE @var2 sysname;
-SELECT @var2 = [d].[name]
-FROM [sys].[default_constraints] [d]
-INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
-WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Conta]') AND [c].[name] = N'Nome');
-IF @var2 IS NOT NULL EXEC(N'ALTER TABLE [Conta] DROP CONSTRAINT [' + @var2 + '];');
-ALTER TABLE [Conta] ALTER COLUMN [Nome] nvarchar(256) NOT NULL;
-
-GO
-
-DECLARE @var3 sysname;
-SELECT @var3 = [d].[name]
-FROM [sys].[default_constraints] [d]
-INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
-WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Conta]') AND [c].[name] = N'Descricao');
-IF @var3 IS NOT NULL EXEC(N'ALTER TABLE [Conta] DROP CONSTRAINT [' + @var3 + '];');
-ALTER TABLE [Conta] ALTER COLUMN [Descricao] nvarchar(256) NULL;
-
-GO
-
-DECLARE @var4 sysname;
-SELECT @var4 = [d].[name]
-FROM [sys].[default_constraints] [d]
-INNER JOIN [sys].[columns] [c] ON [d].[parent_column_id] = [c].[column_id] AND [d].[parent_object_id] = [c].[object_id]
-WHERE ([d].[parent_object_id] = OBJECT_ID(N'[Categoria]') AND [c].[name] = N'Nome');
-IF @var4 IS NOT NULL EXEC(N'ALTER TABLE [Categoria] DROP CONSTRAINT [' + @var4 + '];');
-ALTER TABLE [Categoria] ALTER COLUMN [Nome] nvarchar(256) NOT NULL;
-
-GO
-
-CREATE TABLE [Recorrente] (
-    [Id] int NOT NULL IDENTITY,
-    [Quantidade] int NOT NULL,
-    [Periodo] int NOT NULL,
-    [ParcelaInicial] decimal(18,2) NOT NULL,
-    [ParcelaTotal] decimal(18,2) NOT NULL,
-    [Valor] decimal(18,2) NOT NULL,
-    CONSTRAINT [PK_Recorrente] PRIMARY KEY ([Id])
-);
-
-GO
-
-CREATE TABLE [Lancamento] (
-    [Id] int NOT NULL IDENTITY,
-    [ContaId] int NOT NULL,
-    [Valor] decimal(18,2) NOT NULL,
-    [ValorPago] decimal(18,2) NOT NULL,
-    [Descricao] nvarchar(256) NOT NULL,
-    [IsPago] bit NOT NULL,
-    [IsAutomatico] bit NOT NULL,
-    [DataPagamento] datetime2 NOT NULL,
-    [DataVencimento] datetime2 NOT NULL,
-    [CategoriaId] int NOT NULL,
-    [Tipo] nvarchar(max) NOT NULL,
-    [RecorrenteId] int NULL,
-    [DataInclusao] datetime2 NOT NULL,
-    [ContaDestionId] int NULL,
-    CONSTRAINT [PK_Lancamento] PRIMARY KEY ([Id]),
-    CONSTRAINT [FK_Lancamento_Categoria_CategoriaId] FOREIGN KEY ([CategoriaId]) REFERENCES [Categoria] ([Id]) ON DELETE CASCADE,
-    CONSTRAINT [FK_Lancamento_Conta_ContaDestionId] FOREIGN KEY ([ContaDestionId]) REFERENCES [Conta] ([Id]) ON DELETE NO ACTION,
-    CONSTRAINT [FK_Lancamento_Conta_ContaId] FOREIGN KEY ([ContaId]) REFERENCES [Conta] ([Id]) ON DELETE NO ACTION,
-    CONSTRAINT [FK_Lancamento_Recorrente_RecorrenteId] FOREIGN KEY ([RecorrenteId]) REFERENCES [Recorrente] ([Id]) ON DELETE NO ACTION
-);
 
 GO
 
@@ -290,25 +219,7 @@ CREATE INDEX [IX_Lancamento_RecorrenteId] ON [Lancamento] ([RecorrenteId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190330135216_lancamento', N'2.2.3-servicing-35854');
-
-GO
-
-ALTER TABLE [Conta] ADD [IsSuspensa] bit NOT NULL DEFAULT 0;
-
-GO
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190404213545_contaSuspensao', N'2.2.3-servicing-35854');
-
-GO
-
-ALTER TABLE [Categoria] ADD [IsSuspenco] bit NOT NULL DEFAULT 0;
-
-GO
-
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20190406195802_Categoriasuspensao', N'2.2.3-servicing-35854');
+VALUES (N'20190408153614_primeiraEntrega', N'2.2.3-servicing-35854');
 
 GO
 

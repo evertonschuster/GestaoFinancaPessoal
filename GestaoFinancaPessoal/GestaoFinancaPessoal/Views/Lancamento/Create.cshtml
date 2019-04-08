@@ -41,14 +41,14 @@
                     <a onclick="CadastrarConta()">
                         <label asp-for="Conta" class="control-label"></label><i style="font-size: 13px;" class="material-icons">add</i>
                     </a>
-                    <select class="form-control single-select" name="Conta.Id" asp-for="@Model.Conta.Id" asp-items="@(new SelectList(@ViewBag.Conta, "Id", "Nome"))"></select>
-                    <span asp-validation-for="Conta" class="text-danger"></span>
+                    <select class="form-control single-select" name="Conta.Id" asp-for="@Model.Conta" asp-items="@(new SelectList(@ViewBag.Conta, "Id", "Nome"))"></select>
+                    <span asp-validation-for="Conta.Id" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-3" Conta ContaDestino>
                     <a onclick="CadastrarConta()">
                         <label asp-for="ContaDestion" class="control-label"></label><i style="font-size: 13px;" class="material-icons">add</i>
                     </a>
-                    <select class="form-control single-select" name="ContaDestion.Id" asp-for="@Model.ContaDestion.Id" asp-items="@(new SelectList(@ViewBag.Conta, "Id", "Nome"))"></select>
+                    <select class="form-control single-select" name="ContaDestion.Id" asp-for="@Model.ContaDestion" asp-items="@(new SelectList(@ViewBag.Conta, "Id", "Nome"))"></select>
                     <span asp-validation-for="ContaDestion.Id" class="text-danger"></span>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                     <a onclick="CadastrarCategoria()">
                         <label asp-for="Categoria" class="control-label"></label><i style="font-size: 13px;" class="material-icons">add</i>
                     </a>
-                    <select class="form-control single-select" name="Categoria.Id" asp-for="@Model.Categoria.Id" asp-items="@(new SelectList(@ViewBag.Categoria, "Id", "Nome"))"></select>
+                    <select class="form-control single-select" name="Categoria.Id" asp-for="@Model.Categoria" asp-items="@(new SelectList(@ViewBag.Categoria, "Id", "Nome"))"></select>
                     <span asp-validation-for="Categoria" class="text-danger"></span>
                 </div>
             </div>
