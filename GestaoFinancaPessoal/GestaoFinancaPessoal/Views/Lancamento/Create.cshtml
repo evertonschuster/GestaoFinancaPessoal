@@ -75,7 +75,7 @@
                         <label asp-for="Categoria" class="control-label"></label><i style="font-size: 13px;" class="material-icons">add</i>
                     </a>
                     <select class="form-control single-select" name="Categoria.Id" asp-for="@Model.Categoria" asp-items="@(new SelectList(@ViewBag.Categoria, "Id", "Nome"))"></select>
-                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                    <span asp-validation-for="Categoria.Id" class="text-danger"></span>
                 </div>
             </div>
 

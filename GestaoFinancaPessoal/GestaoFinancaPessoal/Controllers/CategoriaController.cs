@@ -90,7 +90,7 @@ namespace GestaoFinancaPessoal.Controllers
         public ActionResult Edit(int id)
         {
             var categoriaDAO = new CategoriaDAO(this.DAO);
-            ViewBag.Categoria = categoriaDAO.ListSubCategoria();
+            ViewBag.Categoria = categoriaDAO.ListCategoria();
 
             var categoria = categoriaDAO.getById(id);
             return View(categoria);
@@ -103,7 +103,7 @@ namespace GestaoFinancaPessoal.Controllers
         {
             var categoriaDAO = new CategoriaDAO(this.DAO);
 
-            ViewBag.Categoria = categoriaDAO.ListSubCategoria();
+            ViewBag.Categoria = categoriaDAO.ListCategoria();
             ViewBag.Alterado = false;
             ModelState.Remove("Hierarquia.Nome");
             try

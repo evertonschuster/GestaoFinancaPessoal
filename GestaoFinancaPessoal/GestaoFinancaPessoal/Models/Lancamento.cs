@@ -59,7 +59,7 @@ namespace GestaoFinancaPessoal.Models
 
         [DataMember]
         [Display(Name = "Subcategoria")]
-        [Required(ErrorMessage = "Informe a categoria.")]
+        [Required(ErrorMessage = "Informe a subcategoria.")]
         public Categoria Categoria { get; set; }
 
         [DataMember]

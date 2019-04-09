@@ -75,13 +75,13 @@ namespace GestaoFinancaPessoal.DAO
         {
             if (mapeado)
             {
-                return DbSet.Include(c => c.Hierarquia).Select(c => new CategoriaViewModel(c,
+                return DbSet.Where(c => !c.IsSuspenco).Include(c => c.Hierarquia).Select(c => new CategoriaViewModel(c,
                     Context.Set<Lancamento>().Where(l => l.Categoria.Id == c.Id).FirstOrDefault() != null
                     )).ToList();
             }
             else
             {
-                return DbSet.Include(c => c.Hierarquia).Select(c => new CategoriaViewModel(c,
+                return DbSet.Where(c => !c.IsSuspenco).Include(c => c.Hierarquia).Select(c => new CategoriaViewModel(c,
                     Context.Set<Lancamento>().Where(l => l.Categoria.Id == c.Id).FirstOrDefault() != null
                     )).AsNoTracking().ToList();
             }
