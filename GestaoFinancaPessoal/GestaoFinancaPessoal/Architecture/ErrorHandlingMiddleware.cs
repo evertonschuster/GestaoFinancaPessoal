@@ -21,7 +21,12 @@ namespace GestaoFinancaPessoal.Architecture
         {
             //try
             //{
-                await next(context);
+
+            await next(context);
+
+            //await HandleExceptionAsync(context);
+
+
             //}
             //catch (Exception ex)
             //{
@@ -42,7 +47,7 @@ namespace GestaoFinancaPessoal.Architecture
             //context1.Response.ContentType = "application/json";
             //context1.Response.StatusCode = (int)code;
 
-            
+
             //return Task.Factory.StartNew(
             //state =>
             //{
@@ -50,6 +55,28 @@ namespace GestaoFinancaPessoal.Architecture
             //    //use context
             //},
             //context1);
+        }
+
+        private static Task HandleExceptionAsync(HttpContext context1)
+        {
+            //var code = HttpStatusCode.InternalServerError; // 500 if unexpected
+
+            //if (exception is MyNotFoundException) code = HttpStatusCode.NotFound;
+            //else if (exception is MyUnauthorizedException) code = HttpStatusCode.Unauthorized;
+            //else if (exception is MyException) code = HttpStatusCode.BadRequest;
+
+            //var result = JsonConvert.SerializeObject(new { error = exception.Message });
+            //context1.Response.ContentType = "application/json";
+            //context1.Response.StatusCode = (int)code;
+
+
+            return Task.Factory.StartNew(
+            state =>
+            {
+                var context = (HttpContext)state;
+                //use context
+            },
+            context1);
         }
     }
 }

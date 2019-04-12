@@ -10,6 +10,7 @@ using GestaoFinancaPessoal.Services;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using GestaoFinancaPessoal.Authorization;
+using GestaoFinancaPessoal.Architecture;
 
 namespace GestaoFinancaPessoal
 {
@@ -83,6 +84,8 @@ namespace GestaoFinancaPessoal
             services.AddSingleton<IAuthorizationHandler,
                                   AutenticacaoAuthorizationHandler>();
 
+            services.AddSingleton<IEmailSender, EmailSender>();
+
             services.Configure<IISServerOptions>(options =>
             {
                 options.AutomaticAuthentication = false;
@@ -113,7 +116,7 @@ namespace GestaoFinancaPessoal
             app.UseAuthentication();
 
             app.UseSession();   //poem para rodar a session
-
+            app.UseMiddleware(typeof(ErrorHandlingMiddleware));
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

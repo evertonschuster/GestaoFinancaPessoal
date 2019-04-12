@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GestaoFinancaPessoal.DAO;
 using GestaoFinancaPessoal.Data;
 using GestaoFinancaPessoal.Models;
+using GestaoFinancaPessoal.Services;
 using GestaoFinancaPessoal.Uteis.Exception.ModelErrorException;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,10 +22,15 @@ namespace GestaoFinancaPessoal.Controllers
         }
 
         // GET: Categoria
-        public ActionResult Index()
+        public ActionResult Index([FromServices]IEmailSender s)
 
         {
+           // Container.GetRequiredService<IEmailSender>();
             var categoriaDAO = new CategoriaDAO(this.DAO);
+
+            var services = this.HttpContext.RequestServices;
+            services.GetService(typeof(IEmailSender));
+            
 
             return View(categoriaDAO.List(true));
         }

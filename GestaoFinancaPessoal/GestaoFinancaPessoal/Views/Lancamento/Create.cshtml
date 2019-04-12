@@ -108,8 +108,11 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    @{await Html.RenderPartialAsync("_ModalCadastro");}
+    @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ModalCadastro");}*@
+    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ModalCadastro" />
+
 
     <script src="~/js/Lancamento/Create.js"></script>
 
