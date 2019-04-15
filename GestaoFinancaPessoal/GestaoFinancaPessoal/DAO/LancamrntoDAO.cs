@@ -1,7 +1,9 @@
-﻿using GestaoFinancaPessoal.Data;
+﻿using GestaoFinancaPessoal.Controllers;
+using GestaoFinancaPessoal.Data;
 using GestaoFinancaPessoal.Models;
 using GestaoFinancaPessoal.Uteis;
 using GestaoFinancaPessoal.Uteis.Exception.ModelErrorException;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -16,7 +18,7 @@ namespace GestaoFinancaPessoal.DAO
         {
         }
 
-        public LancamentoDAO(ApplicationDbContext context, Session session) : base(context, session)
+        public LancamentoDAO(Controller controller) : base(controller)
         {
         }
 
@@ -29,8 +31,8 @@ namespace GestaoFinancaPessoal.DAO
         {
             if(l.ContaDestion != null && l.Conta.Id == l.ContaDestion.Id)
             {
-                ModelError erro = new ModelError(nameof(l.ContaDestion.Id), "Conta destino nao pode ser a mesma da origem.");
-                throw new ModelErrorException(erro);
+                this.ModelState.AddModelError(nameof(l.ContaDestion.Id), "Conta destino nao pode ser a mesma da origem.");
+                return;
             }
             base.Add(l);
         }

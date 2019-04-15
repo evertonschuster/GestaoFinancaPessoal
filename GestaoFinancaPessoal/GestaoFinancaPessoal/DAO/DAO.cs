@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GestaoFinancaPessoal.Models;
 using GestaoFinancaPessoal.Data;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace GestaoFinancaPessoal.DAO
 {
@@ -15,6 +16,9 @@ namespace GestaoFinancaPessoal.DAO
         protected readonly ApplicationDbContext Context;
         protected readonly DbSet<T> DbSet;
         protected readonly Session Session;
+        protected readonly ModelStateDictionary ModelState;
+        protected readonly Controllers.Controller Controller;
+
 
         public DbContext GetContext()
         {
@@ -25,13 +29,26 @@ namespace GestaoFinancaPessoal.DAO
         {
             return this.Session;
         }
-        public DAO(ApplicationDbContext context, Session session)
-        {
-            this.Context = context;
-            this.DbSet = context.Set<T>();
-            this.Session = session;
 
-            context.Database.EnsureCreated();
+        public ModelStateDictionary GetModelState()
+        {
+            return this.Controller.ModelState;
+        }
+
+        public Controllers.Controller GetController()
+        {
+            return this.Controller;
+        }
+
+        public DAO(Controllers.Controller controller)
+        {
+            this.Context = controller.Contexto;
+            this.DbSet = controller.Contexto.Set<T>();
+            this.Session = controller.Session;
+            this.ModelState = controller.ModelState;
+            this.Controller = controller;
+
+            controller.Contexto.Database.EnsureCreated();
         }
 
         public DAO(IDAO dao)
@@ -39,13 +56,28 @@ namespace GestaoFinancaPessoal.DAO
             this.Context = (ApplicationDbContext)dao.GetContext();
             this.DbSet = this.Context.Set<T>();
             this.Session = dao.GetSssion();
+            this.ModelState = dao.GetModelState();
+            this.Controller = dao.GetController();
 
             Context.Database.EnsureCreated();
         }
 
+        TDAO IDAO.NewDAO<TDAO>(TipoConecao tipo = TipoConecao.DEFAULT)
+        {
+            return (TDAO)Activator.CreateInstance(typeof(TDAO), new object[] { this });
+        }
+
+        public bool IsValid(T p)
+        {
+            return ModelState.IsValid;
+        }
+
         public virtual void Add(T p)
         {
-            DbSet.Add(p);
+            if (this.IsValid(p))
+            {
+                DbSet.Add(p);
+            }
         }
 
         public virtual void Attach(T p)
@@ -55,7 +87,10 @@ namespace GestaoFinancaPessoal.DAO
 
         public virtual void Update(T p)
         {
-            DbSet.Update(p);
+            if (this.IsValid(p))
+            {
+                DbSet.Update(p);
+            }
         }
 
         public virtual void Remove(T p)
@@ -97,6 +132,11 @@ namespace GestaoFinancaPessoal.DAO
             }
         }
 
+        public IQueryable<T> List()
+        {
+            return DbSet;
+        }
+
         public virtual void SaveChanges()
         {
             Context.SaveChanges();
@@ -106,6 +146,7 @@ namespace GestaoFinancaPessoal.DAO
         {
             Context.Dispose();
         }
+
 
 
     }

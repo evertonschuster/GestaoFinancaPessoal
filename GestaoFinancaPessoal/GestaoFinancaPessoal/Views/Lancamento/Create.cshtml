@@ -72,20 +72,13 @@
                 </div>
                 <div class="form-group col-md-4">
                     <a onclick="CadastrarCategoria()">
-                        <label asp-for="Categoria" class="control-label"></label><i style="font-size: 13px;" class="material-icons">add</i>
+                        <label class="control-label">SubCategoria</label><i style="font-size: 13px;" class="material-icons">add</i>
                     </a>
                     <select class="form-control single-select" name="Categoria.Id" asp-for="@Model.Categoria" asp-items="@(new SelectList(@ViewBag.Categoria, "Id", "Nome"))"></select>
                     <span asp-validation-for="Categoria.Id" class="text-danger"></span>
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsPago" /> @Html.DisplayNameFor(model => model.IsPago)
-                    </label>
-                </div>
-            </div>
             <div class="form-group">
                 <div class="checkbox">
                     <label>

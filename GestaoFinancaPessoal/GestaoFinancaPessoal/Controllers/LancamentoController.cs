@@ -102,7 +102,7 @@ namespace GestaoFinancaPessoal.Controllers
                     throw new ModelErrorException(erro);
                 }
 
-                if (lancamento.IsPago)
+                if (lancamento.DataPagamento <= DateTime.Now)
                 {
                     //var conta = ((List<Conta>)(ViewBag.Conta)).Where(c => c.Id == lancamento.Conta.Id).FirstOrDefault();
                     var conta = contaDAO.getById(lancamento.Conta.Id);

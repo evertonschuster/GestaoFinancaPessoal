@@ -27,9 +27,6 @@
                     @Html.DisplayNameFor(model => model.Valor)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.IsPago)
-                </th>
-                <th>
                     Dt Pagt.
                 </th>
                 <th>
@@ -56,17 +53,12 @@
                         @Html.DisplayFor(modelItem => item.Valor)
                     </td>
                     <td>
-                        <span class="@(item.IsPago ? "text-success" : "text-danger")">
-                            @(item.IsPago ? "Sim" : "Näo")
-                        </span>
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.DataPagamento)
                     </td>
                     <td>
                         @{
                             string css = "";
-                            css = item.DataVencimento < data && !item.IsPago ? "text-danger" : "";
+                            css = item.DataVencimento < data && item.DataPagamento >= data ? "text-danger" : "text-success";
                         }
                         <span class="@(css)">
                             @Html.DisplayFor(modelItem => item.DataVencimento)

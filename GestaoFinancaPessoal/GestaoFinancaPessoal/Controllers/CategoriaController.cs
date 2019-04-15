@@ -23,15 +23,12 @@ namespace GestaoFinancaPessoal.Controllers
 
         // GET: Categoria
         public ActionResult Index([FromServices]IEmailSender s)
-
         {
-           // Container.GetRequiredService<IEmailSender>();
-            var categoriaDAO = new CategoriaDAO(this.DAO);
 
+            var categoriaDAO = this.DAO.NewDAO<CategoriaDAO>();
             var services = this.HttpContext.RequestServices;
             services.GetService(typeof(IEmailSender));
             
-
             return View(categoriaDAO.List(true));
         }
 
@@ -44,7 +41,7 @@ namespace GestaoFinancaPessoal.Controllers
         // GET: Categoria/Create
         public ActionResult Create()
         {
-            var categoriaDAO = new CategoriaDAO(this.DAO);
+            var categoriaDAO = this.DAO.NewDAO<CategoriaDAO>();
             ViewBag.Categoria = categoriaDAO.ListCategoria();
             return View(new Categoria());
         }

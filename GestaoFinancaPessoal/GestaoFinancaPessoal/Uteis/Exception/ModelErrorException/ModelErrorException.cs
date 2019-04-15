@@ -9,6 +9,10 @@ namespace GestaoFinancaPessoal.Uteis.Exception.ModelErrorException
     {
         List<ModelError> modelErrors = new List<ModelError>();
 
+        public ModelErrorException()
+        {
+        }
+
         public ModelErrorException(List<ModelError> modelErrors)
         {
             this.modelErrors = modelErrors ?? throw new ArgumentNullException(nameof(modelErrors));

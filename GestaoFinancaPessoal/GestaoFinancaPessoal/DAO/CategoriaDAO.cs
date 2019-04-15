@@ -1,8 +1,10 @@
-﻿using GestaoFinancaPessoal.Data;
+﻿using GestaoFinancaPessoal.Controllers;
+using GestaoFinancaPessoal.Data;
 using GestaoFinancaPessoal.Models;
 using GestaoFinancaPessoal.Uteis;
 using GestaoFinancaPessoal.Uteis.Exception.ModelErrorException;
 using GestaoFinancaPessoal.ViewModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,7 +19,7 @@ namespace GestaoFinancaPessoal.DAO
         {
         }
 
-        public CategoriaDAO(ApplicationDbContext context, Session session) : base(context, session)
+        public CategoriaDAO(Controller controller) : base(controller)
         {
         }
 
@@ -25,8 +27,8 @@ namespace GestaoFinancaPessoal.DAO
         {
             if (this.GetCategoriaByDescricao(Categoria).Count != 0)
             {
-                ModelError erro = new ModelError(nameof(Categoria.Nome), "Categoria já cadastrada.");
-                throw new ModelErrorException(erro);
+                this.ModelState.AddModelError(nameof(Categoria.Nome), "Categoria já cadastrada.");
+                throw new ModelErrorException();
             }
             base.Add(Categoria);
         }

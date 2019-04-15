@@ -35,9 +35,9 @@ namespace GestaoFinancaPessoal.Models
         [StringLength(256, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 3)]
         public string Descricao { get; set; }
 
-        [DataMember]
-        [Display(Name = "Pago?")]
-        public bool IsPago { get; set; }
+        //[DataMember]
+        //[Display(Name = "Pago?")]
+        //public bool IsPago { get; set; }
 
         [DataMember]
         [Display(Name = "Lançamento automatico?")]

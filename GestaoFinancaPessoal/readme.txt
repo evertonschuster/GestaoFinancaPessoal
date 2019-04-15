@@ -1,1 +1,2 @@
-Alterar categoria para subcategoria
+
+Pensando racionalmente

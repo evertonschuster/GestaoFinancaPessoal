@@ -1,6 +1,8 @@
-﻿using GestaoFinancaPessoal.Data;
+﻿using GestaoFinancaPessoal.Controllers;
+using GestaoFinancaPessoal.Data;
 using GestaoFinancaPessoal.Models;
 using GestaoFinancaPessoal.Uteis;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace GestaoFinancaPessoal.DAO
 {
@@ -10,10 +12,8 @@ namespace GestaoFinancaPessoal.DAO
         {
         }
 
-        public RecorrenteDAO(ApplicationDbContext context, Session session) : base(context, session)
+        public RecorrenteDAO(Controller controller) : base(controller)
         {
         }
-
-        
     }
 }

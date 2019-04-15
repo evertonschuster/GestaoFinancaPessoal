@@ -15,7 +15,7 @@ namespace GestaoFinancaPessoal.ViewModels
             this.Nome = conta.Nome;
             this.Saldo = conta.Saldo;
             this.Tipo = conta.Tipo;
-            this.Banco = conta.Banco;
+            //this.Banco = conta.Banco;
             this.DataAtualizacao = conta.DataAtualizacao;
             this.IsSuspensa = conta.IsSuspensa;
             this.HasLancamento = hasLancamento;

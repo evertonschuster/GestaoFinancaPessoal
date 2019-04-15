@@ -13,9 +13,9 @@ namespace GestaoFinancaPessoal.Controllers
 {
     public class Controller : Microsoft.AspNetCore.Mvc.Controller
     {
-        protected ApplicationDbContext Contexto { get; }
-        protected IHttpContextAccessor ContextAcessor { get; }
-        protected Session Session { get; }
+        public ApplicationDbContext Contexto { get; }
+        public IHttpContextAccessor ContextAcessor { get; }
+        public Session Session { get; }
 
         protected IDAO DAO { get; set; }
 
@@ -24,7 +24,7 @@ namespace GestaoFinancaPessoal.Controllers
             this.Contexto = (ApplicationDbContext)Contexto;
             this.ContextAcessor = contextAcessor;
             this.Session = new Session(contextAcessor);
-            this.DAO = new DAO<MasterModel>(this.Contexto, this.Session);
+            this.DAO = new DAO<MasterModel>(this);
 
             this.ViewBag.Salvo = false;
             this.ViewBag.Excluido = false;

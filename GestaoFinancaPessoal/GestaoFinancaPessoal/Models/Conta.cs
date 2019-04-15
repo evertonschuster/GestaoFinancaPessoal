@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GestaoFinancaPessoal.Models
 {
-    public class Conta : MasterModel
+    public class Conta : MasterModel,IValidatableObject
     {
         [DataMember]
         [StringLength(256, ErrorMessage = "A {0} deve ter no máximo {1} caracteres.")]
@@ -30,13 +31,22 @@ namespace GestaoFinancaPessoal.Models
         [Display(Name = "Tipo da Conta")]
         public string Tipo { get; set; }
 
-        [DataMember]
-        [Display(Name = "Banco da Conta")]
-        public string Banco { get; set; }
+        //[DataMember]
+        //[Display(Name = "Banco da Conta")]
+        //public string Banco { get; set; }
 
         public DateTime DataAtualizacao { get; set; }
 
         public Boolean IsSuspensa { get; set; }
 
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            yield break;
+
+            yield return new ValidationResult(
+                $"Message",
+                new[] { "Campo" });
+
+        }
     }
 }

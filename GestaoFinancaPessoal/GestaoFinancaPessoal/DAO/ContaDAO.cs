@@ -1,8 +1,10 @@
-﻿using GestaoFinancaPessoal.Data;
+﻿using GestaoFinancaPessoal.Controllers;
+using GestaoFinancaPessoal.Data;
 using GestaoFinancaPessoal.Models;
 using GestaoFinancaPessoal.Uteis;
 using GestaoFinancaPessoal.Uteis.Exception.ModelErrorException;
 using GestaoFinancaPessoal.ViewModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,16 +19,17 @@ namespace GestaoFinancaPessoal.DAO
         {
         }
 
-        public ContaDAO(ApplicationDbContext context, Session session) : base(context, session)
+        public ContaDAO(Controller controller) : base(controller)
         {
         }
 
         public override void Add(Conta conta)
         {
+
             if (this.GetContaByDescricao(conta).Count != 0)
             {
-                ModelError erro = new ModelError(nameof(conta.Nome), "Conta já cadastrada.");
-                throw new ModelErrorException(erro);
+                this.ModelState.AddModelError(nameof(conta.Nome), "Conta já cadastrada.");
+                throw new ModelErrorException();
             }
             base.Add(conta);
         }
