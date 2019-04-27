@@ -15,5 +15,30 @@ namespace GestaoFinancaPessoal.DAO
         public RecorrenteDAO(Controller controller) : base(controller)
         {
         }
+
+        public void LancarRecorrente(Lancamento lancamento)
+        {
+            var lancamentoDAO = this.NewDAO<LancamentoDAO>();
+
+            var lancamentoOLD = lancamento;
+            lancamento = lancamento.Clone();
+            lancamento.Id = 0;
+            lancamento.IsPago = false;
+
+            for (int i = 0; i < lancamentoOLD.Recorrente.Quantidade - 1; i++)
+            {
+                lancamento = lancamento.Clone();
+                lancamento.Id = 0;
+                lancamento.Descricao = lancamentoOLD.Descricao + $" - {i + 2}";
+                lancamento.DataPagamento = lancamento.DataPagamento.AddDays(lancamentoOLD.Recorrente.Periodo);
+                lancamento.DataVencimento = lancamento.DataVencimento.AddDays(lancamentoOLD.Recorrente.Periodo);
+                lancamento.Recorrente = lancamentoOLD.Recorrente;
+
+                lancamentoDAO.Add(lancamento);
+            }
+            lancamentoOLD.Descricao += "- 1";
+            lancamentoDAO.Add(lancamento);
+
+        }
     }
 }

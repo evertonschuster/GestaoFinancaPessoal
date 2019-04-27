@@ -1,4 +1,4 @@
-﻿@model GestaoFinancaPessoal.Models.Lancamento
+﻿@model GestaoFinancaPessoal.ViewModels.LancamentoViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -28,14 +28,14 @@
                 </div>
                 <div class="form-group col-md-3" Tipo>
                     <a onclick="CadastrarConta()">
-                        <label asp-for="Tipo" class="control-label"></label>
+                        <label asp-for="TipoLancamento" class="control-label"></label>
                     </a>
-                    <select asp-for="Tipo" class="form-control" onchange="LancamentoChange(this)">
+                    <select asp-for="TipoLancamento" class="form-control" onchange="LancamentoChange(this)">
                         <option value="@TipoLancamento.DESPESA">Despesa</option>
                         <option value="@TipoLancamento.RECEITA">Receita</option>
                         <option value="@TipoLancamento.TRANSFERENCIA">Transferencia</option>
                     </select>
-                    <span asp-validation-for="Tipo" class="text-danger"></span>
+                    <span asp-validation-for="TipoLancamento" class="text-danger"></span>
                 </div>
                 <div class="form-group col-md-3" Conta>
                     <a onclick="CadastrarConta()">
@@ -82,8 +82,15 @@
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="IsAutomatico" /> @Html.DisplayNameFor(model => model.IsAutomatico)
+                        <input asp-for="IsAutomatico" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" />
+                        @Html.DisplayNameFor(model => model.IsAutomatico)
                     </label>
+                </div>
+
+                <div class="collapse col-12" id="collapseExample">
+                    <div class="card card-body">
+                        @{Html.RenderPartial("../Recorrente/Create", (Model == null || Model.RecorrenteViewModel == null ? null : Model.RecorrenteViewModel));}
+                    </div>
                 </div>
             </div>
 
@@ -95,6 +102,8 @@
                     <input type="submit" value="Salvar" class="btn btn-primary" />
                 </div>
             </div>
+
+
         </form>
     </div>
 </div>
@@ -102,7 +111,7 @@
 
 @section Scripts {
     @*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    @{await Html.RenderPartialAsync("_ModalCadastro");}*@
+        @{await Html.RenderPartialAsync("_ModalCadastro");}*@
     <partial name="_ValidationScriptsPartial" />
     <partial name="_ModalCadastro" />
 

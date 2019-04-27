@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GestaoFinancaPessoal.Models
 {
-    public class Conta : MasterModel,IValidatableObject
+    public class Conta : MasterModel, IValidatableObject
     {
         [DataMember]
         [StringLength(256, ErrorMessage = "A {0} deve ter no máximo {1} caracteres.")]

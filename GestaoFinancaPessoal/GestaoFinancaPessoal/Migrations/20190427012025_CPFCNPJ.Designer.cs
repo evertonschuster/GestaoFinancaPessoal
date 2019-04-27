@@ -4,14 +4,16 @@ using GestaoFinancaPessoal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestaoFinancaPessoal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190427012025_CPFCNPJ")]
+    partial class CPFCNPJ
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,7 +96,7 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<string>("CpfCnpj")
                         .IsRequired()
-                        .HasMaxLength(18);
+                        .HasMaxLength(15);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -109,6 +111,7 @@ namespace GestaoFinancaPessoal.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("NomeContato")
+                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.Property<string>("Numero")

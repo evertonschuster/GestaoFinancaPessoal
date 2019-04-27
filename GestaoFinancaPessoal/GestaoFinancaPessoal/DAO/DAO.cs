@@ -61,8 +61,8 @@ namespace GestaoFinancaPessoal.DAO
 
             Context.Database.EnsureCreated();
         }
-
-        TDAO IDAO.NewDAO<TDAO>(TipoConecao tipo = TipoConecao.DEFAULT)
+         
+        public TDAO NewDAO<TDAO>(TipoConecao tipo = TipoConecao.DEFAULT) where TDAO : IDAO
         {
             return (TDAO)Activator.CreateInstance(typeof(TDAO), new object[] { this });
         }
@@ -132,7 +132,7 @@ namespace GestaoFinancaPessoal.DAO
             }
         }
 
-        public IQueryable<T> List()
+        public IQueryable<T> ListQuery()
         {
             return DbSet;
         }

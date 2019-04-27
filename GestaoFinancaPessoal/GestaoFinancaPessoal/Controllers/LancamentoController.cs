@@ -6,6 +6,7 @@ using GestaoFinancaPessoal.DAO;
 using GestaoFinancaPessoal.Data;
 using GestaoFinancaPessoal.Models;
 using GestaoFinancaPessoal.Uteis.Exception.ModelErrorException;
+using GestaoFinancaPessoal.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,10 +21,31 @@ namespace GestaoFinancaPessoal.Controllers
         // GET: LancamentoReceita
         public ActionResult Index()
         {
-            var lancamentoDAO = new LancamentoDAO(this.DAO);
-            var listLancamento = lancamentoDAO.List();
+            var lancamentoDAO = this.DAO.NewDAO<LancamentoDAO>();
+            var contaDAO = this.DAO.NewDAO<ContaDAO>();
+
+            VisualizarLancamentoViewModel visualizar = new VisualizarLancamentoViewModel();
+            visualizar.DataFinal = DateTime.Now.AddDays(10);
+            visualizar.DataInicial = DateTime.Now.AddDays(-30);
+
+            var listLancamento = lancamentoDAO.List(visualizar);
+            ViewBag.Conta = contaDAO.ListContaView();
+
             return View(listLancamento);
         }
+
+        public ActionResult Busca(VisualizarLancamentoViewModel visualizarLancamentoViewModel)
+        {
+            ViewBag.VisualizarLancamentoViewModel = visualizarLancamentoViewModel;
+            var lancamentoDAO = this.DAO.NewDAO<LancamentoDAO>();
+            var contaDAO = this.DAO.NewDAO<ContaDAO>();
+
+            var listLancamento = lancamentoDAO.List(visualizarLancamentoViewModel);
+            ViewBag.Conta = contaDAO.ListContaView();
+
+            return View("Index", listLancamento);
+        }
+
 
         // GET: Receita
         public ActionResult Receita()
@@ -34,7 +56,7 @@ namespace GestaoFinancaPessoal.Controllers
             ViewBag.Conta = contaDAO.List();
 
 
-            return View(nameof(Create), new Lancamento { Tipo = TipoLancamento.RECEITA, DataPagamento = DateTime.Now, DataVencimento = DateTime.Now });
+            return View(nameof(Create), new LancamentoViewModel { TipoLancamento = TipoLancamento.RECEITA, DataPagamento = DateTime.Now, DataVencimento = DateTime.Now });
         }
 
         // GET: Receita
@@ -46,7 +68,7 @@ namespace GestaoFinancaPessoal.Controllers
             ViewBag.Conta = contaDAO.List();
 
 
-            return View(nameof(Create), new Lancamento { Tipo = TipoLancamento.TRANSFERENCIA, DataPagamento = DateTime.Now, DataVencimento = DateTime.Now });
+            return View(nameof(Create), new LancamentoViewModel { TipoLancamento = TipoLancamento.TRANSFERENCIA, DataPagamento = DateTime.Now, DataVencimento = DateTime.Now });
         }
 
         // GET: Lancamento/Details/5
@@ -69,13 +91,16 @@ namespace GestaoFinancaPessoal.Controllers
         // POST: Lancamento/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Lancamento lancamento)
+        public ActionResult Create(LancamentoViewModel lancamento, RecorrenteViewModel recorrente)
         {
+
             try
             {
-                var lancamentoDAO = new LancamentoDAO(this.DAO);
-                var categoriaDAO = new CategoriaDAO(this.DAO);
-                var contaDAO = new ContaDAO(this.DAO);
+                var lancamentoDAO = this.DAO.NewDAO<LancamentoDAO>();
+                var categoriaDAO = this.DAO.NewDAO<CategoriaDAO>();
+                var contaDAO = this.DAO.NewDAO<ContaDAO>();
+                var recorrenteDAO = this.DAO.NewDAO<RecorrenteDAO>();
+
                 ViewBag.Categoria = categoriaDAO.ListSubCategoria();
                 ViewBag.Conta = contaDAO.List();
 
@@ -84,14 +109,27 @@ namespace GestaoFinancaPessoal.Controllers
                 ModelState.Remove("Conta.Tipo");
                 ModelState.Remove("ContaDestion.Nome");
                 ModelState.Remove("ContaDestion.Tipo");
-                
+
+                if (!lancamento.IsAutomatico)
+                {
+                    ModelState.Remove("Repetir");
+                    ModelState.Remove("Periodicidade");
+                    ModelState.Remove("DataFinal");
+                    ModelState.Remove("ValorTotal");
+                    ModelState.Remove("Lancamento");
+                    ModelState.Remove("ParcelaInicial");
+                    ModelState.Remove("Quantidade");
+                    ModelState.Remove("Periodo");
+                    ModelState.Remove("DataInicial");
+                }
 
                 if (!ModelState.IsValid)
                 {
                     return View(lancamento);
                 }
 
-                if (lancamento.Tipo != TipoLancamento.TRANSFERENCIA)
+
+                if (lancamento.TipoLancamento != TipoLancamento.TRANSFERENCIA)
                 {
                     lancamento.ContaDestion = null;
                 }
@@ -102,33 +140,41 @@ namespace GestaoFinancaPessoal.Controllers
                     throw new ModelErrorException(erro);
                 }
 
+                lancamento.IsPago = false;
                 if (lancamento.DataPagamento <= DateTime.Now)
                 {
                     //var conta = ((List<Conta>)(ViewBag.Conta)).Where(c => c.Id == lancamento.Conta.Id).FirstOrDefault();
                     var conta = contaDAO.getById(lancamento.Conta.Id);
 
-                    if (lancamento.Tipo == TipoLancamento.DESPESA || lancamento.Tipo == TipoLancamento.TRANSFERENCIA)
+                    if (lancamento.TipoLancamento == TipoLancamento.DESPESA || lancamento.TipoLancamento == TipoLancamento.TRANSFERENCIA)
                     {
                         conta.Saldo -= Convert.ToDouble(lancamento.ValorPago);
                     }
 
-                    if (lancamento.Tipo == TipoLancamento.RECEITA)
+                    if (lancamento.TipoLancamento == TipoLancamento.RECEITA)
                     {
                         conta.Saldo += Convert.ToDouble(lancamento.ValorPago);
                     }
                     contaDAO.Update(conta);
 
-                    if (lancamento.Tipo == TipoLancamento.TRANSFERENCIA)
+                    if (lancamento.TipoLancamento == TipoLancamento.TRANSFERENCIA)
                     {
                         conta = contaDAO.getById(lancamento.ContaDestion.Id);
                         conta.Saldo += Convert.ToDouble(lancamento.ValorPago);
                         contaDAO.Update(conta);
                     }
+
+                    lancamento.IsPago = true;
                 }
 
+                lancamento.Recorrente = recorrente.GetRecorrente();
                 lancamento.DataInclusao = DateTime.Now;
                 lancamentoDAO.Attach(lancamento);
                 lancamentoDAO.Add(lancamento);
+                if (lancamento.IsAutomatico)
+                {
+                    recorrenteDAO.LancarRecorrente(lancamento);
+                }
 
                 lancamentoDAO.SaveChanges();
 
@@ -178,7 +224,7 @@ namespace GestaoFinancaPessoal.Controllers
                     return View(lancamento);
                 }
 
-                if (lancamento.Tipo != TipoLancamento.TRANSFERENCIA)
+                if (lancamento.TipoLancamento != TipoLancamento.TRANSFERENCIA)
                 {
                     lancamento.ContaDestion = null;
                 }

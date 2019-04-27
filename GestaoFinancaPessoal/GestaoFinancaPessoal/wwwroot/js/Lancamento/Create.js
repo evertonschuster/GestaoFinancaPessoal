@@ -1,6 +1,6 @@
 ﻿function LancamentoChange(obj) {
 
-    if ($("#Tipo option:selected").val() == "TRANSFERENCIA") {
+    if ($("#TipoLancamento option:selected").val() == "TRANSFERENCIA") {
         $("[Tipo]").removeClass("col-md-3", "slow", "swing");
         $("[Tipo]").addClass("col-md-4", "slow", "swing");
 
@@ -47,3 +47,7 @@ function Response(response) {
         $('#Categoria_Id').html(elements);
     }
 }
+
+
+
+

@@ -35,9 +35,9 @@ namespace GestaoFinancaPessoal.Models
         [StringLength(256, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 3)]
         public string Descricao { get; set; }
 
-        //[DataMember]
-        //[Display(Name = "Pago?")]
-        //public bool IsPago { get; set; }
+        [DataMember]
+        [Display(Name = "Pago?")]
+        public bool IsPago { get; set; }
 
         [DataMember]
         [Display(Name = "Lançamento automatico?")]
@@ -65,7 +65,7 @@ namespace GestaoFinancaPessoal.Models
         [DataMember]
         [Display(Name = "Tipo lançamento")]
         [Required(ErrorMessage = "Informe o tipo do lançamento.")]
-        public TipoLancamento Tipo { get; set; }
+        public TipoLancamento TipoLancamento { get; set; }
 
         [DataMember]
         [Display(Name = "Recorrente")]
@@ -86,6 +86,8 @@ namespace GestaoFinancaPessoal.Models
         [Display(Name = "Receita")]
         RECEITA,
         [Display(Name = "Transferencia")]
-        TRANSFERENCIA
+        TRANSFERENCIA,
+        [Display(Name = "TODOS")]
+        TODOS
     }
 }

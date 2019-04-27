@@ -1,0 +1,75 @@
+﻿@model IEnumerable<GestaoFinancaPessoal.Models.CPFCNPJ>
+
+@{
+    ViewData["Title"] = "Index";
+    ViewBag.SemContainer = "Sim";
+
+}
+<div class=" col-12 text-center">
+    <h2>Favorecidos/Pagadores</h2>
+</div>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Criar Favorecido/Pagador</a>
+</p>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CpfCnpj)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NomeContato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefones)
+            </th>
+            <th>
+                Endereço
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Observacao)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpfCnpj)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NomeContato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefones)
+                </td>
+                <td>
+                    @(item.Rua.Trim() + " nº " +
+                                        item.Numero.Trim() + " " +
+                                        item.Complemento.Trim() + " " +
+                                        item.Bairro.Trim() + " " +
+                                        item.Cidade.Trim() + " " +
+                                        item.Estado.Trim() + " CEP " +
+                                        item.Cep.Trim())
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Observacao)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

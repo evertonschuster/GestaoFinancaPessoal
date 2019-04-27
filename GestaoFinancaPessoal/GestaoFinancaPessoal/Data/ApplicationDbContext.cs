@@ -24,7 +24,7 @@ namespace GestaoFinancaPessoal.Data
 
             builder
                .Entity<Lancamento>()
-               .Property(e => e.Tipo)
+               .Property(e => e.TipoLancamento)
                .HasConversion(
                    v => v.ToString(),
                    v => (TipoLancamento)Enum.Parse(typeof(TipoLancamento), v));
@@ -46,6 +46,10 @@ namespace GestaoFinancaPessoal.Data
         public DbSet<Lancamento> Lancamento { get; set; }
 
         public DbSet<Recorrente> Recorrente { get; set; }
+    
+        public DbSet<CPFCNPJ> CPFCNPJ { get; set; }
+
+        public DbSet<GestaoFinancaPessoal.ViewModels.RecorrenteViewModel> RecorrenteViewModel { get; set; }
 
 
     }

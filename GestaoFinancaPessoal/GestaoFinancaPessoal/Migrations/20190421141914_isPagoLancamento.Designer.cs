@@ -4,14 +4,16 @@ using GestaoFinancaPessoal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestaoFinancaPessoal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190421141914_isPagoLancamento")]
+    partial class isPagoLancamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,74 +70,6 @@ namespace GestaoFinancaPessoal.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
-                });
-
-            modelBuilder.Entity("GestaoFinancaPessoal.Models.CPFCNPJ", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Bairro")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Cep")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Cidade")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Complemento")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("CpfCnpj")
-                        .IsRequired()
-                        .HasMaxLength(18);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Estado")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(100);
-
-                    b.Property<string>("NomeContato")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Numero")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Observacao")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("RG")
-                        .IsRequired()
-                        .HasMaxLength(13);
-
-                    b.Property<string>("Rua")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<string>("Telefones")
-                        .IsRequired()
-                        .HasMaxLength(256);
-
-                    b.Property<int>("TipoPessoa");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CPFCNPJ");
                 });
 
             modelBuilder.Entity("GestaoFinancaPessoal.Models.Categoria", b =>
@@ -242,7 +176,7 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<int?>("RecorrenteId");
 
-                    b.Property<string>("TipoLancamento")
+                    b.Property<string>("Tipo")
                         .IsRequired();
 
                     b.Property<decimal>("Valor");
@@ -402,11 +336,15 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<DateTime?>("DataFinal");
 
+                    b.Property<int?>("LancamentoId");
+
                     b.Property<int>("Periodicidade");
 
                     b.Property<int>("Repetir");
 
                     b.Property<decimal?>("ValorTotal");
+
+                    b.HasIndex("LancamentoId");
 
                     b.HasDiscriminator().HasValue("RecorrenteViewModel");
                 });
@@ -483,6 +421,13 @@ namespace GestaoFinancaPessoal.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("GestaoFinancaPessoal.ViewModels.RecorrenteViewModel", b =>
+                {
+                    b.HasOne("GestaoFinancaPessoal.Models.Lancamento", "Lancamento")
+                        .WithMany()
+                        .HasForeignKey("LancamentoId");
                 });
 #pragma warning restore 612, 618
         }

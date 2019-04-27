@@ -18,7 +18,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <div class="container" id="container">
+    <div class=" @(ViewBag.SemContainer != null && ViewBag.SemContainer.ToLower() == "sim" ? "container-fluid" : "container" ) " id="container">
         @RenderBody()
     </div>
 
@@ -78,11 +78,6 @@
                 .then((value) => {
                     window.location.href = window.location.href + "/../../";
             });
-        }
-
-        if (semContainer == "Sim") {
-            $("#container").removeClass("container");
-            $("#container").addClass("container-fluid");
         }
     </script>
 

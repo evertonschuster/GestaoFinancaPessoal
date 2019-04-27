@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    ViewBag.SemContainer = "Sim";
 }
 
 
@@ -15,7 +16,7 @@
     @foreach (var item in Model)
     {
 
-        <div class="col-sm-3 col-12 col-sm-12 col-md-6 col-lg-4 pb-4">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pb-4">
             <div class="card  border border-primary">
                 <div class="card-header">
                     <h5 class="card-title text-center text-uppercase">@item.Nome</h5>
@@ -65,7 +66,7 @@
 
 
 
-    <a class="col-sm-3 col-12 col-sm-12 col-md-6 col-lg-4" asp-action="Create">
+    <a class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 pb-4" asp-action="Create">
         <div class="card  border border-primary">
             <div class="card-header">
                <h5 class="card-title text-center">Criar Conta</h5>
