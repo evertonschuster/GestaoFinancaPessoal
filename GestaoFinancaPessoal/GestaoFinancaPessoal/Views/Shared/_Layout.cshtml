@@ -76,7 +76,13 @@
         if (alterado == 'True') {
             swal("Alterado com sucesso!", "", "success")
                 .then((value) => {
-                    window.location.href = window.location.href + "/../../";
+                    var caminho = window.location.href.split("/");
+                    
+                    if (isNaN(caminho[caminho.length - 1])) {
+                        window.location.href = window.location.href + "/../";
+                    } else {
+                        window.location.href = window.location.href + "/../../";
+                    }
             });
         }
     </script>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GestaoFinancaPessoal.Uteis.Attribute;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -28,14 +29,15 @@ namespace GestaoFinancaPessoal.Models
 
         [DataMember]
         //[Required(ErrorMessage = "Informe o Nome do Contato.",AllowEmptyStrings = true )]
+        [RequiredAttributeCPFCNPJ]
         [Display(Name = "Nome do Contato")]
         [StringLength(100, MinimumLength = 3, ErrorMessage = "O campo deve ter no mínimo 3 caracteres e no máximo 100.")]
         public String NomeContato { get; set; }
 
         [DataMember]
-        [Required(ErrorMessage = "Informe o RG.", AllowEmptyStrings = true )]
         [Display(Name = "RG")]
         [StringLength(13, MinimumLength = 11, ErrorMessage = "O campo deve ter no mínimo 11 caracteres e no máximo 13.")]
+        [RequiredAttributeCPFCNPJ]
         public string RG { get; set; }
 
         [DataMember]
@@ -101,7 +103,7 @@ namespace GestaoFinancaPessoal.Models
         [DataMember]
         [Required(ErrorMessage = "Informe a Observação.")]
         [StringLength(256, ErrorMessage = "O campo deve ter no máximo 256.")]
-        [Display(Name = "Observações.")]
+        [Display(Name = "Observações")]
         public string Observacao { get; set; }
 
 

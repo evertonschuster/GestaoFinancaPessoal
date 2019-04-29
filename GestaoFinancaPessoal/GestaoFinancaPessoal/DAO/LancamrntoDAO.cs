@@ -41,7 +41,7 @@ namespace GestaoFinancaPessoal.DAO
         }
         public virtual IList<Lancamento> List(VisualizarLancamentoViewModel v, Boolean mapeado = false)
         {
-
+            VereficarLancamentosPendentes();
             //criacao do filtro
             Expression<Func<Lancamento, bool>> predicate =
                 l => (l.Conta.Id == v.Conta.Id || v.Conta.Id == 0)
@@ -61,7 +61,28 @@ namespace GestaoFinancaPessoal.DAO
             {
                 return DbSet.AsNoTracking().Include(l => l.Conta).Where(predicate).OrderByDescending(l => l.DataVencimento).ToList();//ele nao mapeia os objetos 
             }
-            
+
+        }
+
+        public void VereficarLancamentosPendentes()
+        {
+            var lancamentosBaixa = DbSet.Where(l => l.IsPago == false && l.DataPagamento <= DateTime.Now).ToList();
+            foreach (var item in lancamentosBaixa)
+            {
+                item.IsPago = true;
+            }
+
+            this.SaveChanges();
+        }
+
+        public IList<NotificacaoViewModel> GetNotificacao(Notificacao n)
+        {
+            return DbSet.Where(l => l.DataVencimento <= n.DataInicio).Select(l => new NotificacaoViewModel()
+            {
+                Descricao = l.Descricao,
+                DataVence = l.DataVencimento,
+                TipoLancamento = l.TipoLancamento
+            }).ToList();
         }
     }
 }

@@ -55,19 +55,16 @@
                 <td>
                     @(item.Rua.Trim() + " nº " +
                                         item.Numero.Trim() + " " +
-                                        item.Complemento.Trim() + " " +
                                         item.Bairro.Trim() + " " +
-                                        item.Cidade.Trim() + " " +
-                                        item.Estado.Trim() + " CEP " +
+                                        item.Cidade.Trim() + " CEP " +
                                         item.Cep.Trim())
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Observacao)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Excluir</a>
                 </td>
             </tr>
         }

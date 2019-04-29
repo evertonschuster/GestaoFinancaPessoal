@@ -51,6 +51,8 @@ namespace GestaoFinancaPessoal.Data
 
         public DbSet<GestaoFinancaPessoal.ViewModels.RecorrenteViewModel> RecorrenteViewModel { get; set; }
 
+        public DbSet<GestaoFinancaPessoal.Models.Notificacao> Notificacao { get; set; }
+
 
     }
 }

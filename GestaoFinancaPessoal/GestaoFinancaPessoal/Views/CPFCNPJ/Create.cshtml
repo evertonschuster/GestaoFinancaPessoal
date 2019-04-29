@@ -9,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-12">
-        <form asp-action="Create">
+        <form asp-action="Create" asp-route-id="@(Model != null ? Model.Id.ToString() : "")">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -124,4 +124,9 @@
 
 
     <script src="~/js/CpfCnpj/Create.js"></script>
+
+    <script>
+
+        document.onload = SelecionaMascara($("#TipoPessoa").val());
+    </script>
 }

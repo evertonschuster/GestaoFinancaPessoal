@@ -20,7 +20,7 @@ namespace GestaoFinancaPessoal.Controllers
         public ActionResult Index()
         {
             var contribuinteDAO = this.DAO.NewDAO<CpfCnpjDAO>();
-            return View(contribuinteDAO.List());
+            return View(nameof(Index), contribuinteDAO.List());
         }
 
 
@@ -30,10 +30,10 @@ namespace GestaoFinancaPessoal.Controllers
             return View();
         }
 
-        // POST: CPFCNPJ/Create
+        // POST: CPFCNPJ/Create/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(CPFCNPJ contribuinte )
+        public ActionResult Create( CPFCNPJ contribuinte)
         {
             try
             {
@@ -48,18 +48,28 @@ namespace GestaoFinancaPessoal.Controllers
                 }
 
                 var contribuinteDAO = this.DAO.NewDAO<CpfCnpjDAO>();
-                if (!ModelState.IsValid )
+                if (!ModelState.IsValid)
                 {
-                    return View (contribuinte);
+                    return View(contribuinte);
                 }
 
-                contribuinteDAO.Add(contribuinte);
+                if (contribuinte.Id == 0)
+                {
+                    contribuinteDAO.Add(contribuinte);
+                    ViewBag.Salvo = true;
+                }
+                else
+                {
+                    contribuinteDAO.Update (contribuinte);
+                    ViewBag.Alterado = true;
+
+                }
+
                 contribuinteDAO.SaveChanges();
-                ViewBag.Salvo = true;
 
                 return View(contribuinte);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View(contribuinte);
             }
@@ -68,7 +78,8 @@ namespace GestaoFinancaPessoal.Controllers
         // GET: CPFCNPJ/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var CPFCNPJDAO = this.DAO.NewDAO<CpfCnpjDAO>();
+            return View("Create", CPFCNPJDAO.getById(id));
         }
 
         // POST: CPFCNPJ/Edit/5
@@ -91,7 +102,12 @@ namespace GestaoFinancaPessoal.Controllers
         // GET: CPFCNPJ/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var CPFCNPJDAO = this.DAO.NewDAO<CpfCnpjDAO>();
+            CPFCNPJDAO.Remove(new CPFCNPJ { Id = id });
+            CPFCNPJDAO.SaveChanges();
+            ViewBag.Excluido = true;
+
+            return Index();
         }
 
         // POST: CPFCNPJ/Delete/5
