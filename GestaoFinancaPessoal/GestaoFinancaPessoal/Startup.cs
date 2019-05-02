@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using GestaoFinancaPessoal.Authorization;
 using GestaoFinancaPessoal.Architecture;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 namespace GestaoFinancaPessoal
 {
@@ -29,14 +31,32 @@ namespace GestaoFinancaPessoal
         #region snippet_defaultPolicy
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration.GetConnectionString("Default");
-            //services.AddDbContext<DbContext, FinancaContexto>(options => options.UseSqlServer(connectionString));
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+            if (Environment.IsDevelopment())
+            {
+                string connectionString = Configuration.GetConnectionString("DefaultLocal");
+                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+            }
+            else
+            {
+                string connectionString = Configuration.GetConnectionString("DefaultHeroku");
+                services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+            }
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+               // Default Password settings.
+               options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 6;
+                options.Password.RequiredUniqueChars = 0;
+            });
             //var skipHTTPS = Configuration.GetValue<bool>("LocalTest:skipHTTPS");
             //// requires using Microsoft.AspNetCore.Mvc;
             //services.Configure<MvcOptions>(options =>
@@ -110,6 +130,17 @@ namespace GestaoFinancaPessoal
             {
                 app.UseExceptionHandler("/Error");
             }
+
+
+            var supportedCultures = new[] { new CultureInfo("pt-BR") };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(culture: "pt-BR", uiCulture: "pt-BR"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
+
+
 
             app.UseStaticFiles();
 

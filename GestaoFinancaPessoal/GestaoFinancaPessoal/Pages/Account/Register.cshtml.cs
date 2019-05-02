@@ -42,7 +42,7 @@ namespace GestaoFinancaPessoal.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage ="Nome obrigatório")]
+            [Required(ErrorMessage = "Nome obrigatório")]
             //[StringLength(256,ErrorMessage = "O {o} deve ter minimo {1} caracteres e {2} no maxímo", MinimumLength = 6)]
             [Display(Name = "Nome")]
             public string Username { get; set; }
@@ -74,7 +74,7 @@ namespace GestaoFinancaPessoal.Pages.Account
             ReturnUrl = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Username , Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.Username, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -89,7 +89,11 @@ namespace GestaoFinancaPessoal.Pages.Account
                 }
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    if (error.Code == "DuplicateUserName"){
+                        ModelState.AddModelError(string.Empty, $"O usuario '{Input.Username}' já está Cadastrado.");
+                    }else{
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
                 }
             }
 

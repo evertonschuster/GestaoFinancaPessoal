@@ -51,7 +51,7 @@ namespace GestaoFinancaPessoal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Categoria categoria)
         {
-            var categoriaDAO = new CategoriaDAO(this.DAO);
+            var categoriaDAO = this.DAO.NewDAO<CategoriaDAO>();
 
             ViewBag.Categoria = categoriaDAO.ListCategoria();
             ViewBag.Salvo = false;
@@ -93,7 +93,7 @@ namespace GestaoFinancaPessoal.Controllers
         // GET: Categoria/Edit/5
         public ActionResult Edit(int id)
         {
-            var categoriaDAO = new CategoriaDAO(this.DAO);
+            var categoriaDAO = this.DAO.NewDAO<CategoriaDAO>();
             ViewBag.Categoria = categoriaDAO.ListCategoria();
 
             var categoria = categoriaDAO.getById(id);
@@ -105,7 +105,7 @@ namespace GestaoFinancaPessoal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Categoria categoria)
         {
-            var categoriaDAO = new CategoriaDAO(this.DAO);
+            var categoriaDAO = this.DAO.NewDAO<CategoriaDAO>();
 
             ViewBag.Categoria = categoriaDAO.ListCategoria();
             ViewBag.Alterado = false;
@@ -146,7 +146,7 @@ namespace GestaoFinancaPessoal.Controllers
         // GET: Categoria/Delete/5
         public ActionResult Delete(int id)
         {
-            var categoriaDAO = new CategoriaDAO(this.DAO);
+            var categoriaDAO = this.DAO.NewDAO<CategoriaDAO>();
             try
             {
                 ViewBag.Excluido = false;
@@ -175,7 +175,7 @@ namespace GestaoFinancaPessoal.Controllers
         // GET: Categoria/Delete/5
         public ActionResult Suspender(int id)
         {
-            var categoriaDAO = new CategoriaDAO(this.DAO);
+            var categoriaDAO = this.DAO.NewDAO<CategoriaDAO>();
             try
             {
                 ViewBag.Suspenso = false;
@@ -222,7 +222,7 @@ namespace GestaoFinancaPessoal.Controllers
         [ValidateAntiForgeryToken]
         public IList<Categoria> ListCategoria()
         {
-            var categoriaDao = new CategoriaDAO(this.DAO);
+            var categoriaDao = this.DAO.NewDAO<CategoriaDAO>();
             return categoriaDao.ListSubCategoria();
         }
     }

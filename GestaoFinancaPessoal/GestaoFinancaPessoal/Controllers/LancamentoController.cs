@@ -31,7 +31,7 @@ namespace GestaoFinancaPessoal.Controllers
             var listLancamento = lancamentoDAO.List(visualizar);
             ViewBag.Conta = contaDAO.ListContaView();
 
-            return View(listLancamento);
+            return View("Index",listLancamento);
         }
 
         public ActionResult Busca(VisualizarLancamentoViewModel visualizarLancamentoViewModel)
@@ -264,7 +264,8 @@ namespace GestaoFinancaPessoal.Controllers
 
                 var listLancamento = lancamentoDAO.List();
                 ViewBag.Excluido = true;
-                return View("index", listLancamento);
+
+                return Index();
 
             }
             catch (ModelErrorException e)

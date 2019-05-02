@@ -56,7 +56,7 @@ namespace GestaoFinancaPessoal.Uteis.Attribute
 
             if(obj.TipoPessoa == TipoPessoa.FISICA)
             {
-                if(obj.RG == null || obj.RG.Length < 10)
+                if(obj.RG == null || obj.RG.Length < 5)
                 {
                     return new ValidationResult("RG Invalido");
                 }

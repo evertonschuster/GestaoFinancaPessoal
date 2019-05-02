@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="br">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - GestaoFinacaPessoal</title>
+    <link rel="manifest" href="~/manifest.json">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <environment exclude="Development">
@@ -44,6 +45,7 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
+
     <script>
         //warning error success info
         var salvo = '@ViewBag.Salvo';
@@ -53,7 +55,7 @@
         var erro = '@ViewBag.Erro';
 
         var semContainer = '@ViewBag.SemContainer';
-        
+
         if (salvo == 'True') {
             swal("Salvo com sucesso!", "", "success")
                 .then((value) => {
@@ -77,7 +79,7 @@
             swal("Alterado com sucesso!", "", "success")
                 .then((value) => {
                     var caminho = window.location.href.split("/");
-                    
+
                     if (isNaN(caminho[caminho.length - 1])) {
                         window.location.href = window.location.href + "/../";
                     } else {
@@ -95,6 +97,17 @@
     }
 
 
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function () {
+                    console.log('service worker registered');
+                })
+                .catch(function () {
+                    console.warn('service worker failed');
+                });
+        }
+    </script>
 
 </body>
 </html>

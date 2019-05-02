@@ -37,7 +37,7 @@ namespace GestaoFinancaPessoal.DAO
 
         public List<Conta> GetContaByDescricao(Conta conta)
         {
-            var result = this.DbSet.Where(c => c.Nome == conta.Nome).ToList();
+            var result = this.DbSet.Where(c => c.Nome == conta.Nome && c.IsSuspensa == false).ToList();
             return result;
         }
 

@@ -45,7 +45,7 @@ namespace GestaoFinancaPessoal.DAO
 
         public List<Categoria> GetCategoriaByDescricao(Categoria Categoria)
         {
-            var result = this.DbSet.Where(c => c.Nome == Categoria.Nome).ToList();
+            var result = this.DbSet.Where(c => c.Nome == Categoria.Nome && c.IsSuspenco == false).ToList();
             return result;
         }
 

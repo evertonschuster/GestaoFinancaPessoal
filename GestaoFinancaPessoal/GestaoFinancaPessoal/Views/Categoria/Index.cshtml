@@ -36,7 +36,7 @@
                             }
                             else
                             {
-                                <a asp-action="Suspender" asp-route-id="@categoria.Id" class="btn btn-warning btn-sm">Suspender</a>
+                                <a asp-action="Suspender" asp-route-id="@categoria.Id" class="btn btn-danger btn-sm">Excluir</a>
                             }
                         </div>
                     }
@@ -55,7 +55,7 @@
                         @{
                             if (item.HasLancamento)
                             {
-                                <a asp-action="Suspender" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Suspender</a>
+                                <a asp-action="Suspender" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Excluir</a>
                             }
                             else
                             {

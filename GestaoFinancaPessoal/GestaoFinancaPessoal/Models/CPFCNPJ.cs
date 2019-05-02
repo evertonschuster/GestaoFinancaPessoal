@@ -36,7 +36,7 @@ namespace GestaoFinancaPessoal.Models
 
         [DataMember]
         [Display(Name = "RG")]
-        [StringLength(13, MinimumLength = 11, ErrorMessage = "O campo deve ter no mínimo 11 caracteres e no máximo 13.")]
+        [StringLength(13, MinimumLength = 6, ErrorMessage = "O campo deve ter no mínimo 11 caracteres e no máximo 13.")]
         [RequiredAttributeCPFCNPJ]
         public string RG { get; set; }
 
@@ -71,7 +71,6 @@ namespace GestaoFinancaPessoal.Models
         public string Numero { get; set; }
 
         [DataMember]
-        [Required(ErrorMessage = "Informe o Complemento.")]
         [StringLength(256, ErrorMessage = "O campo deve ter no máximo 256.")]
         [Display(Name = "Complemento")]
         public string Complemento { get; set; }
@@ -101,7 +100,6 @@ namespace GestaoFinancaPessoal.Models
         public string Cep { get; set; }
 
         [DataMember]
-        [Required(ErrorMessage = "Informe a Observação.")]
         [StringLength(256, ErrorMessage = "O campo deve ter no máximo 256.")]
         [Display(Name = "Observações")]
         public string Observacao { get; set; }

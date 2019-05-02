@@ -19,6 +19,7 @@
 <script>
 
     $("#Model").on('hidden.bs.modal', function (e) {
+        debugger;
         // do something...
         let token = $("[name=__RequestVerificationToken]").val();
         let headers = {};
@@ -36,6 +37,8 @@
             data: "",
             headers: headers                //token de validacao para a controller
         }).done(function (response) {
+            debugger;
+
             Response(response);
         }
         );

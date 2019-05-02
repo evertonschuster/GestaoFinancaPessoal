@@ -19,7 +19,7 @@ namespace GestaoFinancaPessoal.Controllers
         // GET: Conta
         public ActionResult Index()
         {
-            var contaDAO = new ContaDAO(this.DAO);
+            var contaDAO = this.DAO.NewDAO<ContaDAO>();
             return View(contaDAO.ListContaView());
         }
 
@@ -45,7 +45,7 @@ namespace GestaoFinancaPessoal.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var contaDAO = new ContaDAO(this.DAO);
+                    var contaDAO = this.DAO.NewDAO<ContaDAO>();
 
                     conta.DataAtualizacao = DateTime.Now;
                     contaDAO.Add(conta);
@@ -71,7 +71,7 @@ namespace GestaoFinancaPessoal.Controllers
         // GET: Conta/Edit/5
         public ActionResult Edit(int id)
         {
-            var contaDAO = new ContaDAO(this.DAO);
+            var contaDAO = this.DAO.NewDAO<ContaDAO>();
             var conta = contaDAO.getById(id);
 
             return View(conta);
@@ -88,7 +88,7 @@ namespace GestaoFinancaPessoal.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    var contaDAO = new ContaDAO(this.DAO);
+                    var contaDAO = this.DAO.NewDAO<ContaDAO>();
 
                     conta.Id = id;
                     conta.DataAtualizacao = DateTime.Now;
@@ -118,7 +118,7 @@ namespace GestaoFinancaPessoal.Controllers
             {
                 ViewBag.Excluido = false;
 
-                var contaDAO = new ContaDAO(this.DAO);
+                var contaDAO = this.DAO.NewDAO<ContaDAO>();
                 Conta conta = contaDAO.getById(id);
 
                 contaDAO.Remove(conta);
@@ -140,7 +140,7 @@ namespace GestaoFinancaPessoal.Controllers
             {
                 ViewBag.Suspenso = false;
 
-                var contaDAO = new ContaDAO(this.DAO);
+                var contaDAO = this.DAO.NewDAO<ContaDAO>();
                 Conta conta = contaDAO.getById(id);
                 conta.IsSuspensa = true;
                 contaDAO.Update(conta);
@@ -177,7 +177,7 @@ namespace GestaoFinancaPessoal.Controllers
         [ValidateAntiForgeryToken]
         public IList<Conta> ListConta()
         {
-            var contaDAO = new ContaDAO(this.DAO);
+            var contaDAO = this.DAO.NewDAO<ContaDAO>();
             return contaDAO.List();
         }
     }
