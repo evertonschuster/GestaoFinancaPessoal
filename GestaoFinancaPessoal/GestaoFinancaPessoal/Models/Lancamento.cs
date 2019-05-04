@@ -48,14 +48,14 @@ namespace GestaoFinancaPessoal.Models
         [DataType(DataType.Date)]
         [Display(Name = "Data de pagamento")]
         [Required(ErrorMessage = "Informe a data de pagamento.")]
-        public DateTime DataPagamento { get; set; }
+        public DateTime DataPagamento { get; set; } = DateTime.Now;
 
         [DataMember]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         [Display(Name = "Data de vencimento")]
         [Required(ErrorMessage = "Informe a data de vencimento.")]
-        public DateTime DataVencimento { get; set; }
+        public DateTime DataVencimento { get; set; } = DateTime.Now;
 
         [DataMember]
         [Display(Name = "Subcategoria")]
@@ -69,13 +69,16 @@ namespace GestaoFinancaPessoal.Models
 
         [DataMember]
         [Display(Name = "Recorrente")]
-        public Recorrente Recorrente { get; set; }
+        public Recorrente Recorrente { get; set; } 
 
         public DateTime DataInclusao { get; set; }
 
         [DataMember]
         [Display(Name = "Conta destino")]
         public Conta ContaDestion { get; set; }
+
+        [DataMember]
+        public Notificacao Notificacao { get; set; } = new Notificacao() { Periodicidade = TipoPeriodicidadeNotificacao.HORAS, Tempo = 1 };
 
     }
 

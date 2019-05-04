@@ -95,6 +95,26 @@
             </div>
 
             <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Notificacao.Tempo" class="control-label"></label>
+                    <input asp-for="Notificacao.Tempo" class="form-control" />
+                    <span asp-validation-for="Notificacao.Tempo" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Notificacao.Periodicidade" class="control-label"></label>
+                    <select asp-for="Notificacao.Periodicidade" class="form-control">
+                        <option value="@((Int16)TipoPeriodicidadeNotificacao.MINUTOS)">Minutos</option>
+                        <option value="@((Int16)TipoPeriodicidadeNotificacao.HORAS)">Horas</option>
+                        <option value="@((Int16)TipoPeriodicidadeNotificacao.DIAS)">Dias</option>
+                        <option value="@((Int16)TipoPeriodicidadeNotificacao.SEMANAS)">Semanas</option>
+
+                    </select>
+                    <span asp-validation-for="Notificacao.Periodicidade" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="row">
                 <div class="form-group col-md-2">
                     <a asp-action="Index" asp-controller="Lancamento" class="btn btn-info">Voltar</a>
                 </div>

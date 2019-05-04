@@ -85,7 +85,7 @@ namespace GestaoFinancaPessoal.Controllers
             ViewBag.Categoria = categoriaDAO.ListSubCategoria();
             ViewBag.Conta = contaDAO.List();
 
-            return View();
+            return View(new LancamentoViewModel());
         }
 
         // POST: Lancamento/Create
