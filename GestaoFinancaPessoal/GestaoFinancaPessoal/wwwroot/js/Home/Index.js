@@ -33,7 +33,6 @@ function EnviarConfiguracaoNotificacao() {
         Periodicidade: $("#Periodicidade").val()
     }
 
-    debugger;
     if (!(!isNaN(parseFloat(Notificacao.Tempo)) && isFinite(Notificacao.Tempo))) {
         $("[data-valmsg-for='Tempo']").html("<span id='Tempo - error' class=''>Informe o Tempo.</span>");
         return;
@@ -142,7 +141,7 @@ function CarregarNotificacao() {
             }
             conteudo +=
                 "<li> " +
-                "   <div class='notification-content'> " +
+                "   <div class='notification-content' onclick='SetURLIframe(\"lancamento/Edit/" + item.id + "\")'> " +
                 "        <small class='notification-timestamp pull-right'>" + item.dataVence.substring(8, 10) + "/" + item.dataVence.substring(5, 7) + "/" + item.dataVence.substring(0, 4) + "</small> " +
                 "        <div class='notification-heading'>" + item.descricao + "</div> " +
                 "        <div class='notification-text " + cor + "'>" + item.strTipoLancamento + "</div> " +
@@ -154,4 +153,15 @@ function CarregarNotificacao() {
     }
 
     );
+}
+
+
+
+document.onloadend = reportWindowSize();
+window.addEventListener('resize', reportWindowSize);
+function reportWindowSize() {
+
+    var windowHeight = window.innerHeight;
+
+    $("#iFrameForm").height(windowHeight - $(".header").height() - 4);
 }

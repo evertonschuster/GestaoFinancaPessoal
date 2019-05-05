@@ -28,6 +28,10 @@ namespace GestaoFinancaPessoal.Models
         public int Quantidade { get; set; }
 
         [DataMember]
+        [Display(Name = "Mensal")]
+        public bool IsMensal { get; set; }
+
+        [DataMember]
         [Display(Name = "Data Inicial")]
         [Required(ErrorMessage = "Informe a data de Inicio.")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]

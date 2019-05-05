@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GestaoFinancaPessoal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190504022337_NotificacaoLancamento")]
-    partial class NotificacaoLancamento
+    [Migration("20190505194612_NotificacaoMigration")]
+    partial class NotificacaoMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -227,7 +227,10 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<DateTime>("DataInclusao");
 
-                    b.Property<DateTime>("DataPagamento");
+                    b.Property<DateTime>("DataNotificacao")
+                        .HasColumnName("Notificacao");
+
+                    b.Property<DateTime?>("DataPagamento");
 
                     b.Property<DateTime>("DataVencimento");
 
@@ -239,9 +242,11 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<bool>("IsPago");
 
-                    b.Property<int?>("NotificacaoId");
+                    b.Property<int>("Periodicidade");
 
                     b.Property<int?>("RecorrenteId");
+
+                    b.Property<int>("Tempo");
 
                     b.Property<string>("TipoLancamento")
                         .IsRequired();
@@ -257,8 +262,6 @@ namespace GestaoFinancaPessoal.Migrations
                     b.HasIndex("ContaDestionId");
 
                     b.HasIndex("ContaId");
-
-                    b.HasIndex("NotificacaoId");
 
                     b.HasIndex("RecorrenteId");
 
@@ -290,6 +293,8 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired();
+
+                    b.Property<bool>("IsMensal");
 
                     b.Property<int>("ParcelaInicial");
 
@@ -420,6 +425,8 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<DateTime?>("DataFinal");
 
+                    b.Property<bool?>("IsAvancado");
+
                     b.Property<int>("Periodicidade");
 
                     b.Property<int>("Repetir");
@@ -452,10 +459,6 @@ namespace GestaoFinancaPessoal.Migrations
                         .WithMany()
                         .HasForeignKey("ContaId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("GestaoFinancaPessoal.Models.Notificacao", "Notificacao")
-                        .WithMany()
-                        .HasForeignKey("NotificacaoId");
 
                     b.HasOne("GestaoFinancaPessoal.Models.Recorrente", "Recorrente")
                         .WithMany()

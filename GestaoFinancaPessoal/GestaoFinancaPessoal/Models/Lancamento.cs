@@ -47,8 +47,8 @@ namespace GestaoFinancaPessoal.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         [Display(Name = "Data de pagamento")]
-        [Required(ErrorMessage = "Informe a data de pagamento.")]
-        public DateTime DataPagamento { get; set; } = DateTime.Now;
+        //[Required(ErrorMessage = "Informe a data de pagamento.")]
+        public DateTime? DataPagamento { get; set; } = DateTime.Now;
 
         [DataMember]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -69,8 +69,9 @@ namespace GestaoFinancaPessoal.Models
 
         [DataMember]
         [Display(Name = "Recorrente")]
-        public Recorrente Recorrente { get; set; } 
+        public Recorrente Recorrente { get; set; }
 
+        [DataMember] 
         public DateTime DataInclusao { get; set; }
 
         [DataMember]
@@ -78,8 +79,26 @@ namespace GestaoFinancaPessoal.Models
         public Conta ContaDestion { get; set; }
 
         [DataMember]
-        public Notificacao Notificacao { get; set; } = new Notificacao() { Periodicidade = TipoPeriodicidadeNotificacao.HORAS, Tempo = 1 };
+        [Column("Notificacao")]
+        public DateTime DataNotificacao { get; set; }
 
+
+        [DataMember]
+        [Required(ErrorMessage = "Informe o Tempo.")]
+        public int Tempo { get; set; }
+
+        [DataMember]
+        [Column("Periodicidade")]
+        public TipoPeriodicidadeNotificacao PeriodicidadeNotificacao { get; set; }
+
+        public TimeSpan DataInicio
+        {
+            get
+            {
+                var minutos = this.Tempo * (int)this.PeriodicidadeNotificacao;
+                return new TimeSpan(0,minutos,0);
+            }
+        }
     }
 
     public enum TipoLancamento
@@ -92,5 +111,13 @@ namespace GestaoFinancaPessoal.Models
         TRANSFERENCIA,
         [Display(Name = "TODOS")]
         TODOS
+    }
+
+    public enum TipoPeriodicidadeNotificacao
+    {
+        MINUTOS = 1,
+        HORAS = 60,
+        DIAS = 1440,
+        SEMANAS = 10080
     }
 }

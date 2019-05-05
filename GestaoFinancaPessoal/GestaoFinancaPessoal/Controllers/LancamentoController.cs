@@ -123,6 +123,12 @@ namespace GestaoFinancaPessoal.Controllers
                     ModelState.Remove("DataInicial");
                 }
 
+                if (recorrente.IsMensal)
+                {
+                    ModelState.Remove("Repetir");
+                    ModelState.Remove("DataInicial");
+                }
+
                 if (!ModelState.IsValid)
                 {
                     return View(lancamento);
@@ -170,8 +176,9 @@ namespace GestaoFinancaPessoal.Controllers
                 lancamento.Recorrente = recorrente.GetRecorrente();
                 lancamento.DataInclusao = DateTime.Now;
                 lancamentoDAO.Attach(lancamento);
-                lancamentoDAO.Add(lancamento);
-                if (lancamento.IsAutomatico)
+                lancamentoDAO.Add(lancamento );
+
+                if (lancamento.IsAutomatico )
                 {
                     recorrenteDAO.LancarRecorrente(lancamento);
                 }

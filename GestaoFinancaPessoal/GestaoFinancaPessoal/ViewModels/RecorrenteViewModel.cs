@@ -20,6 +20,10 @@ namespace GestaoFinancaPessoal.ViewModels
         [Display(Name = "Periodicidade")]
         public TipoPeriodicidade Periodicidade { get; set; }
 
+        [DataMember]
+        [Display(Name = "Avançado")]
+        public bool? IsAvancado { get; set; }
+
         [Display(Name = "Data Final")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
@@ -37,6 +41,7 @@ namespace GestaoFinancaPessoal.ViewModels
             recorrente.Quantidade= this.Quantidade - (this.ParcelaInicial == 0 ? this.ParcelaInicial : this.ParcelaInicial - 1);
             recorrente.ParcelaInicial = this.ParcelaInicial;
             recorrente.DataInicial = this.DataInicial;
+            recorrente.IsMensal = this.IsMensal;
 
             return recorrente;
         }

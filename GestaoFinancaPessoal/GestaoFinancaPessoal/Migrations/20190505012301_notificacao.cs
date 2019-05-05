@@ -1,16 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GestaoFinancaPessoal.Migrations
 {
-    public partial class NotificacaoLancamento : Migration
+    public partial class notificacao : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "NotificacaoId",
+            migrationBuilder.AddColumn<DateTime>(
+                name: "Notificacao",
                 table: "Lancamento",
-                nullable: true);
+                nullable: false,
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
             migrationBuilder.AlterColumn<string>(
                 name: "Observacao",
@@ -28,35 +30,28 @@ namespace GestaoFinancaPessoal.Migrations
                 oldClrType: typeof(string),
                 oldMaxLength: 256);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Lancamento_NotificacaoId",
-                table: "Lancamento",
-                column: "NotificacaoId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Lancamento_Notificacao_NotificacaoId",
-                table: "Lancamento",
-                column: "NotificacaoId",
-                principalTable: "Notificacao",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+            migrationBuilder.CreateTable(
+                name: "Notificacao",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Tempo = table.Column<int>(nullable: false),
+                    Periodicidade = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notificacao", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Lancamento_Notificacao_NotificacaoId",
-                table: "Lancamento");
-
             migrationBuilder.DropTable(
                 name: "Notificacao");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Lancamento_NotificacaoId",
-                table: "Lancamento");
-
             migrationBuilder.DropColumn(
-                name: "NotificacaoId",
+                name: "Notificacao",
                 table: "Lancamento");
 
             migrationBuilder.AlterColumn<string>(

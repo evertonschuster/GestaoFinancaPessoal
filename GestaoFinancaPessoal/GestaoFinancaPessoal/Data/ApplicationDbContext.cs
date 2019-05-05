@@ -32,6 +32,7 @@ namespace GestaoFinancaPessoal.Data
             builder.Entity<Lancamento>().HasOne(l => l.ContaDestion).WithMany().OnDelete(DeleteBehavior.Restrict);
             builder.Entity<Lancamento>().HasOne(l => l.Conta).WithMany().OnDelete(DeleteBehavior.Restrict);
 
+
             //builder.Entity<Categoria>().Ignore("HasLancamento");
             //builder.Entity<CategoriaViewModel>().Ignore("HasLancamento");
 

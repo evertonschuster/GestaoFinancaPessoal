@@ -30,8 +30,18 @@ namespace GestaoFinancaPessoal.DAO
                 lancamento = lancamento.Clone();
                 lancamento.Id = 0;
                 lancamento.Descricao = lancamentoOLD.Descricao + $" - {i + 2}";
-                lancamento.DataPagamento = lancamento.DataPagamento.AddDays(lancamentoOLD.Recorrente.Periodo);
-                lancamento.DataVencimento = lancamento.DataVencimento.AddDays(lancamentoOLD.Recorrente.Periodo);
+
+                if (lancamento.Recorrente.IsMensal)
+                {
+                    lancamento.DataPagamento = lancamento.DataPagamento?.AddMonths(1);
+                    lancamento.DataVencimento = lancamento.DataVencimento.AddMonths(1);
+                }
+                else
+                {
+                    lancamento.DataPagamento = lancamento.DataPagamento?.AddDays(lancamentoOLD.Recorrente.Periodo);
+                    lancamento.DataVencimento = lancamento.DataVencimento.AddDays(lancamentoOLD.Recorrente.Periodo);
+                }
+
                 lancamento.Recorrente = lancamentoOLD.Recorrente;
 
                 lancamentoDAO.Add(lancamento);

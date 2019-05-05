@@ -1,17 +1,11 @@
 ﻿using GestaoFinancaPessoal.Controllers;
-using GestaoFinancaPessoal.Data;
 using GestaoFinancaPessoal.Models;
-using GestaoFinancaPessoal.Uteis;
-using GestaoFinancaPessoal.Uteis.Exception.ModelErrorException;
 using GestaoFinancaPessoal.ViewModels;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace GestaoFinancaPessoal.DAO
 {
@@ -37,8 +31,36 @@ namespace GestaoFinancaPessoal.DAO
                 this.ModelState.AddModelError(nameof(l.ContaDestion.Id), "Conta destino nao pode ser a mesma da origem.");
                 return;
             }
+
+            if (l.DataNotificacao != null)
+            {
+                l.DataNotificacao = l.DataVencimento.Add(l.DataInicio * -1);
+            }
+            else
+            {
+                l.DataNotificacao = l.DataVencimento;
+            }
+
             base.Add(l);
         }
+
+        public override void Update(Lancamento l)
+        {
+            if (this.IsValid(l))
+            {
+                if (l.DataNotificacao != null)
+                {
+                    l.DataNotificacao = l.DataVencimento.Add(l.DataInicio * -1);
+                }
+                else
+                {
+                    l.DataNotificacao = l.DataVencimento;
+                }
+
+                DbSet.Update(l);
+            }
+        }
+
         public virtual IList<Lancamento> List(VisualizarLancamentoViewModel v, Boolean mapeado = false)
         {
             VereficarLancamentosPendentes();
@@ -77,11 +99,12 @@ namespace GestaoFinancaPessoal.DAO
 
         public IList<NotificacaoViewModel> GetNotificacao(Notificacao n)
         {
-            return DbSet.Where(l => l.DataVencimento <= n.DataInicio).Select(l => new NotificacaoViewModel()
+            return DbSet.Where(l => l.DataNotificacao <= n.DataInicio && l.IsPago == false).Select(l => new NotificacaoViewModel()
             {
                 Descricao = l.Descricao,
                 DataVence = l.DataVencimento,
-                TipoLancamento = l.TipoLancamento
+                TipoLancamento = l.TipoLancamento,
+                Id = l.Id
             }).ToList();
         }
     }

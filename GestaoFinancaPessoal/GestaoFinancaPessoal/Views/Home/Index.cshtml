@@ -133,11 +133,11 @@
                                 </span>
                                 <div class="drop-down dropdown-profile dropdown-menu dropdown-menu-right">
                                     <div class="dropdown-content-heading">
-                                        <span class="text-left">Upgrade Now</span>
-                                        <p class="trial-day">30 Days Trail</p>
+                                        <span class="text-left">Gestão Pessoal</span>
+                                        <p class="trial-day">Bem Vindo @UserManager.GetUserName(User) !</p>
                                     </div>
                                     <div class="dropdown-content-body">
-                                        <ul>
+                                        @*<ul>
                                             <li>
                                                 <a href="#">
                                                     <i class="ti-user"></i>
@@ -163,8 +163,8 @@
                                                     <i class="ti-lock"></i>
                                                     <span>Lock Screen</span>
                                                 </a>
-                                            </li>
-                                            <li><a onclick="Logout()"><i class="ti-power-off"></i> Logout</a></li>
+                                            </li>*@
+                                        <li><a onclick="Logout()"><i class="ti-power-off"></i> Logout</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -200,19 +200,6 @@
 @section Scripts{
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <script src="~/js/Home/Index.js">
-    </script>
+    <script src="~/js/Home/Index.js"></script>
 
-    <script>
-        document.onloadend = reportWindowSize();
-        window.addEventListener('resize', reportWindowSize);
-        function reportWindowSize() {
-
-            var windowHeight = window.innerHeight;
-
-            $("#iFrameForm").height(windowHeight - $(".header").height() - 4);
-        }
-
-
-    </script>
 }

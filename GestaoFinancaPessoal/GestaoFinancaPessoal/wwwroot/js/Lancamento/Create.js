@@ -49,5 +49,32 @@ function Response(response) {
 }
 
 
+var typingTimer; //timer identifier
+var doneTypingInterval = 1000; //time in ms, 1 second for example
+
+//on keyup, start the countdown
+$('#Valor').keyup(function () {
+    clearTimeout(typingTimer);
+    if ($('#Valor').val) {
+        typingTimer = setTimeout(doneTyping, doneTypingInterval);
+    }
+});
+
+//user is "finished typing," do something
+function doneTyping() {
+    PreencherValorPago();
+}
 
 
+$('#Valor').blur(function () {
+    PreencherValorPago();
+})
+
+
+function PreencherValorPago() {
+    var valorPago = $("#ValorPago").val().replace(",", "").replace(".", "");
+
+    if (valorPago <= 0) {
+        $("#ValorPago").val($('#Valor').val());
+    }
+}

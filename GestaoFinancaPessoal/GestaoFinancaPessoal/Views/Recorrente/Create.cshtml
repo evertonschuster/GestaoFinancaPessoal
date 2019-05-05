@@ -1,66 +1,79 @@
 ﻿@model GestaoFinancaPessoal.ViewModels.RecorrenteViewModel
 
+
+
 <div class="row">
-    <div class="col-md-12">
+    <div class="form-group col-md-4">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-primary">
+                <input class="form-check-input" asp-for="IsMensal" type="radio" value="True" autocomplete="off" checked />
+                <label class="form-check-label">Mensal</label>
+            </label>
 
-        <div class="row">
-            <div class="form-group col-md-4">
-                <label asp-for="Repetir" class="control-label"></label>
-
-                <div class="row">
-                    <div class="col-md-6 col-6">
-                        <input asp-for="Repetir" class="form-control" onblur="CalcularPeriodo(); CalcularPeriodoFinal();" />
-                    </div>                    <div class="col-md-6  col-6">
-                        <select asp-for="Periodicidade" class="form-control" onblur="CalcularPeriodo(); CalcularPeriodoFinal();">
-                            <option value="@((Int32)TipoPeriodicidade.DIA)">Dia</option>
-                            <option value="@((Int32)TipoPeriodicidade.SEMANA)">Semana</option>
-                            <option value="@((Int32)TipoPeriodicidade.QUINZENA)">Quinzena</option>
-                            <option value="@((Int32)TipoPeriodicidade.MES)">Mes</option>
-                            <option value="@((Int32)TipoPeriodicidade.SEMESTRE)">Semestre</option>
-                            <option value="@((Int32)TipoPeriodicidade.ANO)">Ano</option>
-                        </select>
-                    </div>
-                </div>
-
-                <span asp-validation-for="Repetir" class="text-danger"></span>
-                <span asp-validation-for="Periodicidade" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-4">
-
-                <label asp-for="Quantidade" class="control-label"></label>
-                <input asp-for="Quantidade" class="form-control" asp-is-disabled="true" onblur="CalcularPeriodoFinal()" />
-                <span asp-validation-for="Quantidade" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-4">
-                <label asp-for="ParcelaInicial" class="control-label"></label>
-                <input asp-for="ParcelaInicial" class="form-control" onblur="CalcularPeriodoFinal()" />
-                <span asp-validation-for="ParcelaInicial" class="text-danger"></span>
-            </div>
+            <label class="btn btn-primary">
+                <input class="form-check-input" asp-for="IsAvancado" type="radio" value="False" autocomplete="off" />
+                <label class="form-check-label">Avançado</label>
+            </label>
         </div>
-
-
-        <div class="row">
-            <div class="form-group col-md-4">
-                <label asp-for="DataInicial" class="control-label"></label>
-                <input asp-for="DataInicial" class="form-control" />
-                <span asp-validation-for="DataInicial" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-4">
-                <label asp-for="DataFinal" class="control-label"></label>
-                <input asp-for="DataFinal" class="form-control" readonly />
-                <span asp-validation-for="DataFinal" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-4">
-                <label asp-for="ValorTotal" class="control-label"></label>
-                <input asp-for="ValorTotal" class="form-control" readonly/>
-                <span asp-validation-for="ValorTotal" class="text-danger"></span>
-            </div>
-        </div>
-
-
-
+        <span asp-validation-for="IsMensal" class="text-danger"></span>
     </div>
 </div>
 
+
+<div class="row">
+    <div class="form-group col-md-4"  id="DivPeriodicidade" style="display:none">
+        <label asp-for="Repetir" class="control-label"></label>
+
+        <div class="row">
+            <div class="col-md-6 col-6">
+                <input asp-for="Repetir" class="form-control" onblur="CalcularPeriodo(); CalcularPeriodoFinal();" />
+            </div>                    <div class="col-md-6  col-6">
+                <select asp-for="Periodicidade" class="form-control" onblur="CalcularPeriodo(); CalcularPeriodoFinal();">
+                    <option value="@((Int32)TipoPeriodicidade.DIA)">Dia</option>
+                    <option value="@((Int32)TipoPeriodicidade.SEMANA)">Semana</option>
+                    <option value="@((Int32)TipoPeriodicidade.QUINZENA)">Quinzena</option>
+                    <option value="@((Int32)TipoPeriodicidade.MES)">Mes</option>
+                    <option value="@((Int32)TipoPeriodicidade.SEMESTRE)">Semestre</option>
+                    <option value="@((Int32)TipoPeriodicidade.ANO)">Ano</option>
+                </select>
+            </div>
+        </div>
+
+        <span asp-validation-for="Repetir" class="text-danger"></span>
+        <span asp-validation-for="Periodicidade" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-4">
+
+        <label asp-for="Quantidade" class="control-label"></label>
+        <input asp-for="Quantidade" class="form-control" asp-is-disabled="true" onblur="CalcularPeriodoFinal()" />
+        <span asp-validation-for="Quantidade" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-4">
+        <label asp-for="ParcelaInicial" class="control-label"></label>
+        <input asp-for="ParcelaInicial" class="form-control" onblur="CalcularPeriodoFinal()" />
+        <span asp-validation-for="ParcelaInicial" class="text-danger"></span>
+    </div>
+</div>
+
+
+<div class="row" id="DivData" style="display:none">
+    <div class="form-group col-md-4">
+        <label asp-for="DataInicial" class="control-label"></label>
+        <input asp-for="DataInicial" class="form-control" />
+        <span asp-validation-for="DataInicial" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-4">
+        <label asp-for="DataFinal" class="control-label"></label>
+        <input asp-for="DataFinal" class="form-control" readonly />
+        <span asp-validation-for="DataFinal" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-4">
+        <label asp-for="ValorTotal" class="control-label"></label>
+        <input asp-for="ValorTotal" class="form-control" readonly />
+        <span asp-validation-for="ValorTotal" class="text-danger"></span>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
 
 <script src="~/js/Recorrente/Create.js"></script>

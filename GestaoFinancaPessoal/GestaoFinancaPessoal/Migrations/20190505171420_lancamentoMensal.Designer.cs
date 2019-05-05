@@ -4,14 +4,16 @@ using GestaoFinancaPessoal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GestaoFinancaPessoal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190505171420_lancamentoMensal")]
+    partial class lancamentoMensal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -225,10 +227,7 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<DateTime>("DataInclusao");
 
-                    b.Property<DateTime>("DataNotificacao")
-                        .HasColumnName("Notificacao");
-
-                    b.Property<DateTime?>("DataPagamento");
+                    b.Property<DateTime>("DataPagamento");
 
                     b.Property<DateTime>("DataVencimento");
 
@@ -240,11 +239,9 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<bool>("IsPago");
 
-                    b.Property<int>("Periodicidade");
+                    b.Property<DateTime>("Notificacao");
 
                     b.Property<int?>("RecorrenteId");
-
-                    b.Property<int>("Tempo");
 
                     b.Property<string>("TipoLancamento")
                         .IsRequired();

@@ -44,5 +44,8 @@ namespace GestaoFinancaPessoal.ViewModels
         [Display(Name = "Conta")]
         public Conta Conta { get; set; }
 
+        [DataMember]
+        public Notificacao Notificacao { get; set; }
+
     }
 }

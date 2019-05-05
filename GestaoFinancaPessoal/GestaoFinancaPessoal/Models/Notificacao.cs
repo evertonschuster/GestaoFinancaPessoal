@@ -27,11 +27,4 @@ namespace GestaoFinancaPessoal.Models
         }
     }
 
-    public enum TipoPeriodicidadeNotificacao
-    {
-        MINUTOS = 1,
-        HORAS = 60,
-        DIAS = 1440,
-        SEMANAS = 10080
-    }
 }

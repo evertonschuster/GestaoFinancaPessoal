@@ -59,3 +59,23 @@ function CalcularPeriodoFinal() {
     }
     finally { }
 }
+
+$(function () {
+    $("#IsMensal").change(function (chk) {
+        $("#DivPeriodicidade").hide("slow");
+        $("#DivData").hide("slow");
+
+        $("#IsMensal").val("True");
+        $("#IsAvancado").val("False");
+
+    })
+
+    $("#IsAvancado").change(function (chk) {
+        $("#DivPeriodicidade").show("slow");
+        $("#DivData").show("slow");
+
+        $("#IsMensal").val("False");
+        $("#IsAvancado").val("True");
+    })
+
+})

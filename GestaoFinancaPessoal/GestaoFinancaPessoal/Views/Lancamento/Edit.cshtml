@@ -14,6 +14,8 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div asp-validation-summary="All" class="text-danger"></div>
             </div>
+            <input asp-for="DataNotificacao" type="hidden"/>
+
 
             <div class="row">
                 <div class="form-group col-md-3" Tipo>
@@ -74,8 +76,34 @@
             <div class="form-group">
                 <div class="checkbox">
                     <label>
-                        <input asp-for="IsAutomatico" /> @Html.DisplayNameFor(model => model.IsAutomatico)
+                        <input asp-for="IsAutomatico" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" />
+                        @Html.DisplayNameFor(model => model.IsAutomatico)
                     </label>
+                </div>
+
+                @*<div class="collapse col-12" id="collapseExample">
+                <div class="card card-body">
+                    @{Html.RenderPartial("../Recorrente/Create", (Model == null || Model.RecorrenteViewModel == null ? null : Model.RecorrenteViewModel));}
+                </div>
+            </div>*@
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-1">
+                    <label asp-for="Tempo" class="control-label">Notificação</label>
+                    <input asp-for="Tempo" class="form-control" />
+                    <span asp-validation-for="Tempo" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-2">
+                    <label asp-for="PeriodicidadeNotificacao" class="control-label">  &nbsp;   </label>
+                    <select asp-for="PeriodicidadeNotificacao" class="form-control">
+                        <option value="@((Int16)TipoPeriodicidadeNotificacao.MINUTOS)">Minutos</option>
+                        <option value="@((Int16)TipoPeriodicidadeNotificacao.HORAS)">Horas</option>
+                        <option value="@((Int16)TipoPeriodicidadeNotificacao.DIAS)">Dias</option>
+                        <option value="@((Int16)TipoPeriodicidadeNotificacao.SEMANAS)">Semanas</option>
+
+                    </select>
+                    <span asp-validation-for="PeriodicidadeNotificacao" class="text-danger"></span>
                 </div>
             </div>
 

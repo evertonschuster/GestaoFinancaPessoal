@@ -28,6 +28,10 @@
     <Compile Remove="Migrations\20190406173021_CategoriaViewModel.cs" />
     <Compile Remove="Migrations\20190406175255_CategoriaViewModel1.cs" />
     <Compile Remove="Migrations\20190406180511_CategoriaViewModel1.cs" />
+    <Compile Remove="Migrations\20190505002735_notificacaoLancamento.cs" />
+    <Compile Remove="Migrations\20190505002735_notificacaoLancamento.Designer.cs" />
+    <Compile Remove="Migrations\20190505195644_NotificacaoMigration2.cs" />
+    <Compile Remove="Migrations\20190505195644_NotificacaoMigration2.Designer.cs" />
   </ItemGroup>
 
 
