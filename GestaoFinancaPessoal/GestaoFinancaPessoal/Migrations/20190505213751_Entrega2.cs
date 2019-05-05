@@ -1,10 +1,10 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace GestaoFinancaPessoal.Migrations
 {
-    public partial class primeiraEntrega : Migration
+    public partial class Entrega2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -52,7 +52,7 @@ namespace GestaoFinancaPessoal.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
                     HierarquiaId = table.Column<int>(nullable: true),
                     IsSuspenco = table.Column<bool>(nullable: false)
@@ -73,12 +73,11 @@ namespace GestaoFinancaPessoal.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Descricao = table.Column<string>(maxLength: 256, nullable: true),
                     Nome = table.Column<string>(maxLength: 256, nullable: false),
                     Saldo = table.Column<double>(nullable: false),
                     Tipo = table.Column<string>(maxLength: 256, nullable: false),
-                    Banco = table.Column<string>(nullable: true),
                     DataAtualizacao = table.Column<DateTime>(nullable: false),
                     IsSuspensa = table.Column<bool>(nullable: false)
                 },
@@ -92,7 +91,7 @@ namespace GestaoFinancaPessoal.Migrations
                 columns: table => new
                 {
                     ContactId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     OwnerID = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
@@ -108,16 +107,63 @@ namespace GestaoFinancaPessoal.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CPFCNPJ",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    TipoPessoa = table.Column<int>(nullable: false),
+                    CpfCnpj = table.Column<string>(maxLength: 18, nullable: false),
+                    Nome = table.Column<string>(maxLength: 100, nullable: false),
+                    NomeContato = table.Column<string>(maxLength: 100, nullable: true),
+                    RG = table.Column<string>(maxLength: 13, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: false),
+                    Telefones = table.Column<string>(maxLength: 256, nullable: false),
+                    Rua = table.Column<string>(maxLength: 256, nullable: false),
+                    Numero = table.Column<string>(maxLength: 256, nullable: false),
+                    Complemento = table.Column<string>(maxLength: 256, nullable: true),
+                    Bairro = table.Column<string>(maxLength: 256, nullable: false),
+                    Cidade = table.Column<string>(maxLength: 256, nullable: false),
+                    Estado = table.Column<string>(maxLength: 256, nullable: false),
+                    Cep = table.Column<string>(maxLength: 256, nullable: false),
+                    Observacao = table.Column<string>(maxLength: 256, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CPFCNPJ", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notificacao",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
+                    Tempo = table.Column<int>(nullable: false),
+                    Periodicidade = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notificacao", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Recorrente",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Quantidade = table.Column<int>(nullable: false),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     Periodo = table.Column<int>(nullable: false),
-                    ParcelaInicial = table.Column<decimal>(nullable: false),
-                    ParcelaTotal = table.Column<decimal>(nullable: false),
-                    Valor = table.Column<decimal>(nullable: false)
+                    ParcelaInicial = table.Column<int>(nullable: false),
+                    Quantidade = table.Column<int>(nullable: false),
+                    IsMensal = table.Column<bool>(nullable: false),
+                    DataInicial = table.Column<DateTime>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    Repetir = table.Column<int>(nullable: true),
+                    Periodicidade = table.Column<int>(nullable: true),
+                    IsAvancado = table.Column<bool>(nullable: true),
+                    DataFinal = table.Column<DateTime>(nullable: true),
+                    ValorTotal = table.Column<decimal>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -129,7 +175,7 @@ namespace GestaoFinancaPessoal.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -150,7 +196,7 @@ namespace GestaoFinancaPessoal.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -235,20 +281,23 @@ namespace GestaoFinancaPessoal.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     ContaId = table.Column<int>(nullable: false),
                     Valor = table.Column<decimal>(nullable: false),
                     ValorPago = table.Column<decimal>(nullable: false),
                     Descricao = table.Column<string>(maxLength: 256, nullable: false),
                     IsPago = table.Column<bool>(nullable: false),
                     IsAutomatico = table.Column<bool>(nullable: false),
-                    DataPagamento = table.Column<DateTime>(nullable: false),
+                    DataPagamento = table.Column<DateTime>(nullable: true),
                     DataVencimento = table.Column<DateTime>(nullable: false),
                     CategoriaId = table.Column<int>(nullable: false),
-                    Tipo = table.Column<string>(nullable: false),
+                    TipoLancamento = table.Column<string>(nullable: false),
                     RecorrenteId = table.Column<int>(nullable: true),
                     DataInclusao = table.Column<DateTime>(nullable: false),
-                    ContaDestionId = table.Column<int>(nullable: true)
+                    ContaDestionId = table.Column<int>(nullable: true),
+                    Notificacao = table.Column<DateTime>(nullable: false),
+                    Tempo = table.Column<int>(nullable: false),
+                    Periodicidade = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -288,8 +337,7 @@ namespace GestaoFinancaPessoal.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -315,8 +363,7 @@ namespace GestaoFinancaPessoal.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categoria_HierarquiaId",
@@ -365,7 +412,13 @@ namespace GestaoFinancaPessoal.Migrations
                 name: "Contact");
 
             migrationBuilder.DropTable(
+                name: "CPFCNPJ");
+
+            migrationBuilder.DropTable(
                 name: "Lancamento");
+
+            migrationBuilder.DropTable(
+                name: "Notificacao");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

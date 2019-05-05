@@ -3,8 +3,8 @@ using System;
 using GestaoFinancaPessoal.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace GestaoFinancaPessoal.Migrations
 {
@@ -15,9 +15,9 @@ namespace GestaoFinancaPessoal.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("GestaoFinancaPessoal.Data.ApplicationUser", b =>
                 {
@@ -64,8 +64,7 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -73,8 +72,7 @@ namespace GestaoFinancaPessoal.Migrations
             modelBuilder.Entity("GestaoFinancaPessoal.Models.CPFCNPJ", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Bairro")
                         .IsRequired()
@@ -138,8 +136,7 @@ namespace GestaoFinancaPessoal.Migrations
             modelBuilder.Entity("GestaoFinancaPessoal.Models.Categoria", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("HierarquiaId");
 
@@ -159,8 +156,7 @@ namespace GestaoFinancaPessoal.Migrations
             modelBuilder.Entity("GestaoFinancaPessoal.Models.Conta", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DataAtualizacao");
 
@@ -187,8 +183,7 @@ namespace GestaoFinancaPessoal.Migrations
             modelBuilder.Entity("GestaoFinancaPessoal.Models.Contact", b =>
                 {
                     b.Property<int>("ContactId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
 
@@ -214,8 +209,7 @@ namespace GestaoFinancaPessoal.Migrations
             modelBuilder.Entity("GestaoFinancaPessoal.Models.Lancamento", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("CategoriaId");
 
@@ -240,7 +234,8 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.Property<bool>("IsPago");
 
-                    b.Property<int>("Periodicidade");
+                    b.Property<int>("PeriodicidadeNotificacao")
+                        .HasColumnName("Periodicidade");
 
                     b.Property<int?>("RecorrenteId");
 
@@ -269,8 +264,7 @@ namespace GestaoFinancaPessoal.Migrations
             modelBuilder.Entity("GestaoFinancaPessoal.Models.Notificacao", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("Periodicidade");
 
@@ -284,8 +278,7 @@ namespace GestaoFinancaPessoal.Migrations
             modelBuilder.Entity("GestaoFinancaPessoal.Models.Recorrente", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("DataInicial");
 
@@ -325,8 +318,7 @@ namespace GestaoFinancaPessoal.Migrations
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                        .HasName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles");
                 });
@@ -334,8 +326,7 @@ namespace GestaoFinancaPessoal.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
@@ -354,8 +345,7 @@ namespace GestaoFinancaPessoal.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("ClaimType");
 
