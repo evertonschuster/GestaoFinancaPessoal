@@ -37,9 +37,9 @@ namespace GestaoFinancaPessoal.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = "Informe o Usuario")]
+            [Required(ErrorMessage = "Informe o Usuário")]
             //[EmailAddress(ErrorMessage="Email não é válido")]
-            [Display(Name = "Usuario")]
+            [Display(Name = "Usuário")]
             public string Username { get; set; }
 
             [Required(ErrorMessage = "Informe a senha")]

@@ -22,6 +22,7 @@ namespace GestaoFinancaPessoal.Models
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "Informe o saldo da conta.")]
+        [DisplayFormat(DataFormatString = "{0:N}", ApplyFormatInEditMode = true)]
         [DataMember]
         public double Saldo { get; set; }
 

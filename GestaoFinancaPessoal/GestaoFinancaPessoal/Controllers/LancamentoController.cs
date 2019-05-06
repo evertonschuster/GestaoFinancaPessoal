@@ -109,6 +109,7 @@ namespace GestaoFinancaPessoal.Controllers
                 ModelState.Remove("Conta.Tipo");
                 ModelState.Remove("ContaDestion.Nome");
                 ModelState.Remove("ContaDestion.Tipo");
+                ModelState.Remove("ContaDestion.Id");
 
                 if (!lancamento.IsAutomatico)
                 {
@@ -159,6 +160,7 @@ namespace GestaoFinancaPessoal.Controllers
 
                     if (lancamento.TipoLancamento == TipoLancamento.RECEITA)
                     {
+                        
                         conta.Saldo += Convert.ToDouble(lancamento.ValorPago);
                     }
                     contaDAO.Update(conta);
@@ -166,6 +168,12 @@ namespace GestaoFinancaPessoal.Controllers
                     if (lancamento.TipoLancamento == TipoLancamento.TRANSFERENCIA)
                     {
                         conta = contaDAO.getById(lancamento.ContaDestion.Id);
+
+                        if (conta == null)
+                        {
+                            this.ModelState.AddModelError(nameof(lancamento.ContaDestion.Id), "Informe a Conta destino.");
+                            throw new ModelErrorException();
+                        }
                         conta.Saldo += Convert.ToDouble(lancamento.ValorPago);
                         contaDAO.Update(conta);
                     }

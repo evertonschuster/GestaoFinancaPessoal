@@ -1,5 +1,6 @@
 ﻿using GestaoFinancaPessoal.Controllers;
 using GestaoFinancaPessoal.Models;
+using GestaoFinancaPessoal.Uteis.Exception.ModelErrorException;
 using GestaoFinancaPessoal.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,7 +30,19 @@ namespace GestaoFinancaPessoal.DAO
             if (l.ContaDestion != null && l.Conta.Id == l.ContaDestion.Id)
             {
                 this.ModelState.AddModelError(nameof(l.ContaDestion.Id), "Conta destino nao pode ser a mesma da origem.");
-                return;
+                throw new ModelErrorException();
+            }
+
+            if(l.TipoLancamento == TipoLancamento.TRANSFERENCIA && l.ContaDestion == null)
+            {
+                this.ModelState.AddModelError(nameof(l.ContaDestion.Id), "Informe a Conta destino.");
+                throw new ModelErrorException();
+            }
+
+            if(l.Valor == 0)
+            {
+                this.ModelState.AddModelError(nameof(l.Valor), "O valor não foi informado.");
+                throw new ModelErrorException();
             }
 
             if (l.DataNotificacao != null)

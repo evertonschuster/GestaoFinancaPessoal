@@ -33,7 +33,7 @@ namespace GestaoFinancaPessoal.ViewModels
         public TipoLancamento TipoLancamento { get; set; }
 
         [DataMember]
-        [Display(Name = "Pendentes de Vencidos")]
+        [Display(Name = "Pendentes e Vencidos")]
         public bool PendenteVencidos { get; set; }
 
         [DataMember]
