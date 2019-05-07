@@ -42,9 +42,9 @@ namespace GestaoFinancaPessoal.Pages.Account
 
         public class InputModel
         {
-            [Required(ErrorMessage = "Nome obrigatório")]
+            [Required(ErrorMessage = "Usuário obrigatório")]
             //[StringLength(256,ErrorMessage = "O {o} deve ter minimo {1} caracteres e {2} no maxímo", MinimumLength = 6)]
-            [Display(Name = "Nome")]
+            [Display(Name = "Usuário")]
             public string Username { get; set; }
 
             [Required(ErrorMessage = "Email obrigatório")]

@@ -31,10 +31,12 @@ namespace GestaoFinancaPessoal
         #region snippet_defaultPolicy
         public void ConfigureServices(IServiceCollection services)
         {
-            if (!Environment.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
-                string connectionString = Configuration.GetConnectionString("DefaultLocal");
-                services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+                string connectionString = Configuration.GetConnectionString("DefaultLocalPost");
+                services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
+
+                //services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
             }
             else
             {
