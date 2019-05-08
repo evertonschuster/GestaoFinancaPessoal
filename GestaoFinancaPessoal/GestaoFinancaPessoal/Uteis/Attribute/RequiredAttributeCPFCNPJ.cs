@@ -58,14 +58,14 @@ namespace GestaoFinancaPessoal.Uteis.Attribute
             {
                 if(obj.RG == null || obj.RG.Length < 5)
                 {
-                    return new ValidationResult("RG Invalido");
+                    return new ValidationResult("RG Inválido.");
                 }
             }
             else
             {
                 if(obj.NomeContato == null || obj.NomeContato.Length < 3)
                 {
-                    return new ValidationResult("Nome de Contato Invalido");
+                    return new ValidationResult("Nome de Contato Invalido.");
                 }
             }
 
