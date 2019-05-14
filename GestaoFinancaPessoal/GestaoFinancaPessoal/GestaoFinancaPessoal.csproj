@@ -52,4 +52,10 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <Folder Include="wwwroot\calender\" />
+    <Folder Include="wwwroot\dashBoard\" />
+  </ItemGroup>
+
+
 </Project>

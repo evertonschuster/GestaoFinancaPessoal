@@ -8,63 +8,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-<style>
-    .circle {
-        width: 80px;
-        height: 80px;
-        border-radius: 40px;
-        box-sizing: border-box;
-        border: solid 10px rgba(255, 255, 255, 0.2);
-        border-top-color: #5873FE;
-        animation: spin 1s infinite linear;
-    }
-
-    @@keyframes bouncy {
-        40% {
-            height: 40px;
-        }
-
-        50% {
-            transform: translate(0, 65px);
-            height: 34px;
-            border-radius: 20px;
-        }
-
-        65% {
-            height: 40px;
-        }
-    }
-
-    @@keyframes push {
-        50% {
-            margin-left: 56px;
-        }
-    }
-
-    @@keyframes slide {
-        50% {
-            margin-top: 25px;
-        }
-    }
-
-    @@keyframes pulse {
-        50% {
-            border-width: 30px;
-        }
-    }
-
-    @@keyframes spin {
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    @@keyframes cross {
-        50% {
-            margin-left: 60px;
-        }
-    }
-</style>
+<link rel="stylesheet" href="~/css/home/Index.css" />
 
 <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="">
     <div class="sidebar sidebar-hide-to-small sidebar-shrink sidebar-gestures">
@@ -109,8 +53,8 @@
                                                 <span class="text-left">Notificações Recentes</span>
                                             </div>
                                             @*<div class="text-right" onclick="ClickConfig()">
-                                                <i class="fa fa-gear"></i>
-                                            </div>*@
+                                                    <i class="fa fa-gear"></i>
+                                                </div>*@
                                         </div>
                                     </div>
                                     <div class="dropdown-content-body">
@@ -137,34 +81,34 @@
                                         <p class="trial-day">Bem Vindo @UserManager.GetUserName(User) !</p>
                                     </div>
                                     <div class="dropdown-content-body">
-                                        @*<ul>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="ti-user"></i>
-                                                    <span>Profile</span>
-                                                </a>
-                                            </li>
+                                        <ul>
+                                            @*  <li>
+                                                    <a href="#">
+                                                        <i class="ti-user"></i>
+                                                        <span>Profile</span>
+                                                    </a>
+                                                </li>
 
-                                            <li>
-                                                <a href="#">
-                                                    <i class="ti-email"></i>
-                                                    <span>Inbox</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#">
-                                                    <i class="ti-settings"></i>
-                                                    <span>Setting</span>
-                                                </a>
-                                            </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="ti-email"></i>
+                                                        <span>Inbox</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="ti-settings"></i>
+                                                        <span>Setting</span>
+                                                    </a>
+                                                </li>
 
-                                            <li>
-                                                <a href="#">
-                                                    <i class="ti-lock"></i>
-                                                    <span>Lock Screen</span>
-                                                </a>
-                                            </li>*@
-                                        <li><a onclick="Logout()"><i class="ti-power-off"></i> Logout</a></li>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="ti-lock"></i>
+                                                        <span>Lock Screen</span>
+                                                    </a>
+                                                </li>*@
+                                            <li><a onclick="Logout()"><i class="ti-power-off"></i> Logout</a></li>
                                         </ul>
                                     </div>
                                 </div>

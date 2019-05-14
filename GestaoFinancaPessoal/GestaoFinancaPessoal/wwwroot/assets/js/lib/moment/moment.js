@@ -634,12 +634,12 @@
 
     // LOCALES
 
-    var defaultLocaleMonths = 'January_February_March_April_May_June_July_August_September_October_November_December'.split('_');
+    var defaultLocaleMonths = 'janeiro_fevereiro_março_abril_maio_junho_julho_agosto_setembro_outubro_novembro_dezembro'.split('_');
     function localeMonths (m) {
         return this._months[m.month()];
     }
 
-    var defaultLocaleMonthsShort = 'Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec'.split('_');
+    var defaultLocaleMonthsShort = 'jan_fev_mar_abr_mai_jun_jul_ago_set_out_nov_dez'.split('_');
     function localeMonthsShort (m) {
         return this._monthsShort[m.month()];
     }
@@ -2272,12 +2272,12 @@
 
     // LOCALES
 
-    var defaultLocaleWeekdays = 'Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday'.split('_');
+    var defaultLocaleWeekdays = 'domingo_segunda-feira_terca-feira_quarta-feira_quinta-feira_sexta-feira_sabado'.split('_');
     function localeWeekdays (m) {
         return this._weekdays[m.day()];
     }
 
-    var defaultLocaleWeekdaysShort = 'Sun_Mon_Tue_Wed_Thu_Fri_Sat'.split('_');
+    var defaultLocaleWeekdaysShort = 'dom_seg_ter_qua_qui_sex_sab'.split('_');
     function localeWeekdaysShort (m) {
         return this._weekdaysShort[m.day()];
     }

@@ -1,7 +1,136 @@
-﻿
+﻿@model DashBoardInicial
 @{
     ViewData["Title"] = "Index";
 }
+
+
+<link href='~/calender/core/main.css' rel='stylesheet' />
+<link href='~/calender/daygrid/main.css' rel='stylesheet' />
+<link href='~/calender/timegrid/main.css' rel='stylesheet' />
+<link href='~/calender/list/main.css' rel='stylesheet' />
+
+<link rel="stylesheet" href="~/css/home/Index.css" />
+<style>
+    .mouseHover {
+        cursor: pointer;
+    }
+
+
+
+    /*
+    i wish this required CSS was better documented :(
+    https://github.com/FezVrasta/popper.js/issues/674
+    derived from this CSS on this page: https://popper.js.org/tooltip-examples.html
+    */
+
+    .popper,
+    .tooltip {
+        position: absolute;
+        z-index: 9999;
+        background: #FFC107;
+        color: black;
+        width: 150px;
+        border-radius: 3px;
+        box-shadow: 0 0 2px rgba(0,0,0,0.5);
+        padding: 10px;
+        text-align: center;
+    }
+
+    .style5 .tooltip {
+        background: #1E252B;
+        color: #FFFFFF;
+        max-width: 200px;
+        width: auto;
+        font-size: .8rem;
+        padding: .5em 1em;
+    }
+
+    .popper .popper__arrow,
+    .tooltip .tooltip-arrow {
+        width: 0;
+        height: 0;
+        border-style: solid;
+        position: absolute;
+        margin: 5px;
+    }
+
+    .tooltip .tooltip-arrow,
+    .popper .popper__arrow {
+        border-color: #FFC107;
+    }
+
+    .style5 .tooltip .tooltip-arrow {
+        border-color: #1E252B;
+    }
+
+    .popper[x-placement^="top"],
+    .tooltip[x-placement^="top"] {
+        margin-bottom: 5px;
+    }
+
+        .popper[x-placement^="top"] .popper__arrow,
+        .tooltip[x-placement^="top"] .tooltip-arrow {
+            border-width: 5px 5px 0 5px;
+            border-left-color: transparent;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            bottom: -5px;
+            left: calc(50% - 5px);
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+    .popper[x-placement^="bottom"],
+    .tooltip[x-placement^="bottom"] {
+        margin-top: 5px;
+    }
+
+        .tooltip[x-placement^="bottom"] .tooltip-arrow,
+        .popper[x-placement^="bottom"] .popper__arrow {
+            border-width: 0 5px 5px 5px;
+            border-left-color: transparent;
+            border-right-color: transparent;
+            border-top-color: transparent;
+            top: -5px;
+            left: calc(50% - 5px);
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+    .tooltip[x-placement^="right"],
+    .popper[x-placement^="right"] {
+        margin-left: 5px;
+    }
+
+        .popper[x-placement^="right"] .popper__arrow,
+        .tooltip[x-placement^="right"] .tooltip-arrow {
+            border-width: 5px 5px 5px 0;
+            border-left-color: transparent;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            left: -5px;
+            top: calc(50% - 5px);
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+    .popper[x-placement^="left"],
+    .tooltip[x-placement^="left"] {
+        margin-right: 5px;
+    }
+
+        .popper[x-placement^="left"] .popper__arrow,
+        .tooltip[x-placement^="left"] .tooltip-arrow {
+            border-width: 5px 0 5px 5px;
+            border-top-color: transparent;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            right: -5px;
+            top: calc(50% - 5px);
+            margin-left: 0;
+            margin-right: 0;
+        }
+</style>
 
 <section id="main-content">
     <div class="row">
@@ -14,7 +143,7 @@
                     </div>
                     <div class="stat-content dib">
                         <div class="stat-text">Saldo Atual </div>
-                        <div class="stat-digit"> R<i class="fa fa-usd"></i>8500</div>
+                        <div class="stat-digit"> R<i class="fa fa-usd"></i> @Model.SaldoAtual.ToString("N2")</div>
                     </div>
                 </div>
             </div>
@@ -29,8 +158,8 @@
                         <i class="material-icons color-success border-success">trending_up</i>
                     </div>
                     <div class="stat-content dib">
-                        <div class="stat-text">Receita</div>
-                        <div class="stat-digit"> R<i class="fa fa-usd"></i>7800</div>
+                        <div class="stat-text">Receita do Mês</div>
+                        <div class="stat-digit"> R<i class="fa fa-usd"></i>@Model.TotalReceitaaMes.ToString("N2")</div>
                     </div>
                 </div>
             </div>
@@ -42,248 +171,115 @@
                         <i class="material-icons color-danger border-danger">trending_down</i>
                     </div>
                     <div class="stat-content dib">
-                        <div class="stat-text">Lancamento</div>
-                        <div class="stat-digit"> R<i class="fa fa-usd"></i> 500</div>
+                        <div class="stat-text">Despesa do Mês</div>
+                        <div class="stat-digit"> R<i class="fa fa-usd"></i> @Model.TotalDespesaMes.ToString("N2")</div>
                     </div>
-                </div>
-            </div>
-        </div>
-        @*<div class="col-lg-3">
-                <div class="card">
-                    <div class="stat-widget-one">
-                        <div class="stat-icon dib">
-                            <i class="material-icons">calendar_today</i>
-                        </div>
-                        <div class="stat-content dib">
-                            <div class="stat-text">Lançamentos Futuros</div>
-                            <div class="stat-digit"> R<i class="fa fa-usd"></i>650</div>
-                        </div>
-                    </div>
-                </div>
-            </div>*@
-    </div>
-
-
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Receita X Lancamento</h4>
-                    <div id="morris-bar-chart"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="card-title">Lançamentos Vencidos</h4>
-                    <div id="morris-bar-chart"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-12">
             <div class="card">
-                <div class="card-title">
-                    <h4>Lançamentos Futuros</h4>
-                </div>
+                    <div id='calendar-container'>
+                        <div id='calendar'></div>
+                    </div>
+                </div><!-- /# column -->
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12 col-lg-6" ColunaDireita>
+
+            <div class="card">
                 <div class="card-body">
-                    <div class="current-progress">
-                        <div class="progress-content">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="progress-text">Aluguel</div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="current-progressbar">
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-primary w-40" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">
-                                                40%
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-content">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="progress-text">Parcelas Celular</div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="current-progressbar">
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-primary w-60" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-                                                60%
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="progress-content">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="progress-text">Financimanto da Casa</div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="current-progressbar">
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-primary w-70" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100">
-                                                70%
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <h1>Receita X Lancamento</h1>
+                    <div id="graph">
+                    </div>
+                    <div class="text-center" style="text-align:center" id="divLoadReceitaXLancamento">
+                        <div class="circle" style="margin: auto;"></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-6">
+        @*Searacao das colunas*@
+        <div class="col-12 col-lg-6" ColunaDireita>
             <div class="card">
-                <div class="card-title">
-                    <h4>Timeline</h4>
-
-                </div>
                 <div class="card-body">
-                    <ul class="timeline">
+                    <h1>Lançamentos Pendentes</h1>
+                    <ul class="timeline" id="LancamentoPendente">
                         <li>
-                            <div class="timeline-badge primary"><i class="fa fa-smile-o"></i></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h5 class="timeline-title">School promote video sharing</h5>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>10 minutes ago</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="timeline-badge warning"><i class="fa fa-sun-o"></i></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h5 class="timeline-title">Ready our school website and online service</h5>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>20 minutes ago</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="timeline-badge danger"><i class="fa fa-times-circle-o"></i></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h5 class="timeline-title">Routine pubish our website form 10/03/2017 </h5>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>30 minutes ago</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="timeline-badge success"><i class="fa fa-check-circle-o"></i></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h5 class="timeline-title">Principle quotation publish our website</h5>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>15 minutes ago</p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="timeline-badge warning"><i class="fa fa-sun-o"></i></div>
-                            <div class="timeline-panel">
-                                <div class="timeline-heading">
-                                    <h5 class="timeline-title">Class schedule publish our website</h5>
-                                </div>
-                                <div class="timeline-body">
-                                    <p>20 minutes ago</p>
-                                </div>
+                            <div class="text-center" style="text-align:center" >
+                                <div class="circle" style="margin: auto;"></div>
                             </div>
                         </li>
                     </ul>
                 </div>
             </div>
-            <!-- /# card -->
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h1>Lançamentos Pendentes</h1>
+                    <div id="graphLine"></div>
+                    <div class="text-center" style="text-align:center" id="divLoadReceitaXLancamentoGraphLine">
+                        <div class="circle" style="margin: auto;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </section>
 <partial name="_LancamentoButton" />
-
-@*@await Html.PartialAsync("_LancamentoButton")*@
 
 
 @section Scripts{
     <!-- jquery vendor -->
     <script src="~/assets/js/lib/jquery.min.js"></script>
     <script src="~/assets/js/lib/jquery.nanoscroller.min.js"></script>
-    <!-- nano scroller -->
-    <script src="~/assets/js/lib/menubar/sidebar.js"></script>
-    <script src="~/assets/js/lib/preloader/pace.min.js"></script>
-    <!-- sidebar -->
+
     <script src="~/assets/js/lib/bootstrap.min.js"></script>
 
-    <!-- bootstrap -->
-    @*<script src="~/assets/js/lib/circle-progress/circle-progress.min.js"></script>
-        <script src="~/assets/js/lib/circle-progress/circle-progress-init.js"></script>*@
+    @*<script src="~/assets/js/scripts.js"></script>*@
 
-    <script src="~/assets/js/lib/morris-chart/raphael-min.js"></script>
-    <script src="~/assets/js/lib/morris-chart/morris.js"></script>
-    <script src="~/assets/js/lib/morris-chart/morris-init.js"></script>
+    @*calendario*@
+    <!-- jquery vendor -->
+    @*<script src="~/assets/js/lib/jquery.min.js"></script>
+        <script src="~/assets/js/lib/jquery.nanoscroller.min.js"></script>*@
+    @*<script src="~/assets/js/lib/menubar/sidebar.js"></script>*@
+    @*<script src="~/assets/js/lib/preloader/pace.min.js"></script>*@
+    @*<script src="~/assets/js/lib/bootstrap.min.js"></script>*@
+    @*<script src="~/assets/js/scripts.js"></script>*@
 
-    <!--  flot-chart js -->
-    @*<script src="~/assets/js/lib/flot-chart/jquery.flot.js"></script>
-        <script src="~/assets/js/lib/flot-chart/jquery.flot.resize.js"></script>
-        <script src="~/assets/js/lib/flot-chart/flot-chart-init.js"></script>*@
-    <!-- // flot-chart js -->
-    @*<script src="~/assets/js/lib/vector-map/jquery.vmap.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/jquery.vmap.min.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/jquery.vmap.sampledata.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.world.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.algeria.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.argentina.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.brazil.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.france.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.germany.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.greece.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.iran.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.iraq.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.russia.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.tunisia.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.europe.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/country/jquery.vmap.usa.js"></script>
-        <!-- scripit init-->
-        <script src="~/assets/js/lib/vector-map/vector.init.js"></script>*@
+    @*<script src="~/assets/js/lib/jquery-ui/jquery-ui.min.js"></script>
+        <script src="~/assets/js/lib/moment/moment.js"></script>
+        <script src="~/assets/js/lib/calendar/fullcalendar.min.js"></script>
+        <script src="~/assets/js/lib/calendar/fullcalendar-init.js"></script>*@
 
-    @*<script src="~/assets/js/lib/weather/jquery.simpleWeather.min.js"></script>
-        <script src="~/assets/js/lib/weather/weather-init.js"></script>
-        <script src="~/assets/js/lib/owl-carousel/owl.carousel.min.js"></script>
-        <script src="~/assets/js/lib/owl-carousel/owl.carousel-init.js"></script>*@
-    <script src="~/assets/js/scripts.js"></script>
-    <!-- scripit init-->
+
+
+
+    <script src='~/calender/core/main.js'></script>
+    <script src='~/calender/core/locales-all.js'></script>
+    <script src='~/calender/interaction/main.js'></script>
+    <script src='~/calender/daygrid/main.js'></script>
+    <script src='~/calender/timegrid/main.js'></script>
+    <script src='~/calender/list/main.js'></script>
+    @* <script src='https://fullcalendar.io/releases/fullcalendar/3.10.0/lib/moment.min.js'></script>
+        <script src='https://fullcalendar.io/releases/fullcalendar/3.10.0/lib/jquery.min.js'></script>
+        <script src='https://fullcalendar.io/releases/fullcalendar/3.10.0/fullcalendar.min.js'></script>*@
+
+
+
+    <script src="~/js/DashBoard/index.js"></script>
+    <script src="~/js/DashBoard/indexCalendario.js"></script>
+
 
 }

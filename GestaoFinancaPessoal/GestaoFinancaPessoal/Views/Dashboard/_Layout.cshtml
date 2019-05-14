@@ -5,39 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="~/manifest.json">
 
-    <title>@ViewData["Title"] - CM 2.0</title>
-
-
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 
-    <link rel="shortcut icon" href="http://placehold.it/64.png/000/fff">
-    <!-- Retina iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="144x144" href="http://placehold.it/144.png/000/fff">
-    <!-- Retina iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="114x114" href="http://placehold.it/114.png/000/fff">
-    <!-- Standard iPad Touch Icon-->
-    <link rel="apple-touch-icon" sizes="72x72" href="http://placehold.it/72.png/000/fff">
-    <!-- Standard iPhone Touch Icon-->
-    <link rel="apple-touch-icon" sizes="57x57" href="http://placehold.it/57.png/000/fff">
-
-    <!-- Styles -->
-    <link href="~/assets/css/lib/weather-icons.css" rel="stylesheet" />
-    <link href="~/assets/css/lib/owl.carousel.min.css" rel="stylesheet" />
-    <link href="~/assets/css/lib/owl.theme.default.min.css" rel="stylesheet" />
-    <link href="~/assets/css/lib/font-awesome.min.css" rel="stylesheet">
-    <link href="~/assets/css/lib/themify-icons.css" rel="stylesheet">
-    <link href="~/assets/css/lib/menubar/sidebar.css" rel="stylesheet">
     <link href="~/assets/css/lib/bootstrap.min.css" rel="stylesheet">
-
-
-
     <link href="~/assets/css/lib/helper.css" rel="stylesheet">
     <link href="~/assets/css/style.css" rel="stylesheet">
 
-    @*<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>*@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
+    @*<link rel="stylesheet" href="~/dashBoard/lib/example.css">
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
+        <link rel="stylesheet" href="~/dashBoard/morris.css">*@
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+    <script src="~/dashBoard/morris.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
+    <script src="~/dashBoard/lib/example.js"></script>
+    @*<link rel="stylesheet" href="~/dashBoard/lib/example.css">*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.css">
+    @*<link rel="stylesheet" href="~/dashBoard/morris.css">*@
 </head>
 <body>
 
@@ -54,6 +43,11 @@
     <script src="~/assets/js/lib/menubar/sidebar.js"></script>
     <script src="~/assets/js/lib/preloader/pace.min.js"></script>
 
+    @*<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+        <script src="~/dashBoard/morris.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/prettify/r224/prettify.min.js"></script>
+        <script src="~/dashBoard/lib/example.js"></script>*@
 
     @RenderSection("Scripts", required: false)
 </body>

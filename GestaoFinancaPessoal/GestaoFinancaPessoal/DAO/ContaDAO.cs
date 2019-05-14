@@ -69,5 +69,10 @@ namespace GestaoFinancaPessoal.DAO
 
             }
         }
+
+        public decimal GetSaldoAtual()
+        {
+            return Convert.ToDecimal(DbSet.Where(c => c.IsSuspensa == false).Sum(c => c.Saldo));
+        }
     }
 }

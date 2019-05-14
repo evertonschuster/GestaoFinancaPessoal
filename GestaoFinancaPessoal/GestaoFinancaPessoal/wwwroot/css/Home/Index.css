@@ -1,0 +1,55 @@
+﻿.circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    box-sizing: border-box;
+    border: solid 10px rgba(255, 255, 255, 0.2);
+    border-top-color: #5873FE;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes bouncy {
+    40% {
+        height: 40px;
+    }
+
+    50% {
+        transform: translate(0, 65px);
+        height: 34px;
+        border-radius: 20px;
+    }
+
+    65% {
+        height: 40px;
+    }
+}
+
+@keyframes push {
+    50% {
+        margin-left: 56px;
+    }
+}
+
+@keyframes slide {
+    50% {
+        margin-top: 25px;
+    }
+}
+
+@keyframes pulse {
+    50% {
+        border-width: 30px;
+    }
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes cross {
+    50% {
+        margin-left: 60px;
+    }
+}
