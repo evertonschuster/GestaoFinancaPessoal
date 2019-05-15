@@ -65,7 +65,17 @@ function ClickLancamento(id) {
     window.location.href = "/lancamento/edit/" + id;
 }
 
-function CarregarReceitaXLancamento() {
+function CarregarReceitaXLancamento(isMensal = true) {
+    var url = "";
+    if (isMensal) {
+        url = "../Dashboard/GetReceitaDespesasMes";
+    } else {
+        url = "../Dashboard/GetReceitaDespesasDia";
+    }
+
+    $("#graph").html("");
+    $("#divLoadReceitaXLancamento").show    ();
+
     let token = $("[name=__RequestVerificationToken]").val();
     let headers = {};
     headers["RequestVerificationToken"] = token;
@@ -76,7 +86,7 @@ function CarregarReceitaXLancamento() {
     //contentType   : formato dos dados JSON
     //DATA          : os Dados
     $.ajax({
-        url: "../Dashboard/GetReceitaDespesasMes",
+        url: url,
         type: "POST",
         contentType: "application/json",
         headers: headers,                //token de validacao para a controller

@@ -39,6 +39,13 @@ namespace GestaoFinancaPessoal.Controllers
             return lancamentoDAO.GetReceitaDespesasMes();
         }
 
+        [HttpPost]
+        public IList<ReceitaDespesa> GetReceitaDespesasDia()
+        {
+            var lancamentoDAO = this.DAO.NewDAO<LancamentoDAO>();
+            return lancamentoDAO.GetReceitaDespesasDia();
+        }
+
         [HttpGet]
         public IList<CalendarEvent> GetCalendarEvent(DateTime start, DateTime end)
         {

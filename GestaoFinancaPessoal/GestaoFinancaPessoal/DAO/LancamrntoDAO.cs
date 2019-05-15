@@ -137,17 +137,17 @@ namespace GestaoFinancaPessoal.DAO
 
 
             var result = DbSet.AsNoTracking().Include(l => l.Conta)
-                .Where(predicate)
-                .GroupBy(l => new { l.DataVencimento.Month, l.DataVencimento.Year, l.TipoLancamento })
-                .Select(s => new
-                {
-                    ValorLancamento = s.Sum(i => i.Valor),
-                    TipoLancamento = s.Key.TipoLancamento,
-                    DataLancamento = s.Key.Month,
-                    AnoLancamento = s.Key.Year
-                })
-                .Take(10)
-                .ToList();//ele nao mapeia os objetos 
+                  .Where(predicate)
+                  .GroupBy(l => new { l.DataVencimento.Month, l.DataVencimento.Year, l.TipoLancamento })
+                  .Select(s => new
+                  {
+                      ValorLancamento = s.Sum(i => i.Valor),
+                      TipoLancamento = s.Key.TipoLancamento,
+                      DataLancamento = s.Key.Month,
+                      AnoLancamento = s.Key.Year
+                  })
+                  .Take(10)
+                  .ToList();//ele nao mapeia os objetos 
 
             //precissa agrupar por mes, para nao precisar faz isso na view
 
@@ -188,6 +188,41 @@ namespace GestaoFinancaPessoal.DAO
             return listReceitaDespesa;
         }
 
+        public IList<ReceitaDespesa> GetReceitaDespesasDia()
+        {
+            VereficarLancamentosPendentes();
+
+            VisualizarLancamentoViewModel v = new VisualizarLancamentoViewModel();
+            v.DataFinal = DateTime.Now;
+
+            //criacao do filtro
+            Expression<Func<Lancamento, bool>> predicate =
+                l => (l.Conta.Id == v.Conta.Id || v.Conta.Id == 0)
+                    && (l.DataVencimento <= v.DataFinal || v.DataFinal == DateTime.MinValue)
+                    && l.TipoLancamento != TipoLancamento.TRANSFERENCIA;
+
+
+            var result = DbSet.AsNoTracking().Include(l => l.Conta)
+                  .Where(predicate)
+                  .GroupBy(l => new { l.DataVencimento.Day, l.DataVencimento.Month, l.DataVencimento.Year, l.TipoLancamento })
+                  .Select(s => new
+                  {
+                      ValorLancamento = s.Sum(i => i.Valor),
+                      TipoLancamento = s.Key.TipoLancamento,
+                      DataLancamento = s.Key.Month,
+                      AnoLancamento = s.Key.Year,
+                      DiaLancamento = s.Key.Day
+                  })
+                  .OrderBy(l => new { l.DiaLancamento, l.DataLancamento, l.AnoLancamento })
+                  .ToList();//ele nao mapeia os objetos 
+
+            //precissa agrupar por mes, para nao precisar faz isso na view
+            var listReceitaDespesa = new List<ReceitaDespesa>();
+
+
+            return listReceitaDespesa;
+        }
+
         public IList<CalendarEvent> GetCalendarEvent(DateTime start, DateTime end)
         {
             VereficarLancamentosPendentes();
@@ -212,7 +247,7 @@ namespace GestaoFinancaPessoal.DAO
         public void GetValorTotalReceitaDespesa(DashBoardInicial dashBoard)
         {
 
-            dashBoard.TotalDespesaMes= DbSet.Where(c => c.TipoLancamento == TipoLancamento.DESPESA).Sum(c => c.Valor);
+            dashBoard.TotalDespesaMes = DbSet.Where(c => c.TipoLancamento == TipoLancamento.DESPESA).Sum(c => c.Valor);
             dashBoard.TotalReceitaaMes = DbSet.Where(c => c.TipoLancamento == TipoLancamento.RECEITA).Sum(c => c.Valor);
 
         }

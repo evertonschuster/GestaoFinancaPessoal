@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using GestaoFinancaPessoal.Models;
 using GestaoFinancaPessoal.Data;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Linq.Expressions;
 
 namespace GestaoFinancaPessoal.DAO
 {
@@ -61,7 +62,7 @@ namespace GestaoFinancaPessoal.DAO
 
             Context.Database.EnsureCreated();
         }
-         
+
         public TDAO NewDAO<TDAO>(TipoConecao tipo = TipoConecao.DEFAULT) where TDAO : IDAO
         {
             return (TDAO)Activator.CreateInstance(typeof(TDAO), new object[] { this });
@@ -149,5 +150,19 @@ namespace GestaoFinancaPessoal.DAO
 
 
 
+
+
+        public Expression<Func<TItem, object>> GroupByExpression<TItem>(string[] propertyNames)
+        {
+            var properties = propertyNames.Select(name => typeof(TItem).GetProperty(name)).ToArray();
+            var propertyTypes = properties.Select(p => p.PropertyType).ToArray();
+            var tupleTypeDefinition = typeof(Tuple).Assembly.GetType("System.Tuple`" + properties.Length);
+            var tupleType = tupleTypeDefinition.MakeGenericType(propertyTypes);
+            var constructor = tupleType.GetConstructor(propertyTypes);
+            var param = Expression.Parameter(typeof(TItem), "item");
+            var body = Expression.New(constructor, properties.Select(p => Expression.Property(param, p)));
+            var expr = Expression.Lambda<Func<TItem, object>>(body, param);
+            return expr;
+        }
     }
 }
