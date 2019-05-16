@@ -35,10 +35,15 @@
             $(root).hide();
 
             event.el.children[0].appendChild(root);
-
+            event.el.id = "Pai";
             event.el.addEventListener("mouseover", mouseoverShow);
+            event.el.addEventListener("mouseout", mouseoverHide);
 
+            console.log(event.el.parentElement); 
+            console.log(event.el.parentNode); 
             console.log(event.el);
+            console.log(event);
+
         }
 
     });
@@ -49,7 +54,15 @@
 });
 
 function mouseoverShow(event) {
-    console.log(event.toElement)
+
+    $(event.fromElement.querySelector("#Descricao")).show();
+
+}
+
+function mouseoverHide(event) {
+
+    $(event.fromElement.querySelector("#Descricao")).hide();
+
 }
 
 

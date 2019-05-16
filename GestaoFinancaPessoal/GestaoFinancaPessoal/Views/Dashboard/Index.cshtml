@@ -11,9 +11,9 @@
 
 <link rel="stylesheet" href="~/css/home/Index.css" />
 <style>
-    .mouseHover {
+    /*.mouseHover {
         cursor: pointer;
-    }
+    }*/
 
 
 
@@ -23,113 +23,35 @@
     derived from this CSS on this page: https://popper.js.org/tooltip-examples.html
     */
 
-    /*.popper,
-    .tooltip {
-        position: absolute;
-        z-index: 9999;
-        background: #FFC107;
-        color: black;
-        width: 150px;
-        border-radius: 3px;
-        box-shadow: 0 0 2px rgba(0,0,0,0.5);
-        padding: 10px;
-        text-align: center;
-    }
 
-    .style5 .tooltip {
-        background: #1E252B;
-        color: #FFFFFF;
-        max-width: 200px;
-        width: auto;
-        font-size: .8rem;
-        padding: .5em 1em;
-    }
+    /*.conteudo-aprenda-curso.conteudo-aprenda-curso-impar:before{content: ""; width: 40px; height: 5px; position: absolute; top: -5px; right: -10.5%; transform: translateX(-50%);}
+    .conteudo-aprenda-curso.conteudo-aprenda-curso-par:before{content: ""; width: 40px; height: 5px; position: absolute; top: -5px; left: -10.5%; transform: translateX(+50%);}
+    .bullet-aprenda-curso { height: auto; width: auto; border-radius: 25px; top: -20px; position: absolute; left: 50%; transform: translateX(-50%); padding: 10px; }
+    .bullet-aprenda-curso:before {content: ""; background-color: #C5CED5; width: 2px; position: absolute; top: 50px; height: 190px;  left: 50%; transform: translateX(-50%);}
+    .conteudo-area-preta .bullet-aprenda-curso:before{background-color: #0AC5D4;}
+    .item-conteudo-aprenda-curso.ultimo-item .bullet-aprenda-curso:before {content: "";  background-color: transparent; width: 0; position: absolute; top: 50px; height: 0;  left: 50%; transform: translateX(-50%);}
+    .item-conteudo-aprenda-curso:last-of-type .bullet-aprenda-curso:before { background-color: transparent; }*/
+    /*.conteudo-aprenda-curso.conteudo-aprenda-curso-impar:hover{ width: 60%; right: 316px; bottom: 60%;}
+    .conteudo-aprenda-curso.conteudo-aprenda-curso-par:hover{width: 60%; left: 316px; bottom: 60%;}
 
-    .popper .popper__arrow,
-    .tooltip .tooltip-arrow {
-        width: 0;
-        height: 0;
-        border-style: solid;
-        position: absolute;
-        margin: 5px;
-    }
+    .item-conteudo-aprenda-curso:nth-child(odd) {flex-direction: row-reverse;}
+    .conteudo-aprenda-curso:hover { height: auto; bottom: 0; position: relative; transform: translateY(-10%); padding: 30px 35px; border-top: none; border-radius: 10px !important; z-index: 1;}    
+    .conteudo-aprenda-curso:hover .descricao-box-secao-aprenda { display: block; }
+    .conteudo-aprenda-curso:hover .conteudo-aprenda-curso-link { display: flex; }
+    .conteudo-aprenda-curso:hover .tipo-box-secao-aprenda{display: none;}
+    .conteudo-aprenda-curso:hover .box-secao-aprenda .sub-info-box-codigo-fonte-texto{padding: 0 25px;}
+    .conteudo-aprenda-curso:hover .info-box-secao-aprenda{margin: 20px 0;}
+    .conteudo-aprenda-curso:hover .box-secao-aprenda .info-box-secao-aprenda .info-box-codigo-fonte{ width: 190px; }
+    .conteudo-aprenda-curso:hover .info-box-visualizacoes{margin-top: 0;}
 
-    .tooltip .tooltip-arrow,
-    .popper .popper__arrow {
-        border-color: #FFC107;
-    }
+    .conteudo-aprenda-curso:hover:after { content: ""; position: absolute; height: 150px; width: 100%; top: 100%; left: 0;background-color: transparent; z-index: -1;}
+    .item-conteudo-aprenda-curso .conteudo-aprenda-curso:hover:before{background: transparent; height: calc(100% + 100px); top: 0; width: 65px; }
+    .item-conteudo-aprenda-curso .conteudo-aprenda-curso-impar:hover:before{right: -95px;}
+    .item-conteudo-aprenda-curso .conteudo-aprenda-curso-par:hover:before{left: -95px;}
 
-    .style5 .tooltip .tooltip-arrow {
-        border-color: #1E252B;
-    }
-
-    .popper[x-placement^="top"],
-    .tooltip[x-placement^="top"] {
-        margin-bottom: 5px;
-    }
-
-        .popper[x-placement^="top"] .popper__arrow,
-        .tooltip[x-placement^="top"] .tooltip-arrow {
-            border-width: 5px 5px 0 5px;
-            border-left-color: transparent;
-            border-right-color: transparent;
-            border-bottom-color: transparent;
-            bottom: -5px;
-            left: calc(50% - 5px);
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-
-    .popper[x-placement^="bottom"],
-    .tooltip[x-placement^="bottom"] {
-        margin-top: 5px;
-    }
-
-        .tooltip[x-placement^="bottom"] .tooltip-arrow,
-        .popper[x-placement^="bottom"] .popper__arrow {
-            border-width: 0 5px 5px 5px;
-            border-left-color: transparent;
-            border-right-color: transparent;
-            border-top-color: transparent;
-            top: -5px;
-            left: calc(50% - 5px);
-            margin-top: 0;
-            margin-bottom: 0;
-        }
-
-    .tooltip[x-placement^="right"],
-    .popper[x-placement^="right"] {
-        margin-left: 5px;
-    }
-
-        .popper[x-placement^="right"] .popper__arrow,
-        .tooltip[x-placement^="right"] .tooltip-arrow {
-            border-width: 5px 5px 5px 0;
-            border-left-color: transparent;
-            border-top-color: transparent;
-            border-bottom-color: transparent;
-            left: -5px;
-            top: calc(50% - 5px);
-            margin-left: 0;
-            margin-right: 0;
-        }
-
-    .popper[x-placement^="left"],
-    .tooltip[x-placement^="left"] {
-        margin-right: 5px;
-    }
-
-        .popper[x-placement^="left"] .popper__arrow,
-        .tooltip[x-placement^="left"] .tooltip-arrow {
-            border-width: 5px 0 5px 5px;
-            border-top-color: transparent;
-            border-right-color: transparent;
-            border-bottom-color: transparent;
-            right: -5px;
-            top: calc(50% - 5px);
-            margin-left: 0;
-            margin-right: 0;
-        }*/
+    .conteudo-aprenda-curso.conteudo-aprenda-curso.conteudo-aprenda-curso-impar{border-radius: 10px 0  10px 10px;}
+    .conteudo-aprenda-curso.conteudo-aprenda-curso.conteudo-aprenda-curso-par{border-radius: 0 10px 10px 10px;}*/
+   
 </style>
 
 <section id="main-content">
@@ -197,7 +119,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-8">
-                            <h1>Receita X Lancamento</h1>
+                            <h1>Receita X Lancamento top 5</h1>
                         </div>
                         <div class="col-4 text-right">
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -243,7 +165,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h1>Lançamentos Pendentes</h1>
+                    <h1>Receita X Lancamento último ano</h1>
                     <div id="graphLine"></div>
                     <div class="text-center" style="text-align:center" id="divLoadReceitaXLancamentoGraphLine">
                         <div class="circle" style="margin: auto;"></div>

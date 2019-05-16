@@ -33,6 +33,13 @@ namespace GestaoFinancaPessoal.Controllers
         }
 
         [HttpPost]
+        public IList<ReceitaDespesa> GetReceitaDespesasAno()
+        {
+            var lancamentoDAO = this.DAO.NewDAO<LancamentoDAO>();
+            return lancamentoDAO.GetReceitaDespesasAno();
+        }
+
+        [HttpPost]
         public IList<ReceitaDespesa> GetReceitaDespesasMes()
         {
             var lancamentoDAO = this.DAO.NewDAO<LancamentoDAO>();
@@ -53,5 +60,7 @@ namespace GestaoFinancaPessoal.Controllers
             var lancamentoDAO = this.DAO.NewDAO<LancamentoDAO>();
             return lancamentoDAO.GetCalendarEvent(start, end);
         }
+
+
     }
 }

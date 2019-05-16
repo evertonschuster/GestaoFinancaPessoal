@@ -122,7 +122,7 @@ function CarregarReceitaXLancamentoLine() {
     //contentType   : formato dos dados JSON
     //DATA          : os Dados
     $.ajax({
-        url: "../Dashboard/GetReceitaDespesasMes",
+        url: "../Dashboard/GetReceitaDespesasAno",
         type: "POST",
         contentType: "application/json",
         headers: headers,                //token de validacao para a controller

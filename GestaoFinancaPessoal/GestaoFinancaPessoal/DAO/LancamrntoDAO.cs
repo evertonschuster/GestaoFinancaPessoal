@@ -122,23 +122,90 @@ namespace GestaoFinancaPessoal.DAO
             }).ToList();
         }
 
+        public IList<ReceitaDespesa> GetReceitaDespesasAno()
+        {
+            VereficarLancamentosPendentes();
+
+            VisualizarLancamentoViewModel v = new VisualizarLancamentoViewModel();
+            v.DataFinal = DateTime.Now;
+            v.DataInicial = DateTime.Now.AddYears(-1);
+
+
+            //criacao do filtro
+            Expression<Func<Lancamento, bool>> predicate =
+                l => (l.Conta.Id == v.Conta.Id || v.Conta.Id == 0)
+                    && (l.DataVencimento <= v.DataFinal || v.DataFinal == DateTime.MinValue)
+                    && (l.DataVencimento >= v.DataInicial || v.DataInicial == DateTime.MinValue)
+                    && l.TipoLancamento != TipoLancamento.TRANSFERENCIA;
+
+
+            var result = DbSet.AsNoTracking().Include(l => l.Conta)
+                  .Where(predicate)
+                  .GroupBy(l => new { l.DataVencimento.Year, l.DataVencimento.Month, l.TipoLancamento })
+                  .OrderByDescending(l => l.Key.Month)
+                  .Select(s => new
+                  {
+                      ValorLancamento = s.Sum(i => i.Valor),
+                      TipoLancamento = s.Key.TipoLancamento,
+                      DataLancamento = s.Key.Month,
+                      AnoLancamento = s.Key.Year
+                  })
+                  .Take(24)
+                  .ToList();//ele nao mapeia os objetos 
+
+            //precissa agrupar por mes, para nao precisar faz isso na view
+
+            var lstMonth = result
+                .OrderBy(l => l.DataLancamento)
+                .Select(r => r.DataLancamento)
+                .Distinct()
+                .ToList();
+            var listReceitaDespesa = new List<ReceitaDespesa>();
+
+            //precissa agrupar por mes, para nao precisar faz isso na view
+            for (int i = 0; i <= 12; i++)
+            {
+                var receitaDespesa = new ReceitaDespesa();
+                receitaDespesa.DataLancamento = DateTimeFormatInfo.CurrentInfo.GetMonthName(v.DataInicial.AddMonths(i).Month);
+                receitaDespesa.AnoMesLancamento = v.DataInicial.AddMonths(i).ToString("yyyy-MM");
+                receitaDespesa.DescricaoDespensa = "Despesa.";
+                receitaDespesa.DescricaoReceita = "Receita.";
+
+                var lancamentoMes = result.Where(l => l.DataLancamento == v.DataInicial.AddMonths(i).Month).ToList();
+                var lancamentoReceita = lancamentoMes.Where(l => l.TipoLancamento == TipoLancamento.RECEITA).ToList();
+                receitaDespesa.ValorReceita = (lancamentoReceita.Count == 0) ? 0 : lancamentoReceita[0].ValorLancamento;
+
+                var lancamentoDespesa = lancamentoMes.Where(l => l.TipoLancamento == TipoLancamento.DESPESA).ToList();
+                receitaDespesa.ValorDespesa = (lancamentoDespesa.Count == 0) ? 0 : lancamentoDespesa[0].ValorLancamento;
+
+                listReceitaDespesa.Add(receitaDespesa);
+            }
+
+
+            return listReceitaDespesa;
+        }
+
         public IList<ReceitaDespesa> GetReceitaDespesasMes()
         {
             VereficarLancamentosPendentes();
 
             VisualizarLancamentoViewModel v = new VisualizarLancamentoViewModel();
             v.DataFinal = DateTime.Now;
+            v.DataInicial = DateTime.Now.AddMonths(-5);
+
 
             //criacao do filtro
             Expression<Func<Lancamento, bool>> predicate =
                 l => (l.Conta.Id == v.Conta.Id || v.Conta.Id == 0)
                     && (l.DataVencimento <= v.DataFinal || v.DataFinal == DateTime.MinValue)
+                    && (l.DataVencimento >= v.DataInicial || v.DataInicial == DateTime.MinValue)
                     && l.TipoLancamento != TipoLancamento.TRANSFERENCIA;
 
 
             var result = DbSet.AsNoTracking().Include(l => l.Conta)
                   .Where(predicate)
                   .GroupBy(l => new { l.DataVencimento.Month, l.DataVencimento.Year, l.TipoLancamento })
+                  .OrderByDescending(l => l.Key.Month)
                   .Select(s => new
                   {
                       ValorLancamento = s.Sum(i => i.Valor),
@@ -158,29 +225,22 @@ namespace GestaoFinancaPessoal.DAO
                 .ToList();
             var listReceitaDespesa = new List<ReceitaDespesa>();
 
-            foreach (var itemMonth in lstMonth)
+            //precissa agrupar por mes, para nao precisar faz isso na view
+            for (int i = 0; i <= 5; i++)
             {
                 var receitaDespesa = new ReceitaDespesa();
-                receitaDespesa.DataLancamento = DateTimeFormatInfo.CurrentInfo.GetMonthName(itemMonth);
-
-
-                var receitaDespesaMonth = result.Where(s => s.DataLancamento == itemMonth && s.TipoLancamento == TipoLancamento.DESPESA).OrderBy(l => l).ToList();
+                receitaDespesa.DataLancamento = DateTimeFormatInfo.CurrentInfo.GetMonthName(v.DataInicial.AddMonths(i).Month);
+                receitaDespesa.AnoMesLancamento = v.DataInicial.AddDays(i).ToString("MM/yyyy");
                 receitaDespesa.DescricaoDespensa = "Despesa.";
-                receitaDespesa.ValorDespesa = (receitaDespesaMonth.Count == 0) ? 0 : receitaDespesaMonth[0].ValorLancamento;
-
-                if (receitaDespesaMonth.Count != 0)
-                {
-                    receitaDespesa.AnoMesLancamento = receitaDespesaMonth[0].AnoLancamento.ToString() + "-" + receitaDespesaMonth[0].DataLancamento.ToString("D2");
-                }
-
-                receitaDespesaMonth = result.Where(s => s.DataLancamento == itemMonth && s.TipoLancamento == TipoLancamento.RECEITA).OrderBy(l => l).ToList();
                 receitaDespesa.DescricaoReceita = "Receita.";
-                receitaDespesa.ValorReceita = (receitaDespesaMonth.Count == 0) ? 0 : receitaDespesaMonth[0].ValorLancamento;
 
-                if (receitaDespesaMonth.Count != 0)
-                {
-                    receitaDespesa.AnoMesLancamento = receitaDespesaMonth[0].AnoLancamento.ToString() + "-" + receitaDespesaMonth[0].DataLancamento.ToString("D2");
-                }
+                var lancamentoMes = result.Where(l => l.DataLancamento == v.DataInicial.AddMonths(i).Month).ToList();
+                var lancamentoReceita = lancamentoMes.Where(l => l.TipoLancamento == TipoLancamento.RECEITA).ToList();
+                receitaDespesa.ValorReceita = (lancamentoReceita.Count == 0) ? 0 : lancamentoReceita[0].ValorLancamento;
+
+                var lancamentoDespesa = lancamentoMes.Where(l => l.TipoLancamento == TipoLancamento.DESPESA).ToList();
+                receitaDespesa.ValorDespesa = (lancamentoDespesa.Count == 0) ? 0 : lancamentoDespesa[0].ValorLancamento;
+
                 listReceitaDespesa.Add(receitaDespesa);
             }
 
@@ -194,17 +254,21 @@ namespace GestaoFinancaPessoal.DAO
 
             VisualizarLancamentoViewModel v = new VisualizarLancamentoViewModel();
             v.DataFinal = DateTime.Now;
+            v.DataInicial = DateTime.Now.AddDays(-5);
+
 
             //criacao do filtro
             Expression<Func<Lancamento, bool>> predicate =
                 l => (l.Conta.Id == v.Conta.Id || v.Conta.Id == 0)
                     && (l.DataVencimento <= v.DataFinal || v.DataFinal == DateTime.MinValue)
+                    && (l.DataVencimento >= v.DataInicial || v.DataInicial == DateTime.MinValue)
                     && l.TipoLancamento != TipoLancamento.TRANSFERENCIA;
 
 
             var result = DbSet.AsNoTracking().Include(l => l.Conta)
                   .Where(predicate)
                   .GroupBy(l => new { l.DataVencimento.Day, l.DataVencimento.Month, l.DataVencimento.Year, l.TipoLancamento })
+                  .OrderByDescending(l => l.Key.Day)
                   .Select(s => new
                   {
                       ValorLancamento = s.Sum(i => i.Valor),
@@ -213,11 +277,28 @@ namespace GestaoFinancaPessoal.DAO
                       AnoLancamento = s.Key.Year,
                       DiaLancamento = s.Key.Day
                   })
-                  .OrderBy(l => new { l.DiaLancamento, l.DataLancamento, l.AnoLancamento })
-                  .ToList();//ele nao mapeia os objetos 
+                  .Take(10)
+                  .ToList();
 
             //precissa agrupar por mes, para nao precisar faz isso na view
             var listReceitaDespesa = new List<ReceitaDespesa>();
+            for (int i = 0; i <= 5; i++)
+            {
+                var receitaDespesa = new ReceitaDespesa();
+                receitaDespesa.DataLancamento = v.DataInicial.AddDays(i).ToString("dd/MM/yyyy");
+                receitaDespesa.AnoMesLancamento = v.DataInicial.AddDays(i ).ToString("dd/MM/yyyy");
+                receitaDespesa.DescricaoDespensa = "Despesa.";
+                receitaDespesa.DescricaoReceita = "Receita.";
+
+                var lancamentoDia = result.Where(l => l.DiaLancamento == v.DataInicial.AddDays(i ).Day).ToList();
+                var lancamentoReceita = lancamentoDia.Where(l => l.TipoLancamento == TipoLancamento.RECEITA ).ToList();
+                receitaDespesa.ValorReceita = (lancamentoReceita.Count == 0) ? 0 : lancamentoReceita[0].ValorLancamento;
+
+                var lancamentoDespesa = lancamentoDia.Where(l => l.TipoLancamento == TipoLancamento.DESPESA).ToList();
+                receitaDespesa.ValorDespesa = (lancamentoDespesa.Count == 0) ? 0 : lancamentoDespesa[0].ValorLancamento;
+
+                listReceitaDespesa.Add(receitaDespesa);
+            }
 
 
             return listReceitaDespesa;
