@@ -36,7 +36,10 @@
                             }
                             else
                             {
-                                <a asp-action="Suspender" asp-route-id="@categoria.Id" class="btn btn-danger btn-sm">Excluir</a>
+                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Não é possível excluir Categoria com lançamentos/SubCategoria.">
+                                    <a asp-action="Suspender" asp-route-id="@categoria.Id" class="btn btn-danger btn-sm disabled" aria-disabled="true">Excluir</a>
+                                </span>
+
                             }
                         </div>
                     }
@@ -55,7 +58,9 @@
                         @{
                             if (item.HasLancamento)
                             {
-                                <a asp-action="Suspender" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Excluir</a>
+                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Não é possível excluir Categoria com lançamentos.">
+                                    <a asp-action="Suspender" asp-route-id="@item.Id" class="btn btn-danger btn-sm disabled" aria-disabled="true">Excluir</a>
+                                </span>
                             }
                             else
                             {
@@ -85,3 +90,8 @@
         </div>
     </a>*@
 @*</div>*@
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+}

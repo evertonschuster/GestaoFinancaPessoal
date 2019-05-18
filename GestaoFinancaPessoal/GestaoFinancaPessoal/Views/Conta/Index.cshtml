@@ -49,7 +49,9 @@
                         @{
                             if (item.HasLancamento)
                             {
-                                <a asp-action="Suspender" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
+                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Não é possível excluir Contas com lançamentos.">
+                                    <a asp-action="Suspender" asp-route-id="@item.Id" class="btn btn-danger disabled" aria-disabled="true">Excluir</a>
+                                </span>
                             }
                             else
                             {
@@ -80,3 +82,8 @@
     </a>
 
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+}
