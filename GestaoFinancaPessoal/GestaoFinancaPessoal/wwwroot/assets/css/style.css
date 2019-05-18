@@ -3182,7 +3182,7 @@ tbody tr td:last-child {
 .fc-event {
   border-radius: 2px;
   border: none;
-  cursor: move;
+  /*cursor: move;*/
   font-size: 13px;
   margin: 5px 7px;
   padding: 5px 5px;

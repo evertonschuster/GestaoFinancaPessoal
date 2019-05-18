@@ -74,7 +74,7 @@ function CarregarReceitaXLancamento(isMensal = true) {
     }
 
     $("#graph").html("");
-    $("#divLoadReceitaXLancamento").show    ();
+    $("#divLoadReceitaXLancamento").show();
 
     let token = $("[name=__RequestVerificationToken]").val();
     let headers = {};
@@ -101,7 +101,12 @@ function CarregarReceitaXLancamento(isMensal = true) {
             ykeys: ['valorReceita', 'valorDespesa'],
             labels: ['Receita', 'Despesa'],
             xLabelAngle: 60,
-            barColors: ['#28A745', '#DC3545']
+            barColors: ['#28A745', '#DC3545'],
+            hoverCallback: function (index, options, content, row) {
+
+                console.log(content);
+                return content;
+            }
         });
 
         $("#divLoadReceitaXLancamento").hide();
@@ -144,7 +149,7 @@ function CarregarReceitaXLancamentoLine() {
             console.log(i, row);
         });
 
-        $("#divLoadReceitaXLancamentoGraphLine").hide(); 
+        $("#divLoadReceitaXLancamentoGraphLine").hide();
 
         //data:
         //[{ "valorDespesa": 3000.00, "valorReceita": 0.0, "dataLancamento": "marco" },

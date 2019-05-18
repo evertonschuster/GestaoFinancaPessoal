@@ -26,7 +26,7 @@
             var root = document.createElement("Div");
             root.id = "Descricao";
             var valor = document.createElement("Div");
-            valor.innerHTML = "Valor: " + json.valorPago + "/" + json.valor;
+            valor.innerHTML = "Valor: " + json.valorPago.toFixed(2) + "/" + json.valor.toFixed(2);;
             root.appendChild(valor);
 
             var conta = document.createElement("Div");
