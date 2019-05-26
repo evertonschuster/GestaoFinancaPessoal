@@ -9,6 +9,9 @@ namespace GestaoFinancaPessoal.Models
 {
     public class Categoria : MasterModel
     {
+        [Required(ErrorMessage = "Por Favor selecione a SubCategoria.")]
+        public override int Id { get; set; }
+
         [DataMember]
         [StringLength(256, ErrorMessage = "A {0} deve ter no mínimo {2} e no máximo {1} caracteres.", MinimumLength = 3)]
         [Display(Name = "Categoria")]

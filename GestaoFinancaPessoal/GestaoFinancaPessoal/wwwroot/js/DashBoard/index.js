@@ -7,6 +7,10 @@ window.onload = function () {
     CarregarReceitaXLancamentoLine();
 };
 
+$(window).resize(function () {
+    window.barChart.redraw();
+    window.lineChart.redraw();
+});
 
 function CarregarLancamentoPendente() {
     let token = $("[name=__RequestVerificationToken]").val();
@@ -94,7 +98,7 @@ function CarregarReceitaXLancamento(isMensal = true) {
         },
     }).done(function (response) {
 
-        Morris.Bar({
+        window.barChart = Morris.Bar({
             element: 'graph',
             data: response,
             xkey: 'dataLancamento',
@@ -102,6 +106,9 @@ function CarregarReceitaXLancamento(isMensal = true) {
             labels: ['Receita', 'Despesa'],
             xLabelAngle: 60,
             barColors: ['#28A745', '#DC3545'],
+            resize: true,
+            redraw: true,
+            yLabelFormat: function (x) { return x.toFixed(2).toString(); },
             hoverCallback: function (index, options, content, row) {
 
                 console.log(content);
@@ -136,7 +143,7 @@ function CarregarReceitaXLancamentoLine() {
     }).done(function (response) {
 
 
-        Morris.Area({
+        window.lineChart = Morris.Area({
             element: 'graphLine',
             behaveLikeLine: true,
             lineColors: ['#28A745', '#DC3545'],
@@ -144,7 +151,10 @@ function CarregarReceitaXLancamentoLine() {
             xkey: 'anoMesLancamento',
             ykeys: ['valorReceita', 'valorDespesa'],
             labels: ['Receita', 'Despesa'],
-            xLabels: "month"
+            xLabels: "month",
+            resize: true,
+            redraw: true,
+            yLabelFormat: function (x) { return x.toFixed(2).toString(); }
         }).on('click', function (i, row) {
             console.log(i, row);
         });

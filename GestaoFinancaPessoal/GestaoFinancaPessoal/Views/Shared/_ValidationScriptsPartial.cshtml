@@ -25,4 +25,12 @@
 
 <script>
     $('[data-val-number]').mask("#.##0,00", { reverse: true });
+    $('[data-val-number]').keypress(function (obj, sender) {
+        if (! (obj.target.value.replace(",", "") > 0)) {
+            console.log("oi");
+            obj.target.value = "";
+        }
+
+        
+    })
 </script>

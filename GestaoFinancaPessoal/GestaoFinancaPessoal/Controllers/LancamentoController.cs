@@ -151,7 +151,7 @@ namespace GestaoFinancaPessoal.Controllers
                 if (lancamento.DataPagamento <= DateTime.Now)
                 {
                     //var conta = ((List<Conta>)(ViewBag.Conta)).Where(c => c.Id == lancamento.Conta.Id).FirstOrDefault();
-                    var conta = contaDAO.getById(lancamento.Conta.Id);
+                    var conta = contaDAO.getById(lancamento.Conta.Id );
 
                     if (lancamento.TipoLancamento == TipoLancamento.DESPESA || lancamento.TipoLancamento == TipoLancamento.TRANSFERENCIA)
                     {
@@ -210,7 +210,7 @@ namespace GestaoFinancaPessoal.Controllers
             var contaDAO = new ContaDAO(this.DAO);
             var lancamentoDAO = new LancamentoDAO(this.DAO);
             ViewBag.Categoria = categoriaDAO.ListSubCategoria();
-            ViewBag.Conta = contaDAO.List(comSuspensa: true);
+            ViewBag.Conta = contaDAO.List();
 
             var lancamento = lancamentoDAO.getById(id);
             return View(lancamento);

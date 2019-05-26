@@ -10,7 +10,7 @@ namespace GestaoFinancaPessoal.Models
     public class MasterModel :  IClientModelValidator, IDisposable
     {
         [DataMember]
-        public int Id { get;  set; }
+        public virtual int Id { get;  set; }
 
         public void AddValidation(ClientModelValidationContext context)
         {

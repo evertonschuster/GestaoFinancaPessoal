@@ -7,3 +7,6 @@
     }
 
 }
+
+
+VereficaTipoCategoria($("#Hierarquia_Id"));

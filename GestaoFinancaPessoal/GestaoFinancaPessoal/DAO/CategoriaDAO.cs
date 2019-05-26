@@ -27,7 +27,14 @@ namespace GestaoFinancaPessoal.DAO
         {
             if (this.GetCategoriaByDescricao(Categoria).Count != 0)
             {
-                this.ModelState.AddModelError(nameof(Categoria.Nome), "Categoria já cadastrada.");
+                if (Categoria.Hierarquia == null)
+                {
+                    this.ModelState.AddModelError(nameof(Categoria.Nome), "Categoria já cadastrada.");
+                }
+                else
+                {
+                    this.ModelState.AddModelError(nameof(Categoria.Nome), "SubCategoria já cadastrada.");
+                }
                 throw new ModelErrorException();
             }
             base.Add(Categoria);
@@ -45,7 +52,7 @@ namespace GestaoFinancaPessoal.DAO
 
         public List<Categoria> GetCategoriaByDescricao(Categoria Categoria)
         {
-            var result = this.DbSet.Where(c => c.Nome == Categoria.Nome && c.IsSuspenco == false).ToList();
+            var result = this.DbSet.Where(c => string.Equals(c.Nome, Categoria.Nome, StringComparison.CurrentCultureIgnoreCase) && c.IsSuspenco == false).ToList();
             return result;
         }
 
@@ -65,7 +72,7 @@ namespace GestaoFinancaPessoal.DAO
         {
             if (mapeado)
             {
-                return DbSet.Where(c => c.Hierarquia == null && !c.IsSuspenco ).ToList();//ele mapeia todos objetos 
+                return DbSet.Where(c => c.Hierarquia == null && !c.IsSuspenco).ToList();//ele mapeia todos objetos 
             }
             else
             {

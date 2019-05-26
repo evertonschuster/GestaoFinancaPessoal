@@ -3,7 +3,7 @@
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
         plugins: ['interaction', 'dayGrid', 'timeGrid', 'list'],
-        height: 'auto',
+        height: 'none',
         header: {
             left: 'prev,next today',
             center: 'title',

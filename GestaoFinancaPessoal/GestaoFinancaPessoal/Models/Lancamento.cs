@@ -71,7 +71,7 @@ namespace GestaoFinancaPessoal.Models
         [Display(Name = "Recorrente")]
         public Recorrente Recorrente { get; set; }
 
-        [DataMember] 
+        [DataMember]
         public DateTime DataInclusao { get; set; }
 
         [DataMember]
@@ -96,7 +96,7 @@ namespace GestaoFinancaPessoal.Models
             get
             {
                 var minutos = this.Tempo * (int)this.PeriodicidadeNotificacao;
-                return new TimeSpan(0,minutos,0);
+                return new TimeSpan(0, minutos, 0);
             }
         }
     }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GestaoFinancaPessoal.DAO;
 using GestaoFinancaPessoal.Data;
 using GestaoFinancaPessoal.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,7 @@ namespace GestaoFinancaPessoal.Controllers
             return null;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var contaDAO = this.DAO.NewDAO<ContaDAO>();

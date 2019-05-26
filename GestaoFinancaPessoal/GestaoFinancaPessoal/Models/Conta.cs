@@ -10,6 +10,11 @@ namespace GestaoFinancaPessoal.Models
 {
     public class Conta : MasterModel, IValidatableObject
     {
+        //[Required(ErrorMessage = "Informe a Conta")]
+        //[Range(1, int.MaxValue, ErrorMessage = "Por Favor selecione uma conta.")]
+        [Required(ErrorMessage = "Informe a Conta.")]
+        public override int Id { get; set; }
+
         [DataMember]
         [StringLength(256, ErrorMessage = "A {0} deve ter no máximo {1} caracteres.")]
         [Display(Name = "Descrição da Conta")]
