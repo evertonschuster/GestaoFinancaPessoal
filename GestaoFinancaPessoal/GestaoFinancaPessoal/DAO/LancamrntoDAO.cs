@@ -163,7 +163,7 @@ namespace GestaoFinancaPessoal.DAO
             var listReceitaDespesa = new List<ReceitaDespesa>();
 
             //precissa agrupar por mes, para nao precisar faz isso na view
-            for (int i = 0; i <= 12; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 var receitaDespesa = new ReceitaDespesa();
                 receitaDespesa.DataLancamento = DateTimeFormatInfo.CurrentInfo.GetMonthName(v.DataInicial.AddMonths(i).Month);
@@ -327,9 +327,14 @@ namespace GestaoFinancaPessoal.DAO
 
         public void GetValorTotalReceitaDespesa(DashBoardInicial dashBoard)
         {
+            var data = DateTime.Now;
 
-            dashBoard.TotalDespesaMes = DbSet.Where(c => c.TipoLancamento == TipoLancamento.DESPESA).Sum(c => c.Valor);
-            dashBoard.TotalReceitaaMes = DbSet.Where(c => c.TipoLancamento == TipoLancamento.RECEITA).Sum(c => c.Valor);
+            dashBoard.TotalDespesaMes = DbSet
+                .Where(c => c.TipoLancamento == TipoLancamento.DESPESA && c.DataVencimento.Month == data.Month )
+                .Sum(c => c.Valor);
+            dashBoard.TotalReceitaaMes = DbSet
+                .Where(c => c.TipoLancamento == TipoLancamento.RECEITA && c.DataVencimento.Month == data.Month)
+                .Sum(c => c.Valor);
 
         }
     }
