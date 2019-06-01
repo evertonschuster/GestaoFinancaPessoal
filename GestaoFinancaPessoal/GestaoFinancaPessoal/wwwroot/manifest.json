@@ -3,12 +3,12 @@
   "name": "GestaoPessoal",
   "icons": [
     {
-      "src": "images/icon/avatar-01.jpg",
+      "src": "images/icon/icone-gestao-divida.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "images/icon/avatar-01.jpg",
+      "src": "images/icon/icone-gestao-divida.png",
       "sizes": "512x512",
       "type": "image/png"
     }

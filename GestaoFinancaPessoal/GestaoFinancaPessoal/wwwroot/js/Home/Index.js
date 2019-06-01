@@ -16,10 +16,10 @@
         contentType: "application/json",
         headers: headers,                //token de validacao para a controller
         complete: function (XMLHttpRequest, status) {
-            window.location.reload();
+            window.location.href = "/Account/Logout";
         },
         success: function (XMLHttpRequest, status) {
-            window.location.reload();
+            window.location.href = "/Account/Logout";
         }
     }).done(function (response) {
     }
@@ -122,7 +122,14 @@ function CarregarNotificacao() {
         complete: function (XMLHttpRequest, status, response) {
         }
     }).done(function (response) {
-        console.log(response);
+
+        if (typeof response === "object") {
+            localStorage.setItem("/Home/NotificacaoGet", JSON.stringify(response));
+
+        } else {
+            response = JSON.parse(localStorage.getItem("/Home/NotificacaoGet"));
+        }
+
         var conteudo = "";
 
         for (var i = 0; i < response.length; i++) {
@@ -165,3 +172,8 @@ function reportWindowSize() {
 
     $("#iFrameForm").height(windowHeight - $(".header").height() - 4);
 }
+
+
+
+
+

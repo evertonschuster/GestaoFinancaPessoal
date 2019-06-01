@@ -39,10 +39,6 @@
             event.el.addEventListener("mouseover", mouseoverShow);
             event.el.addEventListener("mouseout", mouseoverHide);
 
-            console.log(event.el.parentElement); 
-            console.log(event.el.parentNode); 
-            console.log(event.el);
-            console.log(event);
 
         }
     });

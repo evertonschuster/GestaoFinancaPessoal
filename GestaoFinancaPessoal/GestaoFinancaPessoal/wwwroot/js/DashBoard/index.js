@@ -31,6 +31,14 @@ function CarregarLancamentoPendente() {
         }
     }).done(function (response) {
 
+
+        if (typeof response === "object") {
+            localStorage.setItem("/Home/NotificacaoGet", JSON.stringify(response));
+
+        } else {
+            response = JSON.parse(localStorage.getItem("/Home/NotificacaoGet"));
+        }
+
         var conteudo = "";
 
         for (var i = 0; i < response.length; i++) {
@@ -96,7 +104,17 @@ function CarregarReceitaXLancamento(isMensal = true) {
         headers: headers,                //token de validacao para a controller
         complete: function (XMLHttpRequest, status) {
         },
-    }).done(function (response) {
+        error: function (xhr, textStatus, errorThrown) {
+        },
+    }).done(function (response, status) {
+
+
+        if (typeof response === "object") {
+            localStorage.setItem(url, JSON.stringify(response));
+
+        } else {
+            response = JSON.parse(localStorage.getItem(url));
+        }
 
         window.barChart = Morris.Bar({
             element: 'graph',
@@ -110,8 +128,6 @@ function CarregarReceitaXLancamento(isMensal = true) {
             redraw: true,
             yLabelFormat: function (x) { return x.toFixed(2).toString(); },
             hoverCallback: function (index, options, content, row) {
-
-                console.log(content);
                 return content;
             }
         });
@@ -142,6 +158,12 @@ function CarregarReceitaXLancamentoLine() {
         },
     }).done(function (response) {
 
+        if (typeof response === "object") {
+            localStorage.setItem("../Dashboard/GetReceitaDespesasAno", JSON.stringify(response));
+
+        } else {
+            response = JSON.parse(localStorage.getItem("../Dashboard/GetReceitaDespesasAno"));
+        }
 
         window.lineChart = Morris.Area({
             element: 'graphLine',
@@ -156,7 +178,6 @@ function CarregarReceitaXLancamentoLine() {
             redraw: true,
             yLabelFormat: function (x) { return x.toFixed(2).toString(); }
         }).on('click', function (i, row) {
-            console.log(i, row);
         });
 
         $("#divLoadReceitaXLancamentoGraphLine").hide();

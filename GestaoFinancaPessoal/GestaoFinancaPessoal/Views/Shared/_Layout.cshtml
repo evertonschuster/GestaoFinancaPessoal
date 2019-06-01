@@ -96,6 +96,20 @@
 
 
     @*<script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function () {
+                        console.log('service worker registered');
+                    })
+                    .catch(function () {
+                        console.warn('service worker failed');
+                    });
+            }
+        </script>
+        <script src="~/install.js"></script>*@
+
+
+    <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js')
                 .then(function () {
@@ -106,7 +120,6 @@
                 });
         }
     </script>
-    <script src="~/install.js"></script>*@
 
 </body>
 </html>
