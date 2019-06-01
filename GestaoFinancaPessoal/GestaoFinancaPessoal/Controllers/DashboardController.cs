@@ -30,6 +30,7 @@ namespace GestaoFinancaPessoal.Controllers
             var obj = new DashBoardInicial();
             obj.SaldoAtual = contaDAO.GetSaldoAtual();
             lancamentoDAO.GetValorTotalReceitaDespesa(obj);
+            obj.Conta = contaDAO.ListContaView();
 
             return View(obj);
         }
