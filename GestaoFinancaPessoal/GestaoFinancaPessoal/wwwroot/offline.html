@@ -2,9 +2,47 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Pagina Offline</title>
+    <link href="/assets/css/lib/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    OPS
+
+    <div class="container">
+        <div class="text-center">
+            <h1 class="text-danger">
+                OPS!
+            </h1>
+            <h2 class="text-danger">
+                Página OFFLINE...
+            </h2>
+
+            <div style="padding-top:50px" class="text-info">
+                <p>A ação que você deseja fazer, necessita de acesso a internet. Tente mais tarde!</p>
+            </div>
+
+            <button class="btn btn-addon" onclick="javascript:history.back()">Voltar</button>
+        </div>
+    </div>
+
+
+
+
+    <script src="/assets/js/lib/jquery.min.js"></script>
+    <script src="/assets/js/lib/jquery.nanoscroller.min.js"></script>
+
+    <!-- sidebar -->
+    <script src="/assets/js/lib/bootstrap.min.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function () {
+                    console.log('service worker registered');
+                })
+                .catch(function () {
+                    console.warn('service worker failed');
+                });
+        }
+    </script>
 </body>
 </html>

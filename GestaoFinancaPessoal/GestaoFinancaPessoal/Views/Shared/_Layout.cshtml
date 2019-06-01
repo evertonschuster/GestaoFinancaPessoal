@@ -62,7 +62,10 @@
         }
 
         if (excluido == 'True') {
-            swal("Excluido com sucesso!", "", "success");
+            swal("Excluido com sucesso!", "", "success")
+            .then((value) => {
+                    window.location.href = window.location.href + "/../../";
+                });
         }
 
         if (suspenso == 'True') {
